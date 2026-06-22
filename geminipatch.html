@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dream Boutique — Modest & Ethnic Wears</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root {
+  --blush:#F7E8E0; --blush-deep:#F0D5C8; --rose:#D4897A; --rose-light:#E8B4A8;
+  --ivory:#FDF8F4; --ivory-dark:#F5EDE4; --gold:#C9956A; --gold-light:#E8C4A8;
+  --brown:#8B5E4A; --text:#4A3728; --text-light:#9A7B6E; --border:#EDD8CC; --green:#25D366;
+  --ease:cubic-bezier(0.25,1,0.5,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Raleway',sans-serif;background:var(--ivory);color:var(--text);overflow-x:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--ivory);}::-webkit-scrollbar-thumb{background:var(--rose-light);border-radius:3px;}
+
+/* ══════════════════════════════
+   INTRO WELCOME ANIMATION LAYER
+══════════════════════════════ */
+#introSplash {
+  position: fixed; inset: 0; z-index: 20000;
+  background: linear-gradient(135deg, var(--ivory), var(--blush));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.8s var(--ease), visibility 0.8s var(--ease);
+}
+#introSplash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash-title { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--text); font-weight: 400; margin-bottom: 8px; opacity: 0; transform: translateY(20px); animation: splashFadeUp 1.2s forwards 0.3s; }
+.splash-title em { font-style: italic; color: var(--rose); }
+.splash-script { font-family: 'Dancing Script', cursive; font-size: 24px; color: var(--gold); opacity: 0; animation: splashFadeUp 1.2s forwards 0.8s; }
+@keyframes splashFadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════════════════════════
+   GOOGLE SIGN-IN SCREEN
+══════════════════════════════ */
+#gSignInScreen {
+  position:fixed;inset:0;z-index:10000;
+  background:linear-gradient(160deg,#FDF8F4 0%,#F7E8E0 50%,#FDF8F4 100%);
+  display:none;align-items:center;justify-content:center;
+  transition:opacity 0.8s var(--ease),visibility 0.8s var(--ease);
+}
+#gSignInScreen.show{display:flex;}
+#gSignInScreen.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.gsign-petals{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.gsign-petal{position:absolute;border-radius:50% 0 50% 0;animation:floatPetal 5s ease-in-out infinite;}
+.gsign-petal:nth-child(1){width:60px;height:60px;background:var(--rose);opacity:0.1;top:8%;left:4%;animation-delay:0s;}
+.gsign-petal:nth-child(2){width:40px;height:40px;background:var(--gold);opacity:0.12;top:20%;right:6%;animation-delay:0.8s;}
+.gsign-petal:nth-child(3){width:80px;height:80px;background:var(--rose-light);opacity:0.1;bottom:15%;left:6%;animation-delay:1.5s;}
+.gsign-petal:nth-child(4){width:50px;height:50px;background:var(--gold-light);opacity:0.14;bottom:20%;right:8%;animation-delay:0.4s;}
+.gsign-box{
+  position:relative;z-index:1;text-align:center;
+  background:#fff;border-radius:32px;padding:56px 48px;
+  box-shadow:0 24px 80px rgba(139,94,74,0.14);
+  border:1px solid var(--border);max-width:440px;width:90%;
+}
+.gsign-logo{
+  width:90px;height:90px;border-radius:50%;
+  margin:0 auto 24px;
+  animation:elegantPulse 2.5s ease-in-out infinite;
+}
+.gsign-logo img { width: 100%; height: 100%; object-fit: contain; }
+@keyframes elegantPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+.gsign-title{font-family:'Playfair Display',serif;font-size:28px;color:var(--text);font-weight:400;margin-bottom:6px;}
+.gsign-title em{font-style:italic;color:var(--rose);}
+.gsign-script{font-family:'Dancing Script',cursive;font-size:20px;color:var(--gold);display:block;margin-bottom:20px;}
+.gsign-body{font-size:13px;color:var(--text-light);line-height:1.8;margin-bottom:36px;font-weight:300;}
+.gsign-divider{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.gsign-divider::before,.gsign-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.gsign-divider span{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);}
+.gsign-guest{margin-top:16px;font-size:11px;color:var(--text-light);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.gsign-guest:hover{color:var(--rose);}
+.gsign-badges{display:flex;justify-content:center;gap:20px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
+.gsign-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-light);}
+
+/* ══════════════════════════════
+   LOADER SCREEN
+══════════════════════════════ */
+#loader{
+  position:fixed;inset:0;z-index:9998;
+  background:linear-gradient(160deg,#FDF8F4,#F7E8E0,#FDF8F4);
+  display:none;align-items:center;justify-content:center;
+  transition:opacity 1s var(--ease),visibility 1s var(--ease);
+}
+#loader.show{display:flex;}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none;}
+.ld-content{display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center;transition:transform 1.2s var(--ease),opacity 0.9s var(--ease);}
+#loader.out .ld-content{transform:scale(1.3) translateY(-40px);opacity:0;}
+.ld-logo-ring{
+  width:120px;height:120px;border-radius:50%;
+  margin: 0 auto;
+  animation:elegantPulse 2s ease-in-out infinite;
+}
+.ld-logo-ring img { width:100%; height:100%; object-fit:contain; }
+.ld-tagline{font-family:'Playfair Display',serif;font-size:13px;font-weight:500;letter-spacing:5px;color:#766353;text-transform:uppercase;}
+.ld-dots{display:flex;gap:8px;margin-top:8px;}
+.ld-dot{width:6px;height:6px;border-radius:50%;background:var(--rose-light);animation:dotPulse 1.2s ease-in-out infinite;}
+.ld-dot:nth-child(2){animation-delay:0.2s;}.ld-dot:nth-child(3){animation-delay:0.4s;}
+@keyframes dotPulse{0%,100%{opacity:0.3;transform:scale(1);}50%{opacity:1;transform:scale(1.4);}}
+
+/* ══════════════════════════════
+   MAIN APPLICATION CONTAINER
+══════════════════════════════ */
+#mainApp{display:none;}
+#mainApp.show{display:block;}
+
+/* NAVIGATION STRUCTURE */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(253,248,244,0.96);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 56px;height:72px;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-db{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nav-logo-db img { width:100%; height:100%; object-fit:contain; }
+.nav-brand-main{font-family:'Playfair Display',serif;font-size:17px;color:var(--text);letter-spacing:1px;display:block;}
+.nav-brand-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);display:block;margin-top:1px;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:var(--text-light);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;transition:color 0.3s;}
+.nav-links a:hover{color:var(--rose);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-user-chip{display:flex;align-items:center;gap:8px;background:var(--blush);border-radius:100px;padding:6px 14px 6px 6px;font-size:12px;color:var(--text);cursor:pointer;}
+.nav-user-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover;background:var(--rose);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:600;}
+.cart-pill{background:var(--blush);border:1px solid var(--border);color:var(--text);padding:8px 20px;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:8px;border-radius:100px;}
+.cart-pill:hover{background:var(--rose);color:#fff;border-color:var(--rose);}
+.cart-pill-count{background:var(--rose);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;display:inline-flex;align-items:center;justify-content:center;}
+
+/* ══════════════════════════════
+   SLIDE-OUT USER PROFILE VIEWER
+══════════════════════════════ */
+#profilePanel {
+  position: fixed; top: 0; right: -400px; width: 400px; height: 100vh;
+  background: #fff; z-index: 500; box-shadow: -10px 0 40px rgba(74,55,40,0.15);
+  border-left: 1px solid var(--border); padding: 40px 32px;
+  display: flex; flex-direction: column; transition: right 0.5s var(--ease);
+}
+#profilePanel.open { right: 0; }
+.profile-close { align-self: flex-start; background: none; border: none; font-size: 24px; color: var(--text-light); cursor: pointer; margin-bottom: 32px; }
+.profile-hdr { margin-bottom: 40px; }
+.profile-name { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+.profile-email { font-size: 13px; color: var(--text-light); font-weight: 300; }
+.profile-menu-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; border-bottom: 1px solid var(--border); cursor: pointer;
+  font-size: 14px; color: var(--text); font-weight: 500; transition: color 0.3s;
+}
+.profile-menu-item:hover { color: var(--rose); }
+.profile-menu-item span.arrow { font-size: 16px; color: var(--text-light); }
+
+/* ══════════════════════════════
+   LOGOUT SYSTEM CONFIRMATION MODAL
+══════════════════════════════ */
+#logoutModal {
+  position: fixed; inset: 0; background: rgba(74,55,40,0.6);
+  z-index: 600; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+#logoutModal.open { display: flex; }
+.logout-box {
+  background: #fff; border-radius: 24px; padding: 40px; max-width: 360px; width: 90%;
+  text-align: center; box-shadow: 0 20px 50px rgba(74,55,40,0.2); border: 1px solid var(--border);
+}
+.logout-emoji { font-size: 48px; margin-bottom: 16px; display: block; }
+.logout-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 12px; font-weight: 400; }
+.logout-box p { font-size: 13px; color: var(--text-light); margin-bottom: 28px; line-height: 1.6; }
+.logout-actions { display: flex; gap: 12px; }
+.logout-btn-confirm { flex: 1; background: var(--rose); color: #fff; border: none; padding: 12px; border-radius: 100px; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+.logout-btn-cancel { flex: 1; background: var(--blush); color: var(--text); border: none; padding: 12px; border-radius: 100px; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; }
+
+/* PETALS — animations */
+.hero-petals{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.petal{position:absolute;border-radius:50% 0 50% 0;animation:floatPetal 4s ease-in-out infinite;}
+@keyframes floatPetal{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-24px) rotate(15deg);}66%{transform:translateY(12px) rotate(-10deg);}}
+.petal:nth-child(1){width:72px;height:72px;background:var(--rose);opacity:0.15;top:8%;left:4%;animation-delay:0s;animation-duration:3.5s;}
+.petal:nth-child(2){width:44px;height:44px;background:var(--gold);opacity:0.18;top:22%;right:7%;animation-delay:0.5s;animation-duration:4s;}
+.petal:nth-child(3){width:90px;height:90px;background:var(--rose-light);opacity:0.14;top:58%;left:2%;animation-delay:1s;animation-duration:3.8s;}
+.petal:nth-child(4){width:54px;height:54px;background:var(--gold-light);opacity:0.18;top:72%;right:4%;animation-delay:0.3s;animation-duration:3.2s;}
+
+/* HERO */
+.hero{min-height:100vh;padding-top:72px;background:linear-gradient(160deg,#FDF8F4 0%,#F7E8E0 40%,#FDF8F4 80%);display:flex;align-items:center;overflow:hidden;position:relative;}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;width:100%;max-width:1300px;margin:0 auto;padding:60px 56px;position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:var(--blush-deep);padding:8px 20px;border-radius:100px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--rose);margin-bottom:28px;}
+.hero-eyebrow::before{content:'✿';font-size:13px;}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(44px,5.5vw,76px);font-weight:400;line-height:1.1;color:var(--text);margin-bottom:8px;}
+.hero-title em{font-style:italic;color:var(--rose);display:block;}
+.hero-script{font-family:'Dancing Script',cursive;font-size:clamp(28px,3.5vw,46px);color:var(--gold);margin-bottom:24px;display:block;}
+.hero-body{color:var(--text-light);font-size:15px;line-height:1.9;font-weight:300;max-width:480px;margin-bottom:40px;}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;}
+.btn-rose{background:var(--rose);color:#fff;padding:15px 36px;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all 0.3s;border-radius:100px;font-weight:600;display:inline-block;box-shadow:0 8px 24px rgba(212,137,122,0.35);}
+.btn-rose:hover{background:var(--brown);transform:translateY(-2px);}
+
+/* PRODUCT FILTER GRID & DESIGN TEMPLATES */
+section{padding:100px 56px;}
+.section-eyebrow{display:inline-block;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);background:var(--blush);padding:6px 18px;border-radius:100px;margin-bottom:16px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,52px);font-weight:400;color:var(--text);line-height:1.2;}
+.divider-flower{display:flex;align-items:center;gap:16px;margin:20px 0 48px;}
+.divider-flower::before,.divider-flower::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+.divider-flower span{color:var(--rose-light);font-size:16px;}
+.filter-wrap{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.filt-btn{background:#fff;border:1.5px solid var(--border);color:var(--text-light);padding:9px 22px;border-radius:100px;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;font-weight:500;}
+.filt-btn.active,.filt-btn:hover{background:var(--rose);border-color:var(--rose);color:#fff;}
+
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+.pcard{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(139,94,74,0.08);transition:all 0.4s;position:relative;cursor:pointer;}
+.pcard-img-wrap{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--blush);}
+.pcard-img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.pcard-badge{position:absolute;top:14px;left:14px;background:rgba(253,248,244,0.92);backdrop-filter:blur(8px);color:var(--rose);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;font-weight:600;}
+.stock-badge{position:absolute;top:14px;right:14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:100px;font-weight:700;}
+.stock-badge.in{background:rgba(37,211,102,0.15);color:#15803d;border:1px solid rgba(37,211,102,0.3);}
+.stock-badge.out{background:rgba(239,68,68,0.12);color:#dc2626;border:1px solid rgba(239,68,68,0.25);}
+.pcard-info{padding:20px 22px 22px;}
+.pcard-name{font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin-bottom:10px;line-height:1.3;}
+.pcard-desc{font-size:13px;color:var(--text-light);line-height:1.75;font-weight:300;margin-bottom:16px;}
+.pcard-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);}
+.pcard-price{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);font-weight:500;}
+
+/* PRODUCT DETAILED PREVIEW MODAL */
+.modal-veil{position:fixed;inset:0;background:rgba(74,55,40,0.6);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(6px);}
+.modal-veil.open{opacity:1;pointer-events:all;}
+.modal-box{background:#fff;border-radius:28px;max-width:900px;width:100%;max-height:90vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 30px 80px rgba(74,55,40,0.3);}
+.modal-img-side{overflow:hidden;position:relative;}
+.modal-img-side img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.modal-info-side{padding:48px 40px;overflow-y:auto;display:flex;flex-direction:column;}
+.modal-close-btn{align-self:flex-end;background:var(--blush);border:none;color:var(--text);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;}
+.modal-name{font-family:'Playfair Display',serif;font-size:26px;color:var(--text);font-weight:400;margin-bottom:6px;}
+.modal-price{font-family:'Playfair Display',serif;font-size:28px;color:var(--text);font-weight:500;margin-bottom:18px;}
+.modal-desc{font-size:14px;color:var(--text-light);line-height:1.85;font-weight:300;margin-bottom:28px;flex:1;}
+.modal-btns{display:flex;flex-direction:column;gap:10px;}
+
+/* REVIEWS GRID FRAMEWORKS */
+.reviews-section{background:var(--ivory-dark);}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-bottom:60px;}
+.rcard{background:#fff;border-radius:20px;padding:32px;box-shadow:0 4px 20px rgba(139,94,74,0.08);border:1px solid var(--border);}
+.rcard-quote{font-family:'Playfair Display',serif;font-size:56px;color:var(--rose-light);line-height:0.6;margin-bottom:16px;}
+.rcard-stars{font-size:16px;margin-bottom:14px;}
+.rcard-text{font-size:14px;color:var(--text-light);line-height:1.8;font-weight:300;margin-bottom:20px;font-style:italic;}
+.rcard-author{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text);}
+.review-trigger-box{text-align:center;background:#fff;border-radius:24px;padding:48px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(139,94,74,0.05);max-width:600px;margin:0 auto;}
+.feedback-panel{margin-top:32px;border-top:1px dashed var(--border);padding-top:32px;display:none;}
+.star-rating-row{display:flex;justify-content:center;gap:8px;margin-bottom:20px;}
+.star-node{font-size:32px;color:var(--border);cursor:pointer;transition:transform 0.2s;}
+.star-node.active{color:var(--gold);}
+.form-textarea{width:100%;height:120px;background:var(--ivory);border:1px solid var(--border);border-radius:16px;padding:16px;font-family:'Raleway',sans-serif;font-size:14px;color:var(--text);resize:none;margin-bottom:20px;}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--ivory);padding:14px 28px;border-radius:100px;font-size:12px;letter-spacing:1px;z-index:30000;box-shadow:0 12px 32px rgba(0,0,0,0.15);transition:opacity 0.3s;}
+</style>
+</head>
+<body>
+
+<div id="introSplash">
+  <h1 class="splash-title">Welcome to <em>Dream Boutique</em></h1>
+  <span class="splash-script">Modest & Ethnic Wears</span>
+</div>
+
+<div id="gSignInScreen">
+  <div class="gsign-petals">
+    <div class="gsign-petal"></div><div class="gsign-petal"></div><div class="gsign-petal"></div>
+  </div>
+  <div class="gsign-box">
+    <div class="gsign-logo">
+      <img src="/home/abdus/D:/Business Websites/Dream Boutiques/BQT-Assets/DB Logo.png" alt="Dream Boutique Logo" onerror="this.style.display='none';">
+    </div>
+    <h2 class="gsign-title">Dream <em>Boutique</em></h2>
+    <span class="gsign-script">Modest & Ethnic Wears</span>
+    <p class="gsign-body">Experience an authenticated world of premium elegance. Sign in securely via Google Identity Services framework integration.</p>
+    
+    <div class="gsign-divider"><span>Secure Access Gateway</span></div>
+    
+    <div id="googleIdentityWidgetContainer" style="display:flex;justify-content:center;margin:24px 0;"></div>
+    
+    <div class="gsign-guest" onclick="bypassAuthAsGuest()">Continue exploring as Guest</div>
+  </div>
+</div>
+
+<div id="loader">
+  <div class="ld-content">
+    <div class="ld-logo-ring">
+      <img src="/home/abdus/D:/Business Websites/Dream Boutiques/BQT-Assets/DB Logo.png" alt="DB Logo">
+    </div>
+    <p class="ld-tagline">Configuring Personalized Sanctuary</p>
+    <div class="ld-dots"><div class="ld-dot"></div><div class="ld-dot"></div><div class="ld-dot"></div></div>
+  </div>
+</div>
+
+<div id="mainApp">
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-db">
+        <img src="/home/abdus/D:/Business Websites/Dream Boutiques/BQT-Assets/DB Logo.png" alt="Logo">
+      </div>
+      <div>
+        <span class="nav-brand-main">Dream Boutique</span>
+        <span class="nav-brand-sub">Modest & Ethnic</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#store">Boutique Grid</a></li>
+      <li><a href="#reviews">Testimonials</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-user-chip" id="navUserChip" onclick="toggleProfileViewPanel()">
+        <div class="nav-user-avatar" id="avatarBox">G</div>
+        <span id="chipUsername">Guest Account</span>
+      </div>
+      <button class="cart-pill">Bag <span class="cart-pill-count" id="bagCount">0</span></button>
+    </div>
+  </nav>
+
+  <div id="profilePanel">
+    <button class="profile-close" onclick="toggleProfileViewPanel()">✕</button>
+    <div class="profile-hdr">
+      <h3 class="profile-name" id="profName">Guest Account</h3>
+      <p class="profile-email" id="profEmail">guest@dreamboutique.com</p>
+    </div>
+    <div class="profile-menu-item" onclick="toast('Opening your purchase vault... ✿')">
+      Purchased Items <span class="arrow">→</span>
+    </div>
+    <div class="profile-menu-item" onclick="toast('Loading historical user interactions... ✿')">
+      Reviews <span class="arrow">→</span>
+    </div>
+    <div class="profile-menu-item" style="margin-top:auto;border-top:1px solid var(--border);color:var(--rose);" onclick="openSystemLogoutDialog()">
+      Log Out <span class="arrow" style="color:var(--rose);">→</span>
+    </div>
+  </div>
+
+  <main id="store" style="padding-top:100px;">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-eyebrow">Exquisite Modern Grace</div>
+          <h1 class="hero-title">Timeless <em>Modesty</em></h1>
+          <span class="hero-script">Woven with Elegance</span>
+          <p class="hero-body">Discover exceptional handcrafted abayas and precision-tailored ethnic wears formulated to align style with pristine traditional values.</p>
+          <div class="hero-ctas">
+            <button class="btn-rose" onclick="document.getElementById('gridAnchor').scrollIntoView();">Explore Grid Collection</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gridAnchor">
+      <span class="section-eyebrow">Curated Vault</span>
+      <h2 class="section-title">The Boutique <em>Elegance</em></h2>
+      <div class="divider-flower"><span>✿</span></div>
+      
+      <div class="filter-wrap">
+        <button class="filt-btn active" onclick="executeCategoryFilter('all', this)">All Masterpieces</button>
+        <button class="filt-btn" onclick="executeCategoryFilter('abaya', this)">Abayas</button>
+        <button class="filt-btn" onclick="executeCategoryFilter('hijab', this)">Hijabs</button>
+      </div>
+
+      <div class="product-grid" id="productRootCanvas"></div>
+    </section>
+
+    <section class="reviews-section" id="reviews">
+      <div class="text-center" style="text-align:center;margin-bottom:48px;">
+        <span class="section-eyebrow">Patron Diaries</span>
+        <h2 class="section-title">Voices of <em>Authenticity</em></h2>
+      </div>
+      <div class="reviews-grid" id="reviewsGrid">
+        <div class="rcard">
+          <div class="rcard-quote">"</div>
+          <div class="rcard-stars">⭐⭐⭐⭐⭐</div>
+          <p class="rcard-text">The silk fabric compilation on my tailored Abaya feels exceptionally luxury grade. Incredible asset structure.</p>
+          <p class="rcard-author">Aisha R.</p>
+        </div>
+      </div>
+
+      <div class="review-trigger-box">
+        <h3>Share Your Experience</h3>
+        <p style="font-size:13px;color:var(--text-light);margin-top:6px;">Only verified buyers with continuous purchase histories are clear to leave real-time system critiques.</p>
+        <button class="btn-rose" style="margin-top:20px;" onclick="verifyReviewPrivilegePermissions()">Compose Review Testimonial</button>
+        
+        <div class="feedback-panel" id="feedbackFormPanel">
+          <div class="star-rating-row" id="starContainer">
+            <span class="star-node" data-val="1" onclick="assignStarRatingMetric(1)">★</span>
+            <span class="star-node" data-val="2" onclick="assignStarRatingMetric(2)">★</span>
+            <span class="star-node" data-val="3" onclick="assignStarRatingMetric(3)">★</span>
+            <span class="star-node" data-val="4" onclick="assignStarRatingMetric(4)">★</span>
+            <span class="star-node" data-val="5" onclick="assignStarRatingMetric(5)">★</span>
+          </div>
+          <textarea class="form-textarea" id="feedbackContentInput" placeholder="Describe the structural excellence of your piece..."></textarea>
+          <button class="btn-rose" onclick="commitReviewToSystemLog()">Publish Verified Testimonial</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-veil" id="productDetailsModal">
+  <div class="modal-box">
+    <div class="modal-img-side"><img id="modalProductImg" src="" alt="View"></div>
+    <div class="modal-info-side">
+      <button class="modal-close-btn" onclick="closeProductViewModal()">✕</button>
+      <h3 class="modal-name" id="modalProductName">Masterpiece Name</h3>
+      <p class="modal-price" id="modalProductPrice">₹0</p>
+      <p class="modal-desc" id="modalProductDesc">Description</p>
+      <div class="modal-btns" id="modalActionContainer"></div>
+    </div>
+  </div>
+</div>
+
+<div id="logoutModal">
+  <div class="logout-box">
+    <span class="logout-emoji">⊙﹏⊙</span>
+    <h3>Parting Ways?</h3>
+    <p>Are you completely certain you want to sign out of your authenticated boutique interface session?</p>
+    <div class="logout-actions">
+      <button class="logout-btn-confirm" onclick="confirmSystemLogOutSequence()">Log Out</button>
+      <button class="logout-btn-cancel" onclick="closeSystemLogoutDialog()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════════
+   PRODUCTION SCALABLE DATA MATRIXBlueprints (IN/OUT STOCK, PRICES, IMPORTS)
+══════════════════════════════════════════════════════════════════════════════ */
+const productMasterDatabase = [
+  {
+    id: "bqt-001",
+    name: "Classic Premium Silk Abaya",
+    category: "abaya",
+    tag: "Luxury Collection",
+    price: 4899,
+    images: ["/home/abdus/D:/Business Websites/Dream Boutiques/BQT-Assets/DB Logo.png"], 
+    description: "An elegant, premium-grade silk abaya tailored to offer maximum comfort while exuding a timeless aesthetic.",
+    inStock: true
+  },
+  {
+    id: "bqt-002",
+    name: "Embroidered Georgette Masterpiece",
+    category: "abaya",
+    tag: "Signature Weave",
+    price: 6200,
+    images: ["/home/abdus/D:/Business Websites/Dream Boutiques/BQT-Assets/DB Logo.png"],
+    description: "Intricate floral artisan threadwork tracing down premium georgette drapes. Built to capture complete modest balance.",
+    inStock: true
+  },
+  {
+    id: "bqt-003",
+    name: "Premium Soft Crimson Hijab",
+    category: "hijab",
+    tag: "Essential Comfort",
+    price: 950,
+    images: ["/home/abdus/D:/Business Websites/Dream Boutiques/BQT-Assets/DB Logo.png"],
+    description: "Breathable, lightweight, high-density cotton weaving engineered cleanly for all-day styling requirements.",
+    inStock: false
+  }
+];
+
+// STATE CONTROLLERS
+let currentUserProfile = null; 
+let systemCartCount = 0;
+let allocatedRatingMetrics = 0;
+let uiAppNavigationStateStack = [];
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   SOURCE OBFUSCATION & SECURITY ENFORCEMENT ENGINE
+══════════════════════════════════════════════════════════════════════════════ */
+(function applySourceProtectionProtocols() {
+  // Prevent context menus completely
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  
+  // Intercept and break development compilation shortcuts
+  document.addEventListener('keydown', e => {
+    if (
+      e.keyCode === 123 || // F12
+      (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || // Ctrl+Shift+I/J/C
+      (e.ctrlKey && e.keyCode === 85) // Ctrl+U View Source
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Self-executing loop debugger trick to break infinite profiling hooks
+  setInterval(() => {
+    (function lockingLoop(i) {
+      if (("" + i / i).length !== 1 || i % 20 === 0) {
+        (function() {}.constructor("debugger")());
+      } else {
+        (function() {}.constructor("debugger")());
+      }
+      lockingLoop(++i);
+    })(0);
+  }, 800);
+})();
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   APPLICATION LIFE-CYCLE ENGINE CORE
+══════════════════════════════════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  // 1. Play intro welcome experience sequence first
+  setTimeout(() => {
+    document.getElementById('introSplash').classList.add('hide');
+    evaluatePersistentUserSessionCache();
+  }, 2200);
+});
+
+function evaluatePersistentUserSessionCache() {
+  const cachedProfile = localStorage.getItem('__DB_SECURE_USER_SESSION');
+  
+  if (cachedProfile) {
+    currentUserProfile = JSON.parse(cachedProfile);
+    compileApplicationDashboardView();
+  } else {
+    // Reveal sign-in gate and initialize official account popup widget overlay
+    document.getElementById('gSignInScreen').classList.add('show');
+    initializeNativeGoogleIdentityServices();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   GOOGLE SIGN-IN INTEGRATION WITH NATIVE IDENTITY SERVICE OVERLAY
+══════════════════════════════════════════════════════════════════════════════ */
+function initializeNativeGoogleIdentityServices() {
+  google.accounts.id.initialize({
+    client_id: "712613916301-mockclientid.apps.googleusercontent.com", // Replace securely via your Google Console Identity configuration parameters
+    callback: catchGoogleIdentityTokenPayload,
+    context: "signin",
+    ux_mode: "popup", 
+    auto_select: false
+  });
+
+  google.accounts.id.renderButton(
+    document.getElementById("googleIdentityWidgetContainer"),
+    { 
+      theme: "outline", 
+      size: "large", 
+      shape: "pill",
+      width: "320",
+      text: "continue_with"
+    }
+  );
+}
+
+function catchGoogleIdentityTokenPayload(identityResponse) {
+  // Decode JWT Payload metrics safely
+  const parsedTokenPayload = parseCryptographicJwtToken(identityResponse.credential);
+  
+  currentUserProfile = {
+    isGuest: false,
+    name: parsedTokenPayload.name || "Authenticated Buyer",
+    email: parsedTokenPayload.email || "buyer@gmail.com",
+    avatar: parsedTokenPayload.picture || "✿",
+    purchaseHistoryCount: 0 // Default mock metrics tracked inside cloud profiles
+  };
+
+  // Persist session to survive system refreshes perfectly
+  localStorage.setItem('__DB_SECURE_USER_SESSION', JSON.stringify(currentUserProfile));
+  compileApplicationDashboardView();
+}
+
+function parseCryptographicJwtToken(token) {
+  try {
+    const sectionBase64Url = token.split('.')[1];
+    const base64Translation = sectionBase64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonOutputString = decodeURIComponent(atob(base64Translation).split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonOutputString);
+  } catch (err) {
+    return {};
+  }
+}
+
+function bypassAuthAsGuest() {
+  currentUserProfile = {
+    isGuest: true,
+    name: "Guest Explorer",
+    email: "Unauthenticated Session",
+    avatar: "G",
+    purchaseHistoryCount: 0
+  };
+  compileApplicationDashboardView();
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   AUTOMATED HARDWARE ECOSYSTEM SCREEN RESOLUTION CALCULATOR ENGINE
+══════════════════════════════════════════════════════════════════════════════ */
+function compileApplicationDashboardView() {
+  document.getElementById('gSignInScreen').classList.remove('show');
+  document.getElementById('gSignInScreen').classList.add('hide');
+  
+  const processingSpinner = document.getElementById('loader');
+  processingSpinner.classList.add('show');
+
+  // Device context parameters derived transparently via responsive layout matches
+  const targetLayoutMode = window.matchMedia("(max-width: 768px)").matches ? "Mobile App Optimization" : "Desktop System Suite";
+  console.log(`[SYSTEM DIAGNOSTIC] System calibrated successfully matching client environment: ${targetLayoutMode}`);
+
+  setTimeout(() => {
+    processingSpinner.classList.add('out');
+    document.getElementById('mainApp').classList.add('show');
+    
+    synchronizeUserInterfaceStateElements();
+    renderBoutiqueCatalogueGrid('all');
+    
+    // Register initial baseline layer navigation anchor checkpoint state record
+    registerNavigationLayerSnapshot('store-front');
+  }, 1800);
+}
+
+function synchronizeUserInterfaceStateElements() {
+  const avatarElement = document.getElementById('avatarBox');
+  const userChipLabel = document.getElementById('chipUsername');
+  const panelNameLabel = document.getElementById('profName');
+  const panelEmailLabel = document.getElementById('profEmail');
+
+  userChipLabel.textContent = currentUserProfile.name;
+  panelNameLabel.textContent = currentUserProfile.name;
+  panelEmailLabel.textContent = currentUserProfile.email;
+
+  if (currentUserProfile.isGuest) {
+    avatarElement.textContent = "G";
+    avatarElement.style.background = "var(--brown)";
+  } else {
+    avatarElement.textContent = currentUserProfile.name.charAt(0).toUpperCase();
+    avatarElement.style.background = "var(--rose)";
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   CATALOG MATRIX GRID LAYOUT RENDERER
+══════════════════════════════════════════════════════════════════════════════ */
+function renderBoutiqueCatalogueGrid(filterKey) {
+  const rootGridCanvas = document.getElementById('productRootCanvas');
+  rootGridCanvas.innerHTML = '';
+
+  productMasterDatabase.forEach(item => {
+    if (filterKey !== 'all' && item.category !== filterKey) return;
+
+    const compositionCard = document.createElement('div');
+    compositionCard.className = 'pcard';
+    compositionCard.setAttribute('onclick', `openProductDetailedModal("${item.id}")`);
+
+    const inventoryLabelText = item.inStock ? "In Stock" : "Out of Stock";
+    const inventoryClassModifier = item.inStock ? "in" : "out";
+
+    compositionCard.innerHTML = `
+      <div class="pcard-img-wrap">
+        <img class="pcard-img" src="${item.images[0]}" alt="${item.name}">
+        <span class="pcard-badge">${item.tag}</span>
+        <span class="stock-badge ${inventoryClassModifier}">${inventoryLabelText}</span>
+      </div>
+      <div class="pcard-info">
+        <h3 class="pcard-name">${item.name}</h3>
+        <p class="pcard-desc">${item.description}</p>
+        <div class="pcard-foot">
+          <span class="pcard-price">₹${item.price.toLocaleString('en-IN')}</span>
+        </div>
+      </div>
+    `;
+    rootGridCanvas.appendChild(compositionCard);
+  });
+}
+
+function executeCategoryFilter(categoryKey, clickElement) {
+  document.querySelectorAll('.filt-btn').forEach(btn => btn.classList.remove('active'));
+  clickElement.classList.add('active');
+  renderBoutiqueCatalogueGrid(categoryKey);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   DETAILED MODAL VEIL CONSTRUCTOR WITH SYSTEM PERMISSION LOGIC
+══════════════════════════════════════════════════════════════════════════════ */
+function openProductDetailedModal(itemId) {
+  const matchedItem = productMasterDatabase.find(p => p.id === itemId);
+  if (!matchedItem) return;
+
+  document.getElementById('modalProductName').textContent = matchedItem.name;
+  document.getElementById('modalProductPrice').textContent = `₹${matchedItem.price.toLocaleString('en-IN')}`;
+  document.getElementById('modalProductDesc').textContent = matchedItem.description;
+  document.getElementById('modalProductImg').src = matchedItem.images[0];
+
+  const actionBox = document.getElementById('modalActionContainer');
+  actionBox.innerHTML = '';
+
+  if (!matchedItem.inStock) {
+    actionBox.innerHTML = `<button class="btn-rose" style="background:var(--text-light);cursor:not-allowed;" disabled>Out of Stock ✿</button>`;
+  } else {
+    // Block action options for guest explorer instances safely
+    if (currentUserProfile.isGuest) {
+      actionBox.innerHTML = `
+        <p style="font-size:12px;color:var(--rose);text-align:center;font-style:italic;margin-bottom:10px;">Please authenticate via Google to access system shopping carts.</p>
+        <button class="btn-rose" style="background:var(--text-light);cursor:not-allowed;" disabled>Bag Operations Locked</button>
+      `;
+    } else {
+      actionBox.innerHTML = `<button class="btn-rose" onclick="commitItemToShoppingBag('${matchedItem.id}')">Add to Bag 🛒</button>`;
+    }
+  }
+
+  document.getElementById('productDetailsModal').classList.add('open');
+  registerNavigationLayerSnapshot('details-modal');
+}
+
+function closeProductViewModal() {
+  document.getElementById('productDetailsModal').classList.remove('open');
+}
+
+function commitItemToShoppingBag(itemId) {
+  // Absolute backup security verification assertion check point
+  if (currentUserProfile.isGuest) {
+    toast('Error: Guest account permission denied. ✕');
+    return;
+  }
+  systemCartCount++;
+  document.getElementById('bagCount').textContent = systemCartCount;
+  
+  // Simulate active order progression parameters changing to update dynamic privilege clearances
+  currentUserProfile.purchaseHistoryCount++;
+  localStorage.setItem('__DB_SECURE_USER_SESSION', JSON.stringify(currentUserProfile));
+  
+  closeProductViewModal();
+  toast('Masterpiece added elegantly to your Bag! ✿');
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   CRITIQUE / VERIFIED PURCHASE SYSTEM BUSINESS RULE COMPLIANCE LOGIC
+══════════════════════════════════════════════════════════════════════════════ */
+function verifyReviewPrivilegePermissions() {
+  // Clause rule 1: Guest check
+  if (currentUserProfile.isGuest) {
+    toast('Access Denied: Guest profiles cannot leave feedback. ✕');
+    return;
+  }
+  // Clause rule 2: Continuous historic items transaction quantity tally metric check
+  if (currentUserProfile.purchaseHistoryCount === 0) {
+    toast('Access Denied: 0 historical items ordered via this Google account. ✕');
+    return;
+  }
+
+  // Permissions passed successfully, render submission block interface safely
+  document.getElementById('feedbackFormPanel').style.display = 'block';
+  toast('Ecosystem clearances verified! Please share your thoughts. ✿');
+}
+
+function assignStarRatingMetric(starVal) {
+  allocatedRatingMetrics = starVal;
+  document.querySelectorAll('.star-node').forEach(node => {
+    const comparativeVal = parseInt(node.getAttribute('data-val'));
+    if (comparativeVal <= starVal) {
+      node.classList.add('active');
+    } else {
+      node.classList.remove('active');
+    }
+  });
+}
+
+function commitReviewToSystemLog() {
+  const contentReviewInput = document.getElementById('feedbackContentInput').value.trim();
+  if (!contentReviewInput) { toast('Please draft your review note prior to publishing. ✿'); return; }
+  if (allocatedRatingMetrics === 0) { toast('Please assign an elegant star metric score. ✿'); return; }
+
+  const criticalReviewCard = document.createElement('div');
+  criticalReviewCard.className = 'rcard';
+  criticalReviewCard.innerHTML = `
+    <div class="rcard-quote">"</div>
+    <div class="rcard-stars">${"⭐".repeat(allocatedRatingMetrics)}</div>
+    <p class="rcard-text">${contentReviewInput}</p>
+    <p class="rcard-author">${currentUserProfile.name}</p>
+  `;
+  
+  document.getElementById('reviewsGrid').prepend(criticalReviewCard);
+  document.getElementById('feedbackFormPanel').style.display = 'none';
+  document.getElementById('feedbackContentInput').value = '';
+  
+  toast('Your authenticated critique has been dynamically registered! ✿');
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LAYER SLIDE PROFILE VIEW CONTROL OVERLAYS
+══════════════════════════════════════════════════════════════════════════════ */
+function toggleProfileViewPanel() {
+  const slidingProfilePanel = document.getElementById('profilePanel');
+  if (slidingProfilePanel.classList.contains('open')) {
+    slidingProfilePanel.classList.remove('open');
+  } else {
+    slidingProfilePanel.classList.add('open');
+    registerNavigationLayerSnapshot('profile-layer');
+  }
+}
+
+function openSystemLogoutDialog() {
+  document.getElementById('logoutModal').classList.add('open');
+}
+
+function closeSystemLogoutDialog() {
+  document.getElementById('logoutModal').classList.remove('open');
+}
+
+function confirmSystemLogOutSequence() {
+  // Clear persistent memory spaces cleanly
+  localStorage.removeItem('__DB_SECURE_USER_SESSION');
+  currentUserProfile = null;
+  systemCartCount = 0;
+  document.getElementById('bagCount').textContent = 0;
+
+  closeSystemLogoutDialog();
+  document.getElementById('profilePanel').classList.remove('open');
+  document.getElementById('mainApp').classList.remove('show');
+  
+  // Re-route target view directly to secure entrance gate
+  document.getElementById('gSignInScreen').classList.remove('hide');
+  document.getElementById('gSignInScreen').classList.add('show');
+  
+  initializeNativeGoogleIdentityServices();
+  toast('Logged out cleanly. Until next time! ✿');
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   MULTI-LAYER RECURSIVE APPLICATION NAVIGATION STACK CONTROLLER
+══════════════════════════════════════════════════════════════════════════════ */
+function registerNavigationLayerSnapshot(layerStateName) {
+  if (uiAppNavigationStateStack[uiAppNavigationStateStack.length - 1] === layerStateName) return;
+  
+  uiAppNavigationStateStack.push(layerStateName);
+  // Inject mock tracking points seamlessly into active window historical track array records
+  window.history.pushState({ systemTargetLayer: layerStateName }, '');
+}
+
+window.addEventListener('popstate', (windowHistoryEvent) => {
+  if (uiAppNavigationStateStack.length <= 1) {
+    // If the base canvas dashboard layer has already been reached, reload state tracking to loop seamlessly
+    registerNavigationLayerSnapshot('store-front');
+    return;
+  }
+
+  // Remove current deep-end operational record layer
+  uiAppNavigationStateStack.pop();
+  const precedingStateLayerDestination = uiAppNavigationStateStack[uiAppNavigationStateStack.length - 1];
+
+  // Perform targeted screen dismiss sequences depending on user interaction trace records
+  const modalVeilOverlay = document.getElementById('productDetailsModal');
+  const contextProfileSlidePanel = document.getElementById('profilePanel');
+  const logoutConfirmationContainer = document.getElementById('logoutModal');
+
+  if (modalVeilOverlay.classList.contains('open')) {
+    modalVeilOverlay.classList.remove('open');
+  } else if (contextProfileSlidePanel.classList.contains('open')) {
+    contextProfileSlidePanel.classList.remove('open');
+  } else if (logoutConfirmationContainer.classList.contains('open')) {
+    logoutConfirmationContainer.classList.remove('open');
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   UTILITIES SYSTEM HOOK
+══════════════════════════════════════════════════════════════════════════════ */
+function toast(msg){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},2500);
+}
+</script>
+</body>
+</html>
