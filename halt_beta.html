@@ -110,6 +110,7 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'Raleway', sans-serif; background: var(--ivory); color: var(--text); overflow-x: hidden; }
 
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--ivory); }
@@ -125,7 +126,7 @@ nav {
 }
 .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
 .nav-logo-circle {
-  width: 44px; height: 44px; border-radius: 50%;
+  width: 44px; height: 44px; border-radius: 50%!important;
   background: linear-gradient(135deg, var(--rose), var(--gold));
   display: flex; align-items: center; justify-content: center;
   font-family: 'Playfair Display', serif; font-weight: 600;
@@ -147,7 +148,7 @@ nav {
 }
 .cart-pill:hover { background: var(--rose); color: #fff; border-color: var(--rose); }
 .cart-pill-count {
-  background: var(--rose); color: #fff; border-radius: 50%;
+  background: var(--rose); color: #fff; border-radius: 50%!important;
   width: 18px; height: 18px; font-size: 10px;
   display: inline-flex; align-items: center; justify-content: center;
 }
@@ -163,18 +164,24 @@ nav {
 }
 .petal {
   position: absolute; border-radius: 50% 0 50% 0;
-  opacity: 0.12; animation: floatPetal 12s ease-in-out infinite;
+  opacity: 0.12; animation: floatPetal 6s ease-in-out infinite;
 }
-.petal:nth-child(1) { width:80px; height:80px; background:var(--rose); top:10%; left:5%; animation-delay:0s; }
-.petal:nth-child(2) { width:50px; height:50px; background:var(--gold); top:25%; right:8%; animation-delay:2s; }
-.petal:nth-child(3) { width:100px; height:100px; background:var(--rose-light); top:60%; left:3%; animation-delay:4s; }
-.petal:nth-child(4) { width:60px; height:60px; background:var(--gold-light); top:75%; right:5%; animation-delay:1s; }
-.petal:nth-child(5) { width:40px; height:40px; background:var(--rose); top:45%; left:50%; animation-delay:3s; }
-.petal:nth-child(6) { width:70px; height:70px; background:var(--blush-deep); top:15%; right:25%; animation-delay:5s; }
+.petal:nth-child(1) { width:80px; height:80px; background:var(--rose); top:10%; left:5%; animation-delay:0s; animation-duration:5s; }
+.petal:nth-child(2) { width:50px; height:50px; background:var(--gold); top:25%; right:8%; animation-delay:0.8s; animation-duration:4.5s; }
+.petal:nth-child(3) { width:100px; height:100px; background:var(--rose-light); top:60%; left:3%; animation-delay:1.5s; animation-duration:6s; }
+.petal:nth-child(4) { width:60px; height:60px; background:var(--gold-light); top:75%; right:5%; animation-delay:0.4s; animation-duration:5.5s; }
+.petal:nth-child(5) { width:40px; height:40px; background:var(--rose); top:45%; left:50%; animation-delay:1s; animation-duration:4s; }
+.petal:nth-child(6) { width:70px; height:70px; background:var(--blush-deep); top:15%; right:25%; animation-delay:2s; animation-duration:5s; }
+.petal:nth-child(7) { width:35px; height:35px; background:var(--rose); top:80%; left:20%; animation-delay:0.6s; animation-duration:4.5s; }
+.petal:nth-child(8) { width:55px; height:55px; background:var(--gold-light); top:35%; left:15%; animation-delay:1.8s; animation-duration:5.5s; }
+.petal:nth-child(9) { width:45px; height:45px; background:var(--rose-light); top:55%; right:18%; animation-delay:2.5s; animation-duration:4s; }
+.petal:nth-child(10) { width:65px; height:65px; background:var(--gold); top:5%; left:38%; animation-delay:1.2s; animation-duration:6.5s; }
+.petal:nth-child(11) { width:30px; height:30px; background:var(--rose); top:70%; right:30%; animation-delay:3s; animation-duration:4s; }
+.petal:nth-child(12) { width:75px; height:75px; background:var(--blush-deep); top:20%; left:60%; animation-delay:2.2s; animation-duration:5s; }
 @keyframes floatPetal {
   0%,100%{transform:translateY(0) rotate(0deg);}
-  33%{transform:translateY(-18px) rotate(12deg);}
-  66%{transform:translateY(10px) rotate(-8deg);}
+  33%{transform:translateY(-28px) rotate(18deg);}
+  66%{transform:translateY(16px) rotate(-12deg);}
 }
 .hero-inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; width: 100%; max-width: 1300px; margin: 0 auto; padding: 60px 56px; position: relative; z-index: 1; }
 
@@ -202,7 +209,7 @@ nav {
 .btn-outline-rose:hover { background: var(--blush); border-color: var(--rose); }
 .hero-badges { display: flex; gap: 24px; flex-wrap: wrap; }
 .badge { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-light); }
-.badge-icon { width: 32px; height: 32px; background: var(--blush-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.badge-icon { width: 32px; height: 32px; background: var(--blush-deep); border-radius: 50%!important; display: flex; align-items: center; justify-content: center; font-size: 14px; }
 .hero-visual { position: relative; display: flex; justify-content: center; }
 .hero-card-stack { position: relative; width: 340px; height: 480px; }
 .hero-card { position: absolute; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(139,94,74,0.18); }
@@ -264,12 +271,18 @@ section { padding: 100px 56px; }
 .pcard-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.6s ease; }
 .pcard:hover .pcard-img { transform: scale(1.06); }
 .pcard-badge { position: absolute; top: 14px; left: 14px; background: rgba(253,248,244,0.92); backdrop-filter: blur(8px); color: var(--rose); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; font-weight: 600; }
-.pcard-hover-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(74,55,40,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 24px; gap: 10px; }
-.pcard:hover .pcard-hover-overlay { opacity: 1; }
-.pcard-hover-btn { width: 100%; background: #fff; color: var(--text); border: none; padding: 12px; border-radius: 100px; font-family: 'Raleway', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-.pcard-hover-btn:hover { background: var(--rose); color: #fff; }
-.pcard-hover-btn.wa { background: var(--green); color: #fff; }
-.pcard-hover-btn.wa:hover { background: #1da851; }
+.pcard-hover-overlay { display: none; }
+.pcard { cursor: pointer; }
+.pcard-img-wrap::after {
+  content: 'Tap to Quick View';
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: rgba(253,248,244,0.92); backdrop-filter: blur(8px);
+  color: var(--rose); font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 100px; font-weight: 600; font-family: 'Raleway',sans-serif;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity 0.3s;
+}
+.pcard:hover .pcard-img-wrap::after { opacity: 1; }
 .pcard-info { padding: 20px 22px 22px; }
 .pcard-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--rose); margin-bottom: 6px; font-weight: 600; }
 .pcard-name { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
@@ -285,8 +298,8 @@ section { padding: 100px 56px; }
 .about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 .about-visual { display: flex; flex-direction: column; align-items: center; gap: 24px; }
 .about-logo-big {
-  width: 130px; height: 130px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--rose), var(--gold));
+  width: 130px; height: 130px; border-radius: 50%!important;
+  background: var(--blush);
   display: flex; align-items: center; justify-content: center;
   font-family: 'Playfair Display', serif; font-weight: 600; color: #fff; font-size: 44px;
   box-shadow: 0 16px 56px rgba(212,137,122,0.4), 0 0 0 16px rgba(212,137,122,0.1);
@@ -355,7 +368,7 @@ section { padding: 100px 56px; }
 .cart-panel.open { right: 0; }
 .cart-panel-head { padding: 28px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--ivory); }
 .cart-panel-head h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--text); font-weight: 400; }
-.cart-close-btn { background: var(--blush); border: none; color: var(--text); width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.cart-close-btn { background: var(--blush); border: none; color: var(--text); width: 36px; height: 36px; border-radius: 50%!important; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .cart-close-btn:hover { background: var(--rose); color: #fff; }
 .cart-body { flex: 1; overflow-y: auto; padding: 24px 32px; }
 .cart-empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px; color: var(--text-light); }
@@ -367,7 +380,7 @@ section { padding: 100px 56px; }
 .citem-cat { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--rose); font-weight: 600; }
 .citem-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--text); margin: 4px 0; }
 .citem-note { font-size: 11px; color: var(--text-light); font-style: italic; }
-.citem-remove { background: var(--blush); border: none; color: var(--text-light); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+.citem-remove { background: var(--blush); border: none; color: var(--text-light); width: 30px; height: 30px; border-radius: 50%!important; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
 .citem-remove:hover { background: #fee2e2; color: #ef4444; }
 .cart-foot { padding: 24px 32px; border-top: 1px solid var(--border); background: var(--ivory); }
 .cart-note-txt { font-size: 12px; color: var(--text-light); text-align: center; line-height: 1.7; margin-bottom: 16px; }
@@ -386,7 +399,7 @@ section { padding: 100px 56px; }
 .modal-desc { font-size: 14px; color: var(--text-light); line-height: 1.85; font-weight: 300; margin-bottom: 32px; }
 .modal-enquire-note { background: var(--blush); border-radius: 12px; padding: 14px 18px; font-size: 13px; color: var(--rose); margin-bottom: 24px; font-style: italic; }
 .modal-btns { display: flex; flex-direction: column; gap: 12px; }
-.modal-close { position: sticky; top: 0; float: right; background: var(--blush); border: none; color: var(--text); width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.modal-close { position: sticky; top: 0; float: right; background: var(--blush); border: none; color: var(--text); width: 36px; height: 36px; border-radius: 50%!important; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .modal-close:hover { background: var(--rose); color: #fff; }
 
 /* CONTACT */
@@ -414,7 +427,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 .footer-bottom { border-top: 1px solid rgba(245,235,228,0.1); padding-top: 24px; display: flex; justify-content: space-between; font-size: 11px; flex-wrap: wrap; gap: 10px; }
 
 /* WA FLOAT */
-.wa-float { position: fixed; bottom: 32px; right: 32px; z-index: 150; background: var(--green); color: #fff; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.45); transition: all 0.3s; }
+.wa-float { position: fixed; bottom: 32px; right: 32px; z-index: 150; background: var(--green); color: #fff; width: 58px; height: 58px; border-radius: 50%!important; display: flex; align-items: center; justify-content: center; font-size: 26px; text-decoration: none; box-shadow: 0 6px 24px rgba(37,211,102,0.45); transition: all 0.3s; }
 .wa-float:hover { transform: scale(1.12); }
 
 /* ANIMATIONS */
@@ -424,8 +437,93 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 /* TOAST */
 .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--gold-light); padding: 14px 28px; border-radius: 100px; font-size: 13px; z-index: 999; white-space: nowrap; box-shadow: 0 8px 32px rgba(74,55,40,0.3); transition: opacity 0.3s; }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* LOGIN SCREEN */
+#loginScreen {
+  position: fixed; inset: 0; z-index: 9998;
+  background: var(--bg-soft-blush);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.25,1,0.5,1), visibility 0.8s;
+}
+#loginScreen.out { opacity: 0; visibility: hidden; pointer-events: none; }
+.login-box {
+  background: #fff; border-radius: 28px;
+  padding: 52px 44px; max-width: 420px; width: 90%;
+  box-shadow: 0 24px 80px rgba(139,94,74,0.16);
+  border: 1px solid var(--border);
+  text-align: center;
+  animation: loginFadeIn 0.6s ease both;
+}
+@keyframes loginFadeIn {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.login-logo {
+  width: 90px; height: 90px; border-radius: 50%!important;
+  object-fit: cover;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 28px rgba(212,137,122,0.35);
+  display: block;
+}
+.login-title { font-family: 'Dancing Script', cursive; font-size: 38px; color: var(--rose); font-weight: 600; font-style: normal; margin-bottom: 6px; letter-spacing: 0.5px; }
+.login-sub { font-size: 12px; color: var(--text-light); letter-spacing: 1px; margin-bottom: 36px; }
+.login-divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; }
+.login-divider::before, .login-divider::after { content:''; flex:1; height:1px; background: var(--border); }
+.login-divider span { font-size: 11px; color: var(--text-light); letter-spacing: 1px; text-transform: uppercase; }
+.login-btn-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+  background: #fff; border: 1.5px solid var(--border); color: var(--text);
+  padding: 14px 20px; border-radius: 100px; font-family: 'Raleway', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+  letter-spacing: 1px; box-shadow: 0 2px 8px rgba(139,94,74,0.08);
+}
+.login-btn-google:hover { border-color: var(--rose); box-shadow: 0 4px 16px rgba(212,137,122,0.2); transform: translateY(-1px); }
+.login-btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
+.login-btn-guest {
+  width: 100%; background: transparent; border: none; color: var(--text-light);
+  font-family: 'Raleway', sans-serif; font-size: 12px; cursor: pointer;
+  padding: 10px; letter-spacing: 1px; transition: color 0.2s;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.login-btn-guest:hover { color: var(--rose); }
+.login-guest-note {
+  margin-top: 16px; padding: 12px 16px; background: var(--blush);
+  border-radius: 12px; font-size: 11px; color: var(--text-light); line-height: 1.7;
+}
+.login-guest-note strong { color: var(--rose); }
+/* User pill in nav */
+.user-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--blush); border: 1px solid var(--border);
+  padding: 7px 16px; border-radius: 100px; font-size: 12px; color: var(--text);
+  cursor: default;
+}
+.user-pill-dot { width: 8px; height: 8px; border-radius: 50%!important; background: var(--rose); flex-shrink: 0; }
+/* Auth-gated elements when guest */
+body.guest-mode .auth-required { pointer-events: none; opacity: 0.45; position: relative; }
+body.guest-mode .auth-required::after {
+  content: '🔒 Sign in to use this';
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 1px; color: var(--rose);
+  background: rgba(253,248,244,0.9); border-radius: inherit;
+  pointer-events: all; cursor: not-allowed;
+}
+/* Lock MY BAG button for guests */
+body.guest-mode #cartPillBtn {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: var(--rose-light);
+}
+body.guest-mode #cartPillBtn::before {
+  content: '🔒 ';
+  font-size: 11px;
+}
+body.guest-mode #cartPillBtn:hover {
+  background: var(--blush);
+  color: var(--text);
+  border-color: var(--border);
+  transform: none;
+}
+
   nav { padding: 0 20px; }
   .nav-links { display: none; }
   section { padding: 70px 20px; }
@@ -440,7 +538,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
   .form-card { padding: 36px 24px; }
   .cart-panel { width: 100%; right: -100%; }
   .product-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-}
+
 @media (max-width: 500px) {
   .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .pcard-name { font-size: 14px; }
@@ -450,7 +548,31 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 </head>
 <body>
 
-    <!-- LOADER -->
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" style="display:none;">
+  <div class="login-box">
+    <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique Logo" class="login-logo">
+    <h2 class="login-title">Welcome Beautiful</h2>
+    <p class="login-sub">Dream Boutique · Modest & Ethnic Wears</p>
+    <button class="login-btn-google" onclick="signInGoogle()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continue with Google
+    </button>
+    <div class="login-divider"><span>or</span></div>
+    <button class="login-btn-guest" onclick="signInGuest()">Browse as Guest</button>
+    <div class="login-guest-note">
+      <strong>Guest mode:</strong> browse the full collection freely.<br/>
+      Sign in with Google to add to bag, enquire, or leave a review.
+    </div>
+  </div>
+</div>
+
+  <!-- LOADER -->
 <div id="loader">
   <div class="loader-content">
     <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique Logo" class="ld-logo">
@@ -458,16 +580,10 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
   </div>
 </div>
 
-<div id="homepage">
-  <main>
-    <p>Welcome to Dream Boutique. Content coming soon!</p>
-  </main>
-</div>
-
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <div class="nav-logo-circle">DB</div>
+    <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique Logo" style="width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 4px 16px rgba(212,137,122,0.35);">
     <div class="nav-brand">
       <span class="nav-brand-main">Dream Boutique</span>
       <span class="nav-brand-sub">Modest & Ethnic Wears</span>
@@ -475,7 +591,11 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
   </a>
 
   <div class="nav-right">
-    <button class="cart-pill" onclick="toggleCart()">
+    <div class="user-pill" id="userPill" style="display:none;">
+      <div class="user-pill-dot"></div>
+      <span id="userPillName">Guest</span>
+    </div>
+    <button class="cart-pill" id="cartPillBtn" onclick="handleCartClick()">
       🛍 My Bag <span class="cart-pill-count" id="cartCount">0</span>
     </button>
   </div>
@@ -484,6 +604,8 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 <!-- HERO -->
 <section class="hero">
   <div class="hero-petals">
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
     <div class="petal"></div><div class="petal"></div><div class="petal"></div>
     <div class="petal"></div><div class="petal"></div><div class="petal"></div>
   </div>
@@ -545,7 +667,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
       <h2 class="section-title">Thirty Pieces, <em>One Dream</em></h2>
       <span class="section-script">each one made to make you feel beautiful</span>
     </div>
-    <p style="max-width:300px; color:var(--text-light); font-size:13px; line-height:1.8; font-weight:300;">Price on enquiry. Click the 💬 on any piece to ask us on WhatsApp.</p>
+    <p style="max-width:300px; color:var(--text-light); font-size:13px; line-height:1.8; font-weight:300;"></p>
   </div>
   <div class="divider-flower"><span>✿</span></div>
   <div class="filter-wrap fade-up">
@@ -562,7 +684,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 <section id="about" class="about-section">
   <div class="about-inner">
     <div class="about-visual fade-up">
-      <div class="about-logo-big">DB</div>
+      <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique" class="about-logo-big" style="object-fit:cover;">
       <div class="about-visual-text">
         <p>Dream Boutique</p>
         <small>Est. with love</small>
@@ -828,7 +950,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
       <p class="modal-tag" id="modalTag"></p>
       <h2 class="modal-name" id="modalName"></h2>
       <p class="modal-desc" id="modalDesc"></p>
-      <div class="modal-enquire-note">✿ Price on enquiry — WhatsApp us to know availability & pricing</div>
+      <div class="modal-enquire-note">✿ WhatsApp us to know availability</div>
       <div class="modal-btns">
         <button class="add-bag-btn" style="border-radius:100px; padding:14px;" onclick="addToCartFromModal()">Add to My Bag</button>
         <a id="modalWaLink" href="#" target="_blank" class="btn-rose" style="text-align:center; font-size:11px;">💬 Enquire on WhatsApp</a>
@@ -839,40 +961,85 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 
 <!-- WA FLOAT -->
 <a href="https://wa.me/9832596691" class="wa-float" target="_blank" title="Chat on WhatsApp">
-  <img src="BQT-Assets/whatsapp_logo.png" alt="WhatsApp" style="width: 100%; height: 100%; object-fit: contain;">
+  💬
 </a>
 
-<script>
 
+<script>
+// ─── AUTH ───────────────────────────────────────────────────────
+let currentUser = { type: null, name: null };
+
+function signInGoogle() {
+  // Simulate Google sign-in (no real OAuth in this static demo)
+  const name = prompt('Enter your name (simulating Google Sign-In):');
+  if (!name) return;
+  currentUser = { type: 'google', name: name.trim() || 'You' };
+  completeLogin();
+}
+
+function signInGuest() {
+  currentUser = { type: 'guest', name: 'Guest' };
+  document.body.classList.add('guest-mode');
+  completeLogin();
+}
+
+function completeLogin() {
+  const ls = document.getElementById('loginScreen');
+  ls.classList.add('out');
+  // Show user pill
+  const pill = document.getElementById('userPill');
+  const pillName = document.getElementById('userPillName');
+  pill.style.display = 'flex';
+  pillName.textContent = currentUser.type === 'guest' ? '👤 Guest' : '✦ ' + currentUser.name;
+  // Re-render products to apply auth-required classes
+  renderProducts();
+  // Show review form note if guest
+  if (currentUser.type === 'guest') {
+    const formCard = document.querySelector('.form-card');
+    if (formCard) {
+      const note = document.createElement('div');
+      note.style.cssText = 'text-align:center;padding:24px;color:var(--text-light);font-size:14px;';
+      note.innerHTML = '🔒 <strong style="color:var(--rose)">Sign in with Google</strong> to leave a review.';
+      formCard.innerHTML = '';
+      formCard.appendChild(note);
+    }
+  }
+}
+</script>
+
+<script>
 // ─── TRANSITION ───────────────────────────────────────────────
 window.addEventListener('load', () => {
-  // Keeps the loader visible for a brief moment for dynamic effect
   setTimeout(() => {
     const loader = document.getElementById('loader');
     if (loader) {
       loader.classList.add('out');
+      // Show login screen right after loader exits
+      setTimeout(() => {
+        document.getElementById('loginScreen').style.display = 'flex';
+      }, 800);
     }
-  }, 1500); // 1.5 seconds reveals the brand beautifully before exit
+  }, 1500);
 });
 
-const WA = "919999999999";
+const WA = "919832596691";
 
 const uploadedImgs = {
-  1:'/mnt/user-data/uploads/btq1.png', 2:'/mnt/user-data/uploads/btq2.png',
-  3:'/mnt/user-data/uploads/btq3.png', 4:'/mnt/user-data/uploads/btq4.png',
-  5:'/mnt/user-data/uploads/btq5.png', 6:'/mnt/user-data/uploads/btq6.png',
-  7:'/mnt/user-data/uploads/btq7.png', 8:'/mnt/user-data/uploads/btq8.png',
-  9:'/mnt/user-data/uploads/btq9.png', 10:'/mnt/user-data/uploads/btq10.png',
-  11:'/mnt/user-data/uploads/btq11.png', 12:'/mnt/user-data/uploads/btq12.png',
-  13:'/mnt/user-data/uploads/btq13.png', 14:'/mnt/user-data/uploads/btq14.png',
-  15:'/mnt/user-data/uploads/btq15.png', 16:'/mnt/user-data/uploads/btq16.png',
-  17:'/mnt/user-data/uploads/btq17.png', 18:'/mnt/user-data/uploads/btq18.png',
-  19:'/mnt/user-data/uploads/btq19.png', 20:'/mnt/user-data/uploads/btq20.png',
-  21:'/mnt/user-data/uploads/btq21.png', 22:'/mnt/user-data/uploads/btq22.png',
-  23:'/mnt/user-data/uploads/btq23.png', 24:'/mnt/user-data/uploads/btq24.png',
-  25:'/mnt/user-data/uploads/btq25.png', 26:'/mnt/user-data/uploads/btq26.png',
-  27:'/mnt/user-data/uploads/btq27.png', 28:'/mnt/user-data/uploads/btq28.png',
-  29:'/mnt/user-data/uploads/btq29.png', 30:'/mnt/user-data/uploads/btq30.png'
+  1:'BQT-Assets/btq1.png', 2:'BQT-Assets/btq2.png',
+  3:'BQT-Assets/btq3.png', 4:'BQT-Assets/btq4.png',
+  5:'BQT-Assets/btq5.png', 6:'BQT-Assets/btq6.png',
+  7:'BQT-Assets/btq7.png', 8:'BQT-Assets/btq8.png',
+  9:'BQT-Assets/btq9.png', 10:'BQT-Assets/btq10.png',
+  11:'BQT-Assets/btq11.png', 12:'BQT-Assets/btq12.png',
+  13:'BQT-Assets/btq13.png', 14:'BQT-Assets/btq14.png',
+  15:'BQT-Assets/btq15.png', 16:'BQT-Assets/btq16.png',
+  17:'BQT-Assets/btq17.png', 18:'BQT-Assets/btq18.png',
+  19:'BQT-Assets/btq19.png', 20:'BQT-Assets/btq20.png',
+  21:'BQT-Assets/btq21.png', 22:'BQT-Assets/btq22.png',
+  23:'BQT-Assets/btq23.png', 24:'BQT-Assets/btq24.png',
+  25:'BQT-Assets/btq25.png', 26:'BQT-Assets/btq26.png',
+  27:'BQT-Assets/btq27.png', 28:'BQT-Assets/btq28.png',
+  29:'BQT-Assets/btq29.png', 30:'BQT-Assets/btq30.png'
 };
 
 const bgColors = {
@@ -884,332 +1051,38 @@ const bgColors = {
   26:'#D4A820',27:'#E83870',28:'#C4956A',29:'#D4A820',30:'#C4B0D4'
 };
 
-// 1. FULL UPDATED DATA ARRAY WITH ALL 30 PRODUCTS & PLACEHOLDER IMAGES
 const products = [
-  {
-    id: 1,
-    name: "Sky Blue Striped Belted Dress",
-    cat: "modest",
-    tag: "Modest Wear",
-    price: "2499",
-    desc: "A fresh breath of sky — this sleeveless sky blue striped overdress is the kind of piece that makes modesty look effortlessly chic. Featuring warm-toned wooden buttons running the full length, two deep patch pockets at the hip, and a cinched waist with a sleek double-ring black belt, it layers beautifully over a fitted black full-sleeve inner.",
-    img: "BQT-Assets/btq1.png"
-  },
-  {
-    id: 2,
-    name: "Navy Blue Belted Maxi Dress",
-    cat: "modest",
-    tag: "Modest Wear",
-    price: "2699",
-    desc: "Deep, decisive, and utterly sophisticated — this navy blue belted maxi dress is structured modesty at its finest. The sleeveless silhouette is perfectly balanced by a white full-sleeve inner, while the matching navy dupatta draped over the shoulders adds a regal finishing touch.",
-    img: "BQT-Assets/btq2.png"
-  },
-  {
-    id: 3,
-    name: "Maroon Corduroy Belted Dress",
-    cat: "modest",
-    tag: "Modest Wear",
-    price: "2899",
-    desc: "Deep crimson drama with quiet refinement — this maroon corduroy sleeveless dress is a statement in restraint. The rich ribbed texture catches the light beautifully, while the full-button front placket and belted waist create a structured, flattering silhouette.",
-    img: "BQT-Assets/btq3.png"
-  },
-  {
-    id: 4,
-    name: "Dusty Rose Corduroy Dress",
-    cat: "modest",
-    tag: "Modest Wear",
-    price: "2899",
-    desc: "Warm blush tones wrapped in the softness of fine corduroy — this dusty rose belted overdress is romance made wearable. The delicate pink-mauve hue complements a wide range of skin tones, while the full-length button placket, structured pockets, and cinched black belt create a composed, editorial silhouette.",
-    img: "BQT-Assets/btq4.png"
-  },
-  {
-    id: 5,
-    name: "Lemon Yellow Lace Kurta",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "1899",
-    desc: "Sunshine captured in fabric — this lemon yellow textured kurta is pure poetry. Crafted in crinkled cotton with a soft feminine drape, the yoke is adorned with intricate white lace floral embroidery that cascades gently onto the bust. Puff sleeves add a touch of whimsy.",
-    img: "BQT-Assets/btq5.png"
-  },
-  {
-    id: 6,
-    name: "Sage Green Lace Kurta",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "1999",
-    desc: "The colour of fresh leaves after rain — this sage green textured kurta is nature's most elegant shade rendered in cloth. The crinkle fabric adds an organic, lived-in beauty, while tonal white lace embroidery across the square neckline and cap sleeves lend it a delicate artisanal quality.",
-    img: "BQT-Assets/btq6.png"
-  },
-  {
-    id: 7,
-    name: "Lavender Lace Kurta",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "1999",
-    desc: "Soft as dusk, dreamy as a lullaby — this lavender crinkle kurta is pure feminine elegance. The dusty lilac hue is one of those rare shades that flatters without trying, while delicate white lace butterfly and floral embroidery across the cap sleeves and square neckline adds a hand-crafted charm.",
-    img: "BQT-Assets/btq7.png"
-  },
-  {
-    id: 8,
-    name: "Ivory Lace Maxi Dress",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "3499",
-    desc: "An heirloom in the making — this ivory crinkle cotton maxi dress is quiet luxury at its most wearable. Tonal white lace trims the square neckline and cap sleeves, while the full-length tiered skirt flows generously to the floor. The fabric has a soft, natural crinkle texture.",
-    img: "BQT-Assets/btq8.png"
-  },
-  {
-    id: 9,
-    name: "Ivory Floral Embroidered Kurta",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "2999",
-    desc: "Tone-on-tone luxury — this ivory embroidered kurta set is refinement defined. The fabric is a soft textured cotton-mix, and large tonal floral embroidery spreads across the chest and hem with artistry that feels both traditional and modern.",
-    img: "BQT-Assets/btq9.png"
-  },
-  {
-    id: 10,
-    name: "Ivory Full-Sleeve Floral Kurta",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3200",
-    desc: "Florals done the right way — not bold, not shy, but perfectly measured. This ivory full-sleeve kurta features large tonal embroidered blooms on a softly sheer fabric, creating a layered, dimensional effect. The full placket of pearl buttons makes it a complete festive set.",
-    img: "BQT-Assets/btq10.png"
-  },
-  {
-    id: 11,
-    name: "Navy Cable Knit Vest Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "2499",
-    desc: "Preppy, polished, and perfectly modest — this navy cable-knit sweater vest paired with white wide-leg trousers is a co-ord set that lives between campus chic and café elegance. The deep V-neck vest features classic white trim at the neckline and hem.",
-    img: "BQT-Assets/btq11.png"
-  },
-  {
-    id: 12,
-    name: "Black Argyle Knit Vest Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "2599",
-    desc: "Classic with an edge — this bold black and ivory argyle diamond-pattern knit vest is a statement in vintage-modern dressing. The geometric pattern is bold yet structured, and the deep V-neck over a black ribbed turtleneck creates a layered look.",
-    img: "BQT-Assets/btq12.png"
-  },
-  {
-    id: 13,
-    name: "Navy Ribbed Vest + Light Wash Jeans",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "2299",
-    desc: "Clean, classic, and quietly confident — this navy ribbed knit vest with white V-neck stripe trim is casual dressing elevated to an art form. Worn over a white turtleneck and paired with light-wash wide-leg jeans featuring a subtle ice-blue wash effect.",
-    img: "BQT-Assets/btq13.png"
-  },
-  {
-    id: 14,
-    name: "Camel Argyle Vest Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "2699",
-    desc: "Warmth in every detail — this camel and ivory diamond-pattern knit vest is the definition of autumnal elegance. The open-knit argyle design adds texture and a handcrafted feel, while the warm camel tones pair beautifully with the white ribbed turtleneck.",
-    img: "BQT-Assets/btq14.png"
-  },
-  {
-    id: 15,
-    name: "Ivory Houndstooth Vest Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "2799",
-    desc: "A study in contrast — this ivory and black houndstooth-weave knit vest is pattern done with sophistication and restraint. The densely woven geometric texture creates a visual richness that reads as both classic and contemporary.",
-    img: "BQT-Assets/btq15.png"
-  },
-  {
-    id: 16,
-    name: "Olive Green Floral Appliqué Set",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3100",
-    desc: "Nature's palette in its most graceful form — this olive green kurta set is adorned with hand-crafted floral appliqué in blush pink, sage, and cream along the dupatta hem. The V-neck pintuck kurta falls in a generous, flowing A-line.",
-    img: "BQT-Assets/btq16.png"
-  },
-  {
-    id: 17,
-    name: "Deep Red Pintuck Kurta Set",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3499",
-    desc: "Passionate, celebratory, and undeniably striking — this deep red pintuck kurta set is everything festive dressing should be. The kurta features delicate pin-tucking at the chest with subtle bead detailing, smocked cuffs, and a full flowing skirt.",
-    img: "BQT-Assets/btq17.png"
-  },
-  {
-    id: 18,
-    name: "Blush Pink Pintuck Kurta Set",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3399",
-    desc: "The softest celebration you've ever worn — this blush pink pintuck kurta set is femininity in its most graceful form. Fine pin-tucks across the chest are accented with delicate lace trim and tiny pearl beading, while the full gathered skirt falls beautifully.",
-    img: "BQT-Assets/btq18.png"
-  },
-  {
-    id: 19,
-    name: "Lavender Floral Stripe Top Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "1799",
-    desc: "Cottage-core romance meets modest street style — this lavender and white striped sleeveless top is a breath of fresh air. The front features a beautiful row of lace trim buttons and scattered hand-embroidered purple daisy motifs.",
-    img: "BQT-Assets/btq19.png"
-  },
-  {
-    id: 20,
-    name: "Sage Green Floral Stripe Top Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "1799",
-    desc: "Green like growth, fresh like beginnings — this sage green striped sleeveless top with hand-embroidered floral details is spring made wearable. The lace-trim button placket runs down the centre, flanked by delicate stitched blooms.",
-    img: "BQT-Assets/btq20.png"
-  },
-  {
-    id: 21,
-    name: "Grey Stripe Floral Top Set",
-    cat: "western",
-    tag: "Western Co-ord",
-    price: "1850",
-    desc: "Understated yet utterly charming — this grey and ivory striped sleeveless top with embroidered floral accents proves that neutral tones are never boring. The delicate floral embroidery in silver-grey tones cascades down the lace-trim button placket.",
-    img: "BQT-Assets/btq21.png"
-  },
-  {
-    id: 22,
-    name: "Cream Gold Tassel Kurta Set",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3600",
-    desc: "Understated luxury in its purest expression — this cream three-piece set in silky smooth fabric is dressed with gold tassel and lace trim detailing at the neckline, hem, and dupatta edges. The V-neck kurta falls in a clean, straight silhouette.",
-    img: "BQT-Assets/btq22.png"
-  },
-  {
-    id: 23,
-    name: "Mocha Tassel Kurta Set",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3799",
-    desc: "Earthy, warm, and deeply sophisticated — this mocha brown three-piece kurta set in flowing satin-touch fabric is elegance dressed in the richest earth tones. Gold tassels and lace trim at the V-neckline add a regal finish.",
-    img: "BQT-Assets/btq23.png"
-  },
-  {
-    id: 24,
-    name: "Ivory Cherry Blossom Maxi",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "3999",
-    desc: "The season's most romantic dress — this ivory maxi in the lightest cotton gauze is scattered with miniature hand-embroidered cherry blossom motifs in red, ivory, and sage green. The lace Peter Pan collar adds a vintage sweetness.",
-    img: "BQT-Assets/btq24.png"
-  },
-  {
-    id: 25,
-    name: "Blush Cherry Blossom Maxi",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "3999",
-    desc: "Pretty in pink, exquisite in every detail — this blush pink maxi dress in softly crinkled cotton gauze is adorned with scattered cherry blossom embroidery in red, white, and green. The lace Peter Pan collar frames the face.",
-    img: "BQT-Assets/btq25.png"
-  },
-  {
-    id: 26,
-    name: "Mustard Cherry Blossom Maxi",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "4100",
-    desc: "Bold warmth in a floral dream — this golden mustard maxi in crinkled cotton gauze is one of those rare pieces where colour and embroidery exist in perfect dialogue. Scattered cherry blossom sprigs in red and white bring the fabric to life.",
-    img: "BQT-Assets/btq26.png"
-  },
-  {
-    id: 27,
-    name: "Hot Pink Cherry Blossom Maxi",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "4299",
-    desc: "Vibrant, unapologetic, and strikingly beautiful — this hot pink crinkle cotton maxi is not for the faint of heart. Scattered cherry blossom embroidery in red, white, and ivory pops against the deep fuchsia ground.",
-    img: "BQT-Assets/btq27.png"
-  },
-  {
-    id: 28,
-    name: "Camel Cherry Blossom Maxi",
-    cat: "ethnic",
-    tag: "Ethnic Wear",
-    price: "3999",
-    desc: "Warmth, earthiness, and quiet festivity — this camel brown crinkle cotton maxi is a stunning display of subtle artistry. Cherry blossom sprigs in red, white, and green are scattered across the full length with a generous hand.",
-    img: "BQT-Assets/btq28.png"
-  },
-  {
-    id: 29,
-    name: "Golden Mustard Heart Collar Kurta",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3299",
-    desc: "The most romantic kurta in the collection — this golden mustard piece is set apart by its extraordinary heart-shaped crochet lace collar. Large red floral embroidery is scattered across the full length of the kurta.",
-    img: "BQT-Assets/btq29.png"
-  },
-  {
-    id: 30,
-    name: "Dusty Lavender Embroidered Co-ord",
-    cat: "kurta",
-    tag: "Kurta Set",
-    price: "3800",
-    desc: "Ethereal, intricately detailed, and unmistakably luxurious — this dusty lavender two-piece co-ord set is embellished with stunning white thread embroidery in a trailing vine and starburst pattern across both top and pants.",
-    img: "BQT-Assets/btq30.png"
-  }
+  {id:1,name:"Sky Blue Striped Belted Dress",cat:"modest",tag:"Modest Wear",price:"2499",desc:"A fresh breath of sky — this sleeveless sky blue striped overdress is the kind of piece that makes modesty look effortlessly chic. Featuring warm-toned wooden buttons running the full length, two deep patch pockets at the hip, and a cinched waist with a sleek double-ring black belt, it layers beautifully over a fitted black full-sleeve inner. The subtle vertical stripe pattern creates a lengthening silhouette, while the airy fabric ensures all-day comfort. Perfect for brunches, college outings, or casual festive gatherings."},
+  {id:2,name:"Navy Blue Belted Maxi Dress",cat:"modest",tag:"Modest Wear",price:"2699",desc:"Deep, decisive, and utterly sophisticated — this navy blue belted maxi dress is structured modesty at its finest. The sleeveless silhouette is perfectly balanced by a white full-sleeve inner, while the matching navy dupatta draped over the shoulders adds a regal finishing touch. Two large hip pockets and a metallic double-ring belt complete the look. Crisp cotton fabric with a relaxed A-line fall makes this the go-to piece for both everyday elegance and special occasions across every season."},
+  {id:3,name:"Maroon Corduroy Belted Dress",cat:"modest",tag:"Modest Wear",price:"2899",desc:"Deep crimson drama with quiet refinement — this maroon corduroy sleeveless dress is a statement in restraint. The rich ribbed texture catches the light beautifully, while the full-button front placket and belted waist create a structured, flattering silhouette. Layered over a classic black full-sleeve inner, it becomes a complete modest outfit with effortless polish. Two patch pockets add a practical, casual edge. Ideal for festive days, Eid mornings, or styled evenings where you want to be remembered."},
+  {id:4,name:"Dusty Rose Corduroy Dress",cat:"modest",tag:"Modest Wear",price:"2899",desc:"Warm blush tones wrapped in the softness of fine corduroy — this dusty rose belted overdress is romance made wearable. The delicate pink-mauve hue complements a wide range of skin tones, while the full-length button placket, structured pockets, and cinched black belt create a composed, editorial silhouette. Paired over a black inner, it transforms into a complete modest ensemble that moves between everyday wear and dressed-up occasions with equal grace."},
+  {id:5,name:"Lemon Yellow Lace Kurta",cat:"ethnic",tag:"Ethnic Wear",price:"1899",desc:"Sunshine captured in fabric — this lemon yellow textured kurta is pure poetry. Crafted in crinkled cotton with a soft feminine drape, the yoke is adorned with intricate white lace floral embroidery that cascades gently onto the bust. Puff sleeves add a touch of whimsy, and the flowy gathered silhouette below the empire waist creates effortless volume. Styled with an ivory ribbed inner and pearl jewellery, this piece is for the woman who dresses like she's walking through a garden in full bloom."},
+  {id:6,name:"Sage Green Lace Kurta",cat:"ethnic",tag:"Ethnic Wear",price:"1999",desc:"The colour of fresh leaves after rain — this sage green textured kurta is nature's most elegant shade rendered in cloth. The crinkle fabric adds an organic, lived-in beauty to the silhouette, while tonal white lace embroidery across the square neckline and cap sleeves lend it a delicate artisanal quality. The empire waist gathers into a flowing skirt that moves like a whisper. Wear it to a garden party, a family gathering, or simply on a day you want to feel particularly lovely and at peace."},
+  {id:7,name:"Lavender Lace Kurta",cat:"ethnic",tag:"Ethnic Wear",price:"1999",desc:"Soft as dusk, dreamy as a lullaby — this lavender crinkle kurta is pure feminine elegance. The dusty lilac hue is one of those rare shades that flatters without trying, while delicate white lace butterfly and floral embroidery across the cap sleeves and square neckline adds a hand-crafted charm. The flowing, gathered lower silhouette drapes beautifully and skims the body with ease. This is the piece for days when you want to feel gentle, beautiful, and utterly and completely yourself."},
+  {id:8,name:"Ivory Lace Maxi Dress",cat:"ethnic",tag:"Ethnic Wear",price:"3499",desc:"An heirloom in the making — this ivory crinkle cotton maxi dress is quiet luxury at its most wearable. Tonal white lace trims the square neckline and cap sleeves, while the full-length tiered skirt flows generously to the floor. The fabric has a soft, natural crinkle texture that lends it an organic, artistic quality. Styled with pearls and spring blooms, this dress is made for soft mornings, elegant occasions, and every beautiful moment you want to hold onto forever."},
+  {id:9,name:"Ivory Floral Embroidered Kurta",cat:"kurta",tag:"Kurta Set",price:"2999",desc:"Tone-on-tone luxury — this ivory embroidered kurta set is refinement defined. The fabric is a soft textured cotton-mix that catches light with a quiet gleam, and large tonal floral embroidery spreads across the chest and hem with artistry that feels both traditional and modern. Pearl-white buttons run down the centre front, while the matching bottoms complete the co-ordinated look. A pearl necklace is all this piece needs. It whispers rather than shouts — and is heard all across the room."},
+  {id:10,name:"Ivory Full-Sleeve Floral Kurta",cat:"kurta",tag:"Kurta Set",price:"3200",desc:"Florals done the right way — not bold, not shy, but perfectly measured. This ivory full-sleeve kurta features large tonal embroidered blooms on a softly sheer fabric, creating a layered, dimensional effect. The full placket of pearl buttons, A-line silhouette, and accompanying dupatta make it a complete festive set. Long sleeves are gathered into soft cuffs for a delicate finishing detail. This is the set you wear when the occasion deserves your best — and so do you, always."},
+  {id:11,name:"Navy Cable Knit Vest Set",cat:"western",tag:"Western Co-ord",price:"2499",desc:"Preppy, polished, and perfectly modest — this navy cable-knit sweater vest paired with white wide-leg trousers is a co-ord set that lives between campus chic and café elegance. The deep V-neck vest features classic white trim at the neckline and hem, with a rich cable-knit texture that adds warmth and visual interest. Worn over a white ribbed turtleneck, the silhouette is layered and effortlessly put-together. A set that dresses up or down with equal ease and grace."},
+  {id:12,name:"Black Argyle Knit Vest Set",cat:"western",tag:"Western Co-ord",price:"2599",desc:"Classic with an edge — this bold black and ivory argyle diamond-pattern knit vest is a statement in vintage-modern dressing. The geometric pattern is bold yet structured, and the deep V-neck over a black ribbed turtleneck creates a layered look that is as modest as it is stylish. Paired with dark wash wide-leg denim, this is the co-ord set for the woman who takes style seriously. A nod to preppy heritage, beautifully reimagined for the modern modest wardrobe."},
+  {id:13,name:"Navy Ribbed Vest + Light Wash Jeans",cat:"western",tag:"Western Co-ord",price:"2299",desc:"Clean, classic, and quietly confident — this navy ribbed knit vest with white V-neck stripe trim is casual dressing elevated to an art form. Worn over a white turtleneck and paired with light-wash wide-leg jeans featuring a subtle ice-blue wash effect, the combination is fresh, modern, and impeccably modest. The faded detailing adds dimension and character without trying too hard. A co-ord you will return to week after week for its ease and effortless elegance."},
+  {id:14,name:"Camel Argyle Vest Set",cat:"western",tag:"Western Co-ord",price:"2699",desc:"Warmth in every detail — this camel and ivory diamond-pattern knit vest is the definition of autumnal elegance. The open-knit argyle design adds texture and a handcrafted feel, while the warm camel tones pair beautifully with the white ribbed turtleneck layered beneath. Matched with mid-wash blue wide-leg denim with a vintage fade, this set exudes an easy, academic charm. Whether styled for a day out or a quiet evening at a bookshop, this co-ord always looks exactly right."},
+  {id:15,name:"Ivory Houndstooth Vest Set",cat:"western",tag:"Western Co-ord",price:"2799",desc:"A study in contrast — this ivory and black houndstooth-weave knit vest is pattern done with sophistication and restraint. The densely woven geometric texture creates a visual richness that reads as both classic and contemporary. Worn over a black ribbed turtleneck and styled with dark wash marble-washed wide-leg jeans, this is the co-ord for the woman who likes her fashion with a clear point of view. Oversized and relaxed in fit, timeless in every single season."},
+  {id:16,name:"Olive Green Floral Appliqué Set",cat:"kurta",tag:"Kurta Set",price:"3100",desc:"Nature's palette in its most graceful form — this olive green kurta set is adorned with hand-crafted floral appliqué in blush pink, sage, and cream along the dupatta hem and scattered across the fabric. The V-neck pintuck kurta falls in a generous, flowing A-line with smocked cuffs for a soft, gathered finish. The olive green shade is earthy yet refined, complementing every skin tone with warmth. A set that transitions beautifully from Eid celebrations to family functions and beyond."},
+  {id:17,name:"Deep Red Pintuck Kurta Set",cat:"kurta",tag:"Kurta Set",price:"3499",desc:"Passionate, celebratory, and undeniably striking — this deep red pintuck kurta set is everything festive dressing should be. The kurta features delicate pin-tucking at the chest with subtle bead detailing, smocked cuffs, and a full flowing skirt that moves with purpose. The matching dupatta is bordered with three-dimensional floral appliqué in tangerine and emerald — a detail of extraordinary artisanship. Whether worn for Eid, a wedding, or a festive gathering, this red set announces itself with pure joy."},
+  {id:18,name:"Blush Pink Pintuck Kurta Set",cat:"kurta",tag:"Kurta Set",price:"3399",desc:"The softest celebration you've ever worn — this blush pink pintuck kurta set is femininity in its most graceful form. Fine pin-tucks across the chest are accented with delicate lace trim and tiny pearl beading, while the full gathered skirt falls beautifully to ankle length. The dupatta carries a scattering of 3D floral appliqué in hot pink and sage green — each bloom individually stitched with extraordinary care. A set made for moments that deserve to be remembered always."},
+  {id:19,name:"Lavender Floral Stripe Top Set",cat:"western",tag:"Western Co-ord",price:"1799",desc:"Cottage-core romance meets modest street style — this lavender and white striped sleeveless top is a breath of fresh air. The front features a beautiful row of lace trim buttons and scattered hand-embroidered purple daisy motifs, while the ruffled peplum hem adds movement and playfulness. Styled over a cream ribbed inner and paired with light-wash wide-leg denim, this set is for the woman who dresses like every single day is worth celebrating. Joyful, feminine, and entirely unforgettable."},
+  {id:20,name:"Sage Green Floral Stripe Top Set",cat:"western",tag:"Western Co-ord",price:"1799",desc:"Green like growth, fresh like beginnings — this sage green striped sleeveless top with hand-embroidered floral details is spring made wearable. The lace-trim button placket runs down the centre, flanked by delicate stitched blooms in ivory and green, while the ruffled peplum hem adds a playful, feminine edge. Worn over a cream ribbed inner and matched with dark wash wide-leg jeans, it creates a balanced contrast that feels polished and purposeful every single time."},
+  {id:21,name:"Grey Stripe Floral Top Set",cat:"western",tag:"Western Co-ord",price:"1850",desc:"Understated yet utterly charming — this grey and ivory striped sleeveless top with embroidered floral accents proves that neutral tones are never, ever boring. The delicate floral embroidery in silver-grey tones cascades down the lace-trim button placket, while the peplum ruffle adds a feminine silhouette without sacrificing modesty. Paired over a cream ribbed inner and matched with deep charcoal wide-leg jeans, this co-ord is for the woman who leads with quiet confidence."},
+  {id:22,name:"Cream Gold Tassel Kurta Set",cat:"kurta",tag:"Kurta Set",price:"3600",desc:"Understated luxury in its purest expression — this cream three-piece set in silky smooth fabric is dressed with gold tassel and lace trim detailing at the neckline, hem, and dupatta edges. The V-neck kurta falls in a clean, straight silhouette with wide sleeves that gather softly at the wrist with golden tassel accents. The matching wide-leg pants and flowing dupatta complete a harmonious, head-to-toe look of quiet opulence. Ideal for every occasion where you want to be peacefully, impeccably dressed."},
+  {id:23,name:"Mocha Tassel Kurta Set",cat:"kurta",tag:"Kurta Set",price:"3799",desc:"Earthy, warm, and deeply sophisticated — this mocha brown three-piece kurta set in flowing satin-touch fabric is elegance dressed in the richest earth tones. Gold tassels and lace trim at the V-neckline, hem, and dupatta border add a regal, artisanal finish that elevates the simplicity of the silhouette. The wide-sleeve kurta, matching wide-leg pants, and dupatta form a complete look that requires nothing more than your graceful, beautiful presence to complete it perfectly."},
+  {id:24,name:"Ivory Cherry Blossom Maxi",cat:"ethnic",tag:"Ethnic Wear",price:"3999",desc:"The season's most romantic dress — this ivory maxi in the lightest cotton gauze is scattered with miniature hand-embroidered cherry blossom motifs in red, ivory, and sage green. The lace Peter Pan collar adds a vintage, storybook sweetness, while the full-length gathered silhouette drapes with an effortless, dreamy quality. Long sleeves with puffed cuffs complete the ethereal look. Styled with pearl jewellery, this dress belongs to the moments you wish you could live in forever."},
+  {id:25,name:"Blush Cherry Blossom Maxi",cat:"ethnic",tag:"Ethnic Wear",price:"3999",desc:"Pretty in pink, exquisite in every detail — this blush pink maxi dress in softly crinkled cotton gauze is adorned with scattered cherry blossom embroidery in red, white, and green. The lace Peter Pan collar frames the face with delicate sweetness, while the full gathered length and balloon sleeves create a silhouette of romantic abundance. Feminine without apology, modest without effort — this is everything a beautiful spring dress was ever meant to be, worn by you."},
+  {id:26,name:"Mustard Cherry Blossom Maxi",cat:"ethnic",tag:"Ethnic Wear",price:"4100",desc:"Bold warmth in a floral dream — this golden mustard maxi in crinkled cotton gauze is one of those rare pieces where colour and embroidery exist in perfect dialogue. Scattered cherry blossom sprigs in red, white, and emerald green bring the fabric to life with a hand-crafted energy, while the lace collar and gathered flowing silhouette make it unequivocally special. The mustard tone catches golden-hour light magnificently — so please, dress accordingly and beautifully."},
+  {id:27,name:"Hot Pink Cherry Blossom Maxi",cat:"ethnic",tag:"Ethnic Wear",price:"4299",desc:"Vibrant, unapologetic, and strikingly beautiful — this hot pink crinkle cotton maxi is not for the faint of heart. Scattered cherry blossom embroidery in red, white, and ivory pops against the deep fuchsia ground with an energy that is impossible to ignore. The lace yoke collar and pintuck detailing at the chest add structure and artisanship, while the floor-grazing length and smocked cuffs complete the look with grace. Wear this when you want every head in the room to turn."},
+  {id:28,name:"Camel Cherry Blossom Maxi",cat:"ethnic",tag:"Ethnic Wear",price:"3999",desc:"Warmth, earthiness, and quiet festivity — this camel brown crinkle cotton maxi is a stunning display of subtle artistry. Cherry blossom sprigs in red, white, and green are scattered across the full length of the dress with a generous, confident hand. The lace collar adds a delicate anchor at the neckline, while the gathered silhouette and long smocked sleeves create a balanced, enveloping form. A colour that grounds you, a pattern that lifts you — beautifully, always."},
+  {id:29,name:"Golden Mustard Heart Collar Kurta",cat:"kurta",tag:"Kurta Set",price:"3299",desc:"The most romantic kurta in the collection — this golden mustard piece is set apart by its extraordinary heart-shaped crochet lace collar, a detail so unique it stops you in your tracks. Large red floral embroidery is scattered across the full length of the kurta and matching dupatta, while the pintuck chest detailing and golden lace yoke border add layers of exceptional craftsmanship. This is not a kurta you simply wear — it is a kurta that wears you, with warmth and an unmistakable handmade soul."},
+  {id:30,name:"Dusty Lavender Embroidered Co-ord",cat:"kurta",tag:"Kurta Set",price:"3800",desc:"Ethereal, intricately detailed, and unmistakably luxurious — this dusty lavender two-piece co-ord set in flowing fabric is embellished with stunning white thread embroidery in a trailing vine and starburst pattern across both the top and wide-leg pants. Pearl trim lines the sleeves and hem, adding a final touch of delicate opulence. The silhouette is relaxed and dignified. Wear it to a formal gathering, an evening event, or simply on a day when ordinary dressing simply won't do."}
 ];
-
-// 2. REFACTORED DYNAMIC RENDERING CODE TO INCLUDE PRODUCT IMAGE TAGS
-function renderProducts(items) {
-  const grid = document.getElementById('productGrid');
-  grid.innerHTML = "";
-  
-  if (items.length === 0) {
-    grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-light); padding: 40px 0;">No matching items found in this collection.</p>`;
-    return;
-  }
-  
-  items.forEach(p => {
-    grid.innerHTML += `
-      <div class="pcard fade-up">
-        <div class="pcard-img-wrap" style="width: 100%; height: 320px; overflow: hidden; border-radius: 12px; margin-bottom: 16px; background: var(--ivory-dark);">
-          <img src="${p.img}" alt="${p.name}" class="pcard-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-elegant);">
-        </div>
-        
-        <div class="pcard-info" style="display: flex; flex-direction: column; flex-grow: 1;">
-          <span style="font-size: 10px; color: var(--rose); text-transform: uppercase; font-weight: 600; letter-spacing: 1.5px;">${p.tag}</span>
-          <h3 class="pcard-name" style="font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 500; margin: 6px 0 10px; color: var(--text); line-height: 1.3;">${p.name}</h3>
-          <p style="font-size: 13px; color: var(--text-light); margin-bottom: 20px; flex-grow: 1; line-height: 1.6;">${p.desc}</p>
-          
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--border);">
-            <span class="pcard-price" style="font-size: 18px; font-weight: 600; color: var(--text);">₹${Number(p.price).toLocaleString('en-IN')}</span>
-            <button class="btn-rose" onclick="addToCart(${p.id})" style="padding: 10px 22px; font-size: 10px; letter-spacing: 1px; border-radius: 100px;">Add To Bag</button>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-  
-  // Re-run your beautiful fade observer to transition newly filtered cards onto the screen
-  if (typeof observeFades === 'function') {
-    observeFades();
-  }
-}
-
-// 3. UPDATED FILTER CONTROL LINKED TO THE NEW PROPERTY CATEGORY FIELDS
-function filterCategory(cat, btn) {
-  document.querySelectorAll('.filt-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  
-  if (cat === 'all') {
-    renderProducts(products);
-  } else {
-    // Matches against the shorthand string identifier 'modest', 'ethnic', 'kurta', or 'western'
-    renderProducts(products.filter(p => p.cat === cat));
-  }
-}
-
-// Initial draw initialization on window mount
-renderProducts(products);
 
 let cart = [], currentProd = null, rating = 0;
 
@@ -1221,21 +1094,21 @@ function renderProducts(filter='all') {
     const imgEl = img
       ? `<img class="pcard-img" src="${img}" alt="${p.name}" loading="lazy"/>`
       : `<div style="width:100%;height:100%;background:${bgColors[p.id]}30;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:0.3;">✿</div>`;
-    return `<div class="pcard fade-up">
+    return `<div class="pcard fade-up" onclick="openModal(${p.id})" style="cursor:pointer;">
       <div class="pcard-img-wrap">${imgEl}
         <span class="pcard-badge">${p.tag}</span>
-        <div class="pcard-hover-overlay">
-          <button class="pcard-hover-btn" onclick="openModal(${p.id})">Quick View</button>
-          <button class="pcard-hover-btn wa" onclick="enquireWA(${p.id})">💬 Enquire</button>
-        </div>
+        <div class="pcard-hover-overlay"></div>
       </div>
       <div class="pcard-info">
         <p class="pcard-tag">${p.tag}</p>
         <h3 class="pcard-name">${p.name}</h3>
-        <p class="pcard-desc">${p.desc.substring(0,110)}…</p>
-        <div class="pcard-actions">
-          <button class="add-bag-btn" onclick="addToCart(${p.id})">Add to Bag</button>
-          <button class="wa-icon-btn" onclick="enquireWA(${p.id})" title="Enquire on WhatsApp">💬</button>
+        <p class="pcard-desc">${p.desc.substring(0,120)}…</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);">
+          <span style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text);font-weight:500;">₹${Number(p.price).toLocaleString('en-IN')}</span>
+          <div style="display:flex;gap:8px;" onclick="event.stopPropagation()">
+            <button class="add-bag-btn ${currentUser.type==='guest'?'auth-required':''}" style="padding:10px 18px;" onclick="addToCart(${p.id})">Add to Bag</button>
+            <button class="wa-icon-btn ${currentUser.type==='guest'?'auth-required':''}" onclick="enquireWA(${p.id})" title="Enquire on WhatsApp">💬</button>
+          </div>
         </div>
       </div>
     </div>`;
@@ -1250,6 +1123,7 @@ function filterP(cat, btn) {
 }
 
 function addToCart(id, fromModal=false) {
+  if (currentUser.type === 'guest') { toast('Sign in with Google to add items to your bag ✿'); return; }
   const p = products.find(x=>x.id===id);
   if (!cart.find(x=>x.id===id)) { cart.push(p); updateCart(); toast(`"${p.name}" added to your bag ✿`); }
   else toast('Already in your bag ✿');
@@ -1274,28 +1148,36 @@ function updateCart() {
       <div class="citem-info">
         <p class="citem-cat">${p.tag}</p>
         <p class="citem-name">${p.name}</p>
-        <p class="citem-note">Price on enquiry via WhatsApp</p>
+        <p class="citem-note" style="color:var(--rose);font-weight:600;">₹${Number(p.price).toLocaleString('en-IN')}</p>
       </div>
       <button class="citem-remove" onclick="removeFromCart(${p.id})">×</button>
     </div>`;
   }).join('');
 }
 
-function toggleCart() {
+function handleCartClick() {
+  if (currentUser.type === 'guest') {
+    toast('Sign in with Google to access your bag ✿');
+    return;
+  }
+  toggleCart();
+}
+
   document.getElementById('cartPanel').classList.toggle('open');
   document.getElementById('cartVeil').classList.toggle('open');
-}
 
 function checkoutWA() {
   if (!cart.length) return;
-  const list = cart.map((p,i)=>`${i+1}. ${p.name}`).join('%0A');
-  const msg = `Hello Dream Boutique! 🌸%0A%0AI'd love to enquire about these pieces:%0A${list}%0A%0APlease share availability and pricing. Thank you!`;
+  const list = cart.map((p,i)=>`${i+1}. ${p.name} — ₹${Number(p.price).toLocaleString('en-IN')}`).join('%0A');
+  const total = cart.reduce((s,p)=>s+Number(p.price),0);
+  const msg = `Hello Dream Boutique! 🌸%0A%0AI'd love to order these pieces:%0A${list}%0A%0ATotal: ₹${total.toLocaleString('en-IN')}%0A%0APlease confirm availability. Thank you!`;
   window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
 }
 
 function enquireWA(id) {
+  if (currentUser.type === 'guest') { toast('Sign in with Google to enquire on WhatsApp ✿'); return; }
   const p = products.find(x=>x.id===id);
-  const msg = `Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0ACould you share availability and pricing? Thank you!`;
+  const msg = `Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0APrice: ₹${Number(p.price).toLocaleString('en-IN')}%0ACould you confirm availability? Thank you!`;
   window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
 }
 
@@ -1308,10 +1190,20 @@ function openModal(id) {
   document.getElementById('modalTag').textContent = p.tag;
   document.getElementById('modalName').textContent = p.name;
   document.getElementById('modalDesc').textContent = p.desc;
-  const msg = `Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0ACould you share availability and pricing? Thank you!`;
+  const msg = `Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0APrice: ₹${Number(p.price).toLocaleString('en-IN')}%0ACould you confirm availability? Thank you!`;
   document.getElementById('modalWaLink').href = `https://wa.me/${WA}?text=${msg}`;
   document.getElementById('modalVeil').classList.add('open');
   document.body.style.overflow='hidden';
+  // Gate modal buttons for guests
+  const addBtn = document.querySelector('.modal-btns .add-bag-btn');
+  const waBtn = document.querySelector('#modalWaLink');
+  if (currentUser.type === 'guest') {
+    if (addBtn) { addBtn.classList.add('auth-required'); addBtn.style.borderRadius='100px'; }
+    if (waBtn) { waBtn.classList.add('auth-required'); }
+  } else {
+    if (addBtn) addBtn.classList.remove('auth-required');
+    if (waBtn) waBtn.classList.remove('auth-required');
+  }
 }
 function closeModal(e) { if(e.target===document.getElementById('modalVeil')) closeModalDirect(); }
 function closeModalDirect() { document.getElementById('modalVeil').classList.remove('open'); document.body.style.overflow=''; currentProd=null; }
@@ -1322,13 +1214,11 @@ function toast(msg) {
   setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},2500);
 }
 
-// STARS
 function setRating(n) {
   rating=n;
   document.querySelectorAll('.star-btn').forEach((s,i)=>s.classList.toggle('lit',i<n));
 }
 
-// PHOTOS
 function handlePhotos(e) {
   const prev = document.getElementById('previewRow');
   Array.from(e.target.files).forEach(f=>{
@@ -1337,12 +1227,15 @@ function handlePhotos(e) {
   });
 }
 
-// SUBMIT REVIEW
 function submitReview() {
+  if (currentUser.type === 'guest') { toast('Sign in with Google to leave a review ✿'); return; }
+  const product = document.getElementById('fproduct').value;
+  if (!product) { toast('Please select the product you purchased ✿'); return; }
+  const purchased = cart.some(x => x.name === product || products.find(p=>p.id===x.id)?.name === product);
+  if (!purchased) { toast('You can only review products you\'ve added to your bag ✿'); return; }
   const name=document.getElementById('fname').value.trim();
   const review=document.getElementById('freview').value.trim();
   const city=document.getElementById('fcity').value.trim();
-  const product=document.getElementById('fproduct').value;
   if(!name||!review){toast('Please fill in your name and review ✿');return;}
   if(!rating){toast('Please select a star rating ✿');return;}
   const stars='★'.repeat(rating)+'☆'.repeat(5-rating);
@@ -1357,7 +1250,6 @@ function submitReview() {
   document.getElementById('successBox').style.display='block';
 }
 
-// FADE OBSERVER
 function observeFades() {
   const obs=new IntersectionObserver((entries)=>{
     entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*60);obs.unobserve(e.target);}});

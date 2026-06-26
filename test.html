@@ -127,11 +127,11 @@ nav {
 .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
 .nav-logo-circle {
   width: 44px; height: 44px; border-radius: 50%!important;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden; /* Ensures the image fits the circle */
-}
-.nav-logo-circle img {
-  width: 100%; height: 100%; object-fit: cover;
+  font-family: 'Playfair Display', serif; font-weight: 600;
+  color: #fff; font-size: 15px; letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(212,137,122,0.35);
 }
 .nav-brand { display: flex; flex-direction: column; line-height: 1; }
 .nav-brand-main { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--text); letter-spacing: 1px; }
@@ -164,18 +164,24 @@ nav {
 }
 .petal {
   position: absolute; border-radius: 50% 0 50% 0;
-  opacity: 0.12; animation: floatPetal 12s ease-in-out infinite;
+  opacity: 0.12; animation: floatPetal 6s ease-in-out infinite;
 }
-.petal:nth-child(1) { width:80px; height:80px; background:var(--rose); top:10%; left:5%; animation-delay:0s; }
-.petal:nth-child(2) { width:50px; height:50px; background:var(--gold); top:25%; right:8%; animation-delay:2s; }
-.petal:nth-child(3) { width:100px; height:100px; background:var(--rose-light); top:60%; left:3%; animation-delay:4s; }
-.petal:nth-child(4) { width:60px; height:60px; background:var(--gold-light); top:75%; right:5%; animation-delay:1s; }
-.petal:nth-child(5) { width:40px; height:40px; background:var(--rose); top:45%; left:50%; animation-delay:3s; }
-.petal:nth-child(6) { width:70px; height:70px; background:var(--blush-deep); top:15%; right:25%; animation-delay:5s; }
+.petal:nth-child(1) { width:80px; height:80px; background:var(--rose); top:10%; left:5%; animation-delay:0s; animation-duration:5s; }
+.petal:nth-child(2) { width:50px; height:50px; background:var(--gold); top:25%; right:8%; animation-delay:0.8s; animation-duration:4.5s; }
+.petal:nth-child(3) { width:100px; height:100px; background:var(--rose-light); top:60%; left:3%; animation-delay:1.5s; animation-duration:6s; }
+.petal:nth-child(4) { width:60px; height:60px; background:var(--gold-light); top:75%; right:5%; animation-delay:0.4s; animation-duration:5.5s; }
+.petal:nth-child(5) { width:40px; height:40px; background:var(--rose); top:45%; left:50%; animation-delay:1s; animation-duration:4s; }
+.petal:nth-child(6) { width:70px; height:70px; background:var(--blush-deep); top:15%; right:25%; animation-delay:2s; animation-duration:5s; }
+.petal:nth-child(7) { width:35px; height:35px; background:var(--rose); top:80%; left:20%; animation-delay:0.6s; animation-duration:4.5s; }
+.petal:nth-child(8) { width:55px; height:55px; background:var(--gold-light); top:35%; left:15%; animation-delay:1.8s; animation-duration:5.5s; }
+.petal:nth-child(9) { width:45px; height:45px; background:var(--rose-light); top:55%; right:18%; animation-delay:2.5s; animation-duration:4s; }
+.petal:nth-child(10) { width:65px; height:65px; background:var(--gold); top:5%; left:38%; animation-delay:1.2s; animation-duration:6.5s; }
+.petal:nth-child(11) { width:30px; height:30px; background:var(--rose); top:70%; right:30%; animation-delay:3s; animation-duration:4s; }
+.petal:nth-child(12) { width:75px; height:75px; background:var(--blush-deep); top:20%; left:60%; animation-delay:2.2s; animation-duration:5s; }
 @keyframes floatPetal {
   0%,100%{transform:translateY(0) rotate(0deg);}
-  33%{transform:translateY(-18px) rotate(12deg);}
-  66%{transform:translateY(10px) rotate(-8deg);}
+  33%{transform:translateY(-28px) rotate(18deg);}
+  66%{transform:translateY(16px) rotate(-12deg);}
 }
 .hero-inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 60px; width: 100%; max-width: 1300px; margin: 0 auto; padding: 60px 56px; position: relative; z-index: 1; }
 
@@ -265,12 +271,18 @@ section { padding: 100px 56px; }
 .pcard-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.6s ease; }
 .pcard:hover .pcard-img { transform: scale(1.06); }
 .pcard-badge { position: absolute; top: 14px; left: 14px; background: rgba(253,248,244,0.92); backdrop-filter: blur(8px); color: var(--rose); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; font-weight: 600; }
-.pcard-hover-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(74,55,40,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 24px; gap: 10px; }
-.pcard:hover .pcard-hover-overlay { opacity: 1; }
-.pcard-hover-btn { width: 100%; background: #fff; color: var(--text); border: none; padding: 12px; border-radius: 100px; font-family: 'Raleway', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-.pcard-hover-btn:hover { background: var(--rose); color: #fff; }
-.pcard-hover-btn.wa { background: var(--green); color: #fff; }
-.pcard-hover-btn.wa:hover { background: #1da851; }
+.pcard-hover-overlay { display: none; }
+.pcard { cursor: pointer; }
+.pcard-img-wrap::after {
+  content: 'Tap to Quick View';
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: rgba(253,248,244,0.92); backdrop-filter: blur(8px);
+  color: var(--rose); font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 100px; font-weight: 600; font-family: 'Raleway',sans-serif;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity 0.3s;
+}
+.pcard:hover .pcard-img-wrap::after { opacity: 1; }
 .pcard-info { padding: 20px 22px 22px; }
 .pcard-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--rose); margin-bottom: 6px; font-weight: 600; }
 .pcard-name { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
@@ -287,15 +299,11 @@ section { padding: 100px 56px; }
 .about-visual { display: flex; flex-direction: column; align-items: center; gap: 24px; }
 .about-logo-big {
   width: 130px; height: 130px; border-radius: 50%!important;
-  overflow: hidden; /* Ensures the image fits the circle */
+  background: var(--blush);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 600; color: #fff; font-size: 44px;
   box-shadow: 0 16px 56px rgba(212,137,122,0.4), 0 0 0 16px rgba(212,137,122,0.1);
-}
-.about-logo-big img {
-    width: 150%;        /* Increase this until the logo fits the circle */
-    height: 150%;
-    object-fit: contain;
-    margin-left: -25%;  /* Pull it back to the center */
-    margin-top: -25%;   /* Pull it back to the center */
+  letter-spacing: 2px;
 }
 .about-visual-text { text-align: center; }
 .about-visual-text p { font-family: 'Dancing Script', cursive; font-size: 22px; color: var(--rose); }
@@ -429,8 +437,93 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 /* TOAST */
 .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--gold-light); padding: 14px 28px; border-radius: 100px; font-size: 13px; z-index: 999; white-space: nowrap; box-shadow: 0 8px 32px rgba(74,55,40,0.3); transition: opacity 0.3s; }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* LOGIN SCREEN */
+#loginScreen {
+  position: fixed; inset: 0; z-index: 9998;
+  background: var(--bg-soft-blush);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.25,1,0.5,1), visibility 0.8s;
+}
+#loginScreen.out { opacity: 0; visibility: hidden; pointer-events: none; }
+.login-box {
+  background: #fff; border-radius: 28px;
+  padding: 52px 44px; max-width: 420px; width: 90%;
+  box-shadow: 0 24px 80px rgba(139,94,74,0.16);
+  border: 1px solid var(--border);
+  text-align: center;
+  animation: loginFadeIn 0.6s ease both;
+}
+@keyframes loginFadeIn {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.login-logo {
+  width: 90px; height: 90px; border-radius: 50%!important;
+  object-fit: cover;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 28px rgba(212,137,122,0.35);
+  display: block;
+}
+.login-title { font-family: 'Dancing Script', cursive; font-size: 38px; color: var(--rose); font-weight: 600; font-style: normal; margin-bottom: 6px; letter-spacing: 0.5px; }
+.login-sub { font-size: 12px; color: var(--text-light); letter-spacing: 1px; margin-bottom: 36px; }
+.login-divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; }
+.login-divider::before, .login-divider::after { content:''; flex:1; height:1px; background: var(--border); }
+.login-divider span { font-size: 11px; color: var(--text-light); letter-spacing: 1px; text-transform: uppercase; }
+.login-btn-google {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+  background: #fff; border: 1.5px solid var(--border); color: var(--text);
+  padding: 14px 20px; border-radius: 100px; font-family: 'Raleway', sans-serif;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+  letter-spacing: 1px; box-shadow: 0 2px 8px rgba(139,94,74,0.08);
+}
+.login-btn-google:hover { border-color: var(--rose); box-shadow: 0 4px 16px rgba(212,137,122,0.2); transform: translateY(-1px); }
+.login-btn-google svg { width: 20px; height: 20px; flex-shrink: 0; }
+.login-btn-guest {
+  width: 100%; background: transparent; border: none; color: var(--text-light);
+  font-family: 'Raleway', sans-serif; font-size: 12px; cursor: pointer;
+  padding: 10px; letter-spacing: 1px; transition: color 0.2s;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.login-btn-guest:hover { color: var(--rose); }
+.login-guest-note {
+  margin-top: 16px; padding: 12px 16px; background: var(--blush);
+  border-radius: 12px; font-size: 11px; color: var(--text-light); line-height: 1.7;
+}
+.login-guest-note strong { color: var(--rose); }
+/* User pill in nav */
+.user-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--blush); border: 1px solid var(--border);
+  padding: 7px 16px; border-radius: 100px; font-size: 12px; color: var(--text);
+  cursor: default;
+}
+.user-pill-dot { width: 8px; height: 8px; border-radius: 50%!important; background: var(--rose); flex-shrink: 0; }
+/* Auth-gated elements when guest */
+body.guest-mode .auth-required { pointer-events: none; opacity: 0.45; position: relative; }
+body.guest-mode .auth-required::after {
+  content: '🔒 Sign in to use this';
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 1px; color: var(--rose);
+  background: rgba(253,248,244,0.9); border-radius: inherit;
+  pointer-events: all; cursor: not-allowed;
+}
+/* Lock MY BAG button for guests */
+body.guest-mode #cartPillBtn {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: var(--rose-light);
+}
+body.guest-mode #cartPillBtn::before {
+  content: '🔒 ';
+  font-size: 11px;
+}
+body.guest-mode #cartPillBtn:hover {
+  background: var(--blush);
+  color: var(--text);
+  border-color: var(--border);
+  transform: none;
+}
+
   nav { padding: 0 20px; }
   .nav-links { display: none; }
   section { padding: 70px 20px; }
@@ -445,7 +538,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
   .form-card { padding: 36px 24px; }
   .cart-panel { width: 100%; right: -100%; }
   .product-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-}
+
 @media (max-width: 500px) {
   .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .pcard-name { font-size: 14px; }
@@ -454,6 +547,30 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 </style>
 </head>
 <body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" style="display:none;">
+  <div class="login-box">
+    <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique Logo" class="login-logo">
+    <h2 class="login-title">Welcome Beautiful</h2>
+    <p class="login-sub">Dream Boutique · Modest & Ethnic Wears</p>
+    <button class="login-btn-google" onclick="signInGoogle()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continue with Google
+    </button>
+    <div class="login-divider"><span>or</span></div>
+    <button class="login-btn-guest" onclick="signInGuest()">Browse as Guest</button>
+    <div class="login-guest-note">
+      <strong>Guest mode:</strong> browse the full collection freely.<br/>
+      Sign in with Google to add to bag, enquire, or leave a review.
+    </div>
+  </div>
+</div>
 
   <!-- LOADER -->
 <div id="loader">
@@ -466,26 +583,29 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <div class="nav-logo-circle">
-      <img src="BQT-Assets/DB Logo.png" alt="DB Logo" style="width: 100%; height: 100%; object-fit: cover;">
-    </div>
+    <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique Logo" style="width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 4px 16px rgba(212,137,122,0.35);">
     <div class="nav-brand">
       <span class="nav-brand-main">Dream Boutique</span>
       <span class="nav-brand-sub">Modest & Ethnic Wears</span>
     </div>
   </a>
 
-
   <div class="nav-right">
-    <button class="cart-pill" onclick="toggleCart()">
+    <div class="user-pill" id="userPill" style="display:none;">
+      <div class="user-pill-dot"></div>
+      <span id="userPillName">Guest</span>
+    </div>
+    <button class="cart-pill" id="cartPillBtn" onclick="handleCartClick()">
       🛍 My Bag <span class="cart-pill-count" id="cartCount">0</span>
     </button>
   </div>
+</nav>
 
-  </nav>
 <!-- HERO -->
 <section class="hero">
   <div class="hero-petals">
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
     <div class="petal"></div><div class="petal"></div><div class="petal"></div>
     <div class="petal"></div><div class="petal"></div><div class="petal"></div>
   </div>
@@ -497,7 +617,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
       <p class="hero-body">Curated pieces that honour your grace, celebrate your culture, and move with you through every beautiful moment of your day. Shipping across all of India.</p>
       <div class="hero-ctas">
         <a href="#collection" class="btn-rose">Explore Collection</a>
-        <a href="#about" class="btn-outline-rose">About Us</a>
+        <a href="#about" class="btn-outline-rose">Our Story</a>
       </div>
       <div class="hero-badges">
         <div class="badge"><div class="badge-icon">📦</div><span>Pan India Shipping</span></div>
@@ -564,9 +684,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 <section id="about" class="about-section">
   <div class="about-inner">
     <div class="about-visual fade-up">
-      <div class="about-logo-big">
-  <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique Logo">
-</div>
+      <img src="BQT-Assets/DB Logo.png" alt="Dream Boutique" class="about-logo-big" style="object-fit:cover;">
       <div class="about-visual-text">
         <p>Dream Boutique</p>
         <small>Est. with love</small>
@@ -578,7 +696,7 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
       </div>
     </div>
     <div class="about-text fade-up">
-      <span class="section-eyebrow">About Us</span>
+      <span class="section-eyebrow">Our Story</span>
       <h2 class="section-title">Modest Wears, <em>Timeless</em></h2>
       <span class="section-script">crafted for everyday elegance</span>
       <p class="about-body">
@@ -848,15 +966,60 @@ footer { background: var(--text); color: rgba(245,235,228,0.6); padding: 60px 56
 
 
 <script>
+// ─── AUTH ───────────────────────────────────────────────────────
+let currentUser = { type: null, name: null };
+
+function signInGoogle() {
+  // Simulate Google sign-in (no real OAuth in this static demo)
+  const name = prompt('Enter your name (simulating Google Sign-In):');
+  if (!name) return;
+  currentUser = { type: 'google', name: name.trim() || 'You' };
+  completeLogin();
+}
+
+function signInGuest() {
+  currentUser = { type: 'guest', name: 'Guest' };
+  document.body.classList.add('guest-mode');
+  completeLogin();
+}
+
+function completeLogin() {
+  const ls = document.getElementById('loginScreen');
+  ls.classList.add('out');
+  // Show user pill
+  const pill = document.getElementById('userPill');
+  const pillName = document.getElementById('userPillName');
+  pill.style.display = 'flex';
+  pillName.textContent = currentUser.type === 'guest' ? '👤 Guest' : '✦ ' + currentUser.name;
+  // Re-render products to apply auth-required classes
+  renderProducts();
+  // Show review form note if guest
+  if (currentUser.type === 'guest') {
+    const formCard = document.querySelector('.form-card');
+    if (formCard) {
+      const note = document.createElement('div');
+      note.style.cssText = 'text-align:center;padding:24px;color:var(--text-light);font-size:14px;';
+      note.innerHTML = '🔒 <strong style="color:var(--rose)">Sign in with Google</strong> to leave a review.';
+      formCard.innerHTML = '';
+      formCard.appendChild(note);
+    }
+  }
+}
+</script>
+
+<script>
 // ─── TRANSITION ───────────────────────────────────────────────
 window.addEventListener('load', () => {
-  // Keeps the loader visible for a brief moment for dynamic effect
   setTimeout(() => {
     const loader = document.getElementById('loader');
     if (loader) {
       loader.classList.add('out');
+      // Show login screen right after loader exits
+      setTimeout(() => {
+        document.getElementById('loginScreen').style.display = 'flex';
+      }, 800);
     }
-  }, 1500); // 1.5 seconds reveals the brand beautifully before exit
+  }, 1500);
 });
 
 const WA = "919832596691";
@@ -931,13 +1094,10 @@ function renderProducts(filter='all') {
     const imgEl = img
       ? `<img class="pcard-img" src="${img}" alt="${p.name}" loading="lazy"/>`
       : `<div style="width:100%;height:100%;background:${bgColors[p.id]}30;display:flex;align-items:center;justify-content:center;font-size:40px;opacity:0.3;">✿</div>`;
-    return `<div class="pcard fade-up">
+    return `<div class="pcard fade-up" onclick="openModal(${p.id})" style="cursor:pointer;">
       <div class="pcard-img-wrap">${imgEl}
         <span class="pcard-badge">${p.tag}</span>
-        <div class="pcard-hover-overlay">
-          <button class="pcard-hover-btn" onclick="openModal(${p.id})">Quick View</button>
-          <button class="pcard-hover-btn wa" onclick="enquireWA(${p.id})">💬 Enquire</button>
-        </div>
+        <div class="pcard-hover-overlay"></div>
       </div>
       <div class="pcard-info">
         <p class="pcard-tag">${p.tag}</p>
@@ -945,9 +1105,9 @@ function renderProducts(filter='all') {
         <p class="pcard-desc">${p.desc.substring(0,120)}…</p>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);">
           <span style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text);font-weight:500;">₹${Number(p.price).toLocaleString('en-IN')}</span>
-          <div style="display:flex;gap:8px;">
-            <button class="add-bag-btn" style="padding:10px 18px;" onclick="addToCart(${p.id})">Add to Bag</button>
-            <button class="wa-icon-btn" onclick="enquireWA(${p.id})" title="Enquire on WhatsApp">💬</button>
+          <div style="display:flex;gap:8px;" onclick="event.stopPropagation()">
+            <button class="add-bag-btn ${currentUser.type==='guest'?'auth-required':''}" style="padding:10px 18px;" onclick="addToCart(${p.id})">Add to Bag</button>
+            <button class="wa-icon-btn ${currentUser.type==='guest'?'auth-required':''}" onclick="enquireWA(${p.id})" title="Enquire on WhatsApp">💬</button>
           </div>
         </div>
       </div>
@@ -963,6 +1123,7 @@ function filterP(cat, btn) {
 }
 
 function addToCart(id, fromModal=false) {
+  if (currentUser.type === 'guest') { toast('Sign in with Google to add items to your bag ✿'); return; }
   const p = products.find(x=>x.id===id);
   if (!cart.find(x=>x.id===id)) { cart.push(p); updateCart(); toast(`"${p.name}" added to your bag ✿`); }
   else toast('Already in your bag ✿');
@@ -994,10 +1155,16 @@ function updateCart() {
   }).join('');
 }
 
-function toggleCart() {
+function handleCartClick() {
+  if (currentUser.type === 'guest') {
+    toast('Sign in with Google to access your bag ✿');
+    return;
+  }
+  toggleCart();
+}
+
   document.getElementById('cartPanel').classList.toggle('open');
   document.getElementById('cartVeil').classList.toggle('open');
-}
 
 function checkoutWA() {
   if (!cart.length) return;
@@ -1008,6 +1175,7 @@ function checkoutWA() {
 }
 
 function enquireWA(id) {
+  if (currentUser.type === 'guest') { toast('Sign in with Google to enquire on WhatsApp ✿'); return; }
   const p = products.find(x=>x.id===id);
   const msg = `Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0APrice: ₹${Number(p.price).toLocaleString('en-IN')}%0ACould you confirm availability? Thank you!`;
   window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
@@ -1026,6 +1194,16 @@ function openModal(id) {
   document.getElementById('modalWaLink').href = `https://wa.me/${WA}?text=${msg}`;
   document.getElementById('modalVeil').classList.add('open');
   document.body.style.overflow='hidden';
+  // Gate modal buttons for guests
+  const addBtn = document.querySelector('.modal-btns .add-bag-btn');
+  const waBtn = document.querySelector('#modalWaLink');
+  if (currentUser.type === 'guest') {
+    if (addBtn) { addBtn.classList.add('auth-required'); addBtn.style.borderRadius='100px'; }
+    if (waBtn) { waBtn.classList.add('auth-required'); }
+  } else {
+    if (addBtn) addBtn.classList.remove('auth-required');
+    if (waBtn) waBtn.classList.remove('auth-required');
+  }
 }
 function closeModal(e) { if(e.target===document.getElementById('modalVeil')) closeModalDirect(); }
 function closeModalDirect() { document.getElementById('modalVeil').classList.remove('open'); document.body.style.overflow=''; currentProd=null; }
@@ -1050,10 +1228,14 @@ function handlePhotos(e) {
 }
 
 function submitReview() {
+  if (currentUser.type === 'guest') { toast('Sign in with Google to leave a review ✿'); return; }
+  const product = document.getElementById('fproduct').value;
+  if (!product) { toast('Please select the product you purchased ✿'); return; }
+  const purchased = cart.some(x => x.name === product || products.find(p=>p.id===x.id)?.name === product);
+  if (!purchased) { toast('You can only review products you\'ve added to your bag ✿'); return; }
   const name=document.getElementById('fname').value.trim();
   const review=document.getElementById('freview').value.trim();
   const city=document.getElementById('fcity').value.trim();
-  const product=document.getElementById('fproduct').value;
   if(!name||!review){toast('Please fill in your name and review ✿');return;}
   if(!rating){toast('Please select a star rating ✿');return;}
   const stars='★'.repeat(rating)+'☆'.repeat(5-rating);

@@ -4,7 +4,25 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dream Boutique — Modest & Ethnic Wears</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Security -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com https://accounts.google.com https://apis.google.com; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com;">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  <!-- PWA -->
+  <meta name="theme-color" content="#D4897A"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="Dream Boutique"/>
+  <meta name="application-name" content="Dream Boutique"/>
+  <meta name="description" content="Dream Boutique — Modest & Ethnic Wears. Curated pieces that honour your grace. Shipping across India."/>
+  <link rel="icon" href="BQT-Assets/DB%20Logo.png" type="image/png"/>
+  <link rel="apple-touch-icon" href="BQT-Assets/DB%20Logo.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root {
@@ -18,6 +36,34 @@ html{scroll-behavior:smooth;}
 body{font-family:'Raleway',sans-serif;background:var(--ivory);color:var(--text);overflow-x:hidden;}
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--ivory);}::-webkit-scrollbar-thumb{background:var(--rose-light);border-radius:3px;}
 
+/* Shared logo image */
+.db-logo,.intro-logo,.gsign-logo,.ld-logo-ring,.nav-logo-db,.about-logo-big,.footer-db-circle{
+  object-fit:cover;object-position:center;background:transparent;display:block;
+}
+
+/* ══════════════════════════════
+   INTRO SPLASH SCREEN
+══════════════════════════════ */
+#introScreen{
+  position:fixed;inset:0;z-index:10001;
+  background:linear-gradient(160deg,#FDF8F4 0%,#F7E8E0 50%,#FDF8F4 100%);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.9s var(--ease),visibility 0.9s var(--ease);
+}
+#introScreen.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.intro-inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;padding:20px;}
+.intro-logo{
+  width:140px;height:140px;border-radius:50%;margin:0 auto;
+  box-shadow:0 12px 40px rgba(212,137,122,0.35),0 0 0 10px rgba(212,137,122,0.1);
+  animation:elegantPulse 2.5s ease-in-out infinite;
+}
+.intro-tagline{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--rose);font-weight:500;}
+.intro-sub{font-family:'Dancing Script',cursive;font-size:22px;color:var(--gold);}
+.intro-dots{display:flex;gap:8px;margin-top:4px;}
+.intro-dot{width:6px;height:6px;border-radius:50%;background:var(--rose-light);animation:dotPulse 1.2s ease-in-out infinite;}
+.intro-dot:nth-child(2){animation-delay:0.2s;}
+.intro-dot:nth-child(3){animation-delay:0.4s;}
+
 /* ══════════════════════════════
    GOOGLE SIGN-IN SCREEN
 ══════════════════════════════ */
@@ -26,7 +72,9 @@ body{font-family:'Raleway',sans-serif;background:var(--ivory);color:var(--text);
   background:linear-gradient(160deg,#FDF8F4 0%,#F7E8E0 50%,#FDF8F4 100%);
   display:flex;align-items:center;justify-content:center;
   transition:opacity 0.8s var(--ease),visibility 0.8s var(--ease);
+  opacity:0;visibility:hidden;pointer-events:none;
 }
+#gSignInScreen.show{opacity:1;visibility:visible;pointer-events:auto;}
 #gSignInScreen.hide{opacity:0;visibility:hidden;pointer-events:none;}
 .gsign-petals{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
 .gsign-petal{position:absolute;border-radius:50% 0 50% 0;animation:floatPetal 5s ease-in-out infinite;}
@@ -44,14 +92,7 @@ body{font-family:'Raleway',sans-serif;background:var(--ivory);color:var(--text);
   box-shadow:0 24px 80px rgba(139,94,74,0.14);
   border:1px solid var(--border);max-width:440px;width:90%;
 }
-.gsign-logo{
-  width:90px;height:90px;border-radius:50%;
-  background:linear-gradient(135deg,var(--rose),var(--gold));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:32px;
-  margin:0 auto 24px;box-shadow:0 12px 40px rgba(212,137,122,0.4),0 0 0 10px rgba(212,137,122,0.1);
-  animation:elegantPulse 2.5s ease-in-out infinite;
-}
+.gsign-logo{width:110px;height:110px;border-radius:50%;object-fit:cover;object-position:center;margin:0 auto 24px;display:block;box-shadow:0 8px 32px rgba(212,137,122,0.25),0 0 0 8px rgba(212,137,122,0.08);animation:elegantPulse 2.5s ease-in-out infinite;background:transparent;}
 @keyframes elegantPulse{0%,100%{transform:scale(1);box-shadow:0 12px 40px rgba(212,137,122,0.4),0 0 0 10px rgba(212,137,122,0.1);}50%{transform:scale(1.06);box-shadow:0 18px 56px rgba(212,137,122,0.5),0 0 0 16px rgba(212,137,122,0.08);}}
 .gsign-title{font-family:'Playfair Display',serif;font-size:28px;color:var(--text);font-weight:400;margin-bottom:6px;}
 .gsign-title em{font-style:italic;color:var(--rose);}
@@ -120,9 +161,6 @@ body{font-family:'Raleway',sans-serif;background:var(--ivory);color:var(--text);
 #loader.out .ld-content{transform:scale(1.3) translateY(-40px);opacity:0;}
 .ld-logo-ring{
   width:120px;height:120px;border-radius:50%;
-  background:linear-gradient(135deg,var(--rose),var(--gold));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:40px;letter-spacing:2px;
   box-shadow:0 16px 56px rgba(212,137,122,0.45),0 0 0 14px rgba(212,137,122,0.12);
   animation:elegantPulse 2s ease-in-out infinite;
 }
@@ -149,9 +187,6 @@ nav{
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-logo-db{
   width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,var(--rose),var(--gold));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:15px;letter-spacing:1px;
   box-shadow:0 4px 16px rgba(212,137,122,0.35);flex-shrink:0;
 }
 .nav-brand-main{font-family:'Playfair Display',serif;font-size:17px;color:var(--text);letter-spacing:1px;display:block;}
@@ -265,8 +300,8 @@ section{padding:100px 56px;}
 .modal-veil{position:fixed;inset:0;background:rgba(74,55,40,0.6);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(6px);}
 .modal-veil.open{opacity:1;pointer-events:all;}
 .modal-box{background:#fff;border-radius:28px;max-width:900px;width:100%;max-height:90vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 30px 80px rgba(74,55,40,0.3);}
-.modal-img-side{overflow:hidden;position:relative;}
-.modal-img-side img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.modal-img-side{overflow:hidden;position:relative;min-height:420px;background:var(--blush);}
+.modal-img-side img{width:100%;height:100%;min-height:420px;object-fit:cover;object-position:top;}
 .modal-info-side{padding:48px 40px;overflow-y:auto;display:flex;flex-direction:column;}
 .modal-close-btn{align-self:flex-end;background:var(--blush);border:none;color:var(--text);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-bottom:16px;flex-shrink:0;}
 .modal-close-btn:hover{background:var(--rose);color:#fff;}
@@ -284,7 +319,11 @@ section{padding:100px 56px;}
 .about-section{background:linear-gradient(135deg,#FDF8F4 0%,#F7E8E0 50%,#FDF8F4 100%);}
 .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
 .about-visual{display:flex;flex-direction:column;align-items:center;gap:24px;}
-.about-logo-big{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:44px;box-shadow:0 16px 56px rgba(212,137,122,0.4),0 0 0 16px rgba(212,137,122,0.1);letter-spacing:2px;}
+.about-logo-big{width:130px;height:130px;border-radius:50%;box-shadow:0 16px 56px rgba(212,137,122,0.4),0 0 0 16px rgba(212,137,122,0.1);}
+
+.about-visual-text{text-align:center;}
+.about-visual-text p{font-family:'Dancing Script',cursive;font-size:22px;color:var(--rose);}
+.about-visual-text small{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);}
 .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px;width:100%;}
 .about-stat{background:#fff;border-radius:16px;padding:20px;text-align:center;box-shadow:0 4px 16px rgba(139,94,74,0.08);}
 .about-stat-num{font-family:'Playfair Display',serif;font-size:32px;color:var(--rose);}
@@ -301,7 +340,7 @@ section{padding:100px 56px;}
 .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-bottom:60px;}
 .rcard{background:#fff;border-radius:20px;padding:32px;box-shadow:0 4px 20px rgba(139,94,74,0.08);border:1px solid var(--border);}
 .rcard-quote{font-family:'Playfair Display',serif;font-size:56px;color:var(--rose-light);line-height:0.6;margin-bottom:16px;}
-.rcard-stars{font-size:16px;margin-bottom:14px;letter-spacing:1px;}
+.rcard-stars{color:#F4A261;font-size:16px;margin-bottom:14px;letter-spacing:1px;}
 .rcard-text{font-size:14px;line-height:1.85;color:var(--text);font-style:italic;font-weight:300;margin-bottom:20px;}
 .rcard-author{font-weight:600;font-size:13px;color:var(--text);}
 .rcard-loc{font-size:11px;color:var(--rose);margin-top:3px;}
@@ -323,13 +362,23 @@ section{padding:100px 56px;}
 .feedback-form-section{background:linear-gradient(135deg,#FDF8F4,#F7E8E0);}
 .form-card{background:#fff;border-radius:28px;padding:64px;box-shadow:0 16px 60px rgba(139,94,74,0.1);max-width:720px;margin:0 auto;}
 .form-subtitle{font-size:15px;color:var(--text-light);line-height:1.8;margin-top:8px;margin-bottom:32px;font-weight:300;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 .fgroup{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.fgroup.full{grid-column:1/-1;}
 .fgroup label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);font-weight:600;}
-.fgroup textarea{border:1.5px solid var(--border);background:var(--ivory);color:var(--text);padding:16px 18px;border-radius:16px;font-family:'Raleway',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s;resize:vertical;min-height:120px;}
-.fgroup textarea:focus{border-color:var(--rose);background:#fff;}
-.fgroup textarea::placeholder{color:var(--text-light);opacity:0.5;}
+.fgroup input,.fgroup textarea,.fgroup select{
+  border:1.5px solid var(--border);background:var(--ivory);color:var(--text);
+  padding:14px 18px;border-radius:12px;font-family:'Raleway',sans-serif;
+  font-size:14px;outline:none;transition:border-color 0.3s,background 0.3s;width:100%;
+}
+.fgroup textarea{resize:vertical;min-height:120px;border-radius:16px;padding:16px 18px;}
+.fgroup input:focus,.fgroup textarea:focus,.fgroup select:focus{border-color:var(--rose);background:#fff;}
+.fgroup input::placeholder,.fgroup textarea::placeholder{color:var(--text-light);opacity:0.5;}
+.fgroup select{appearance:none;cursor:pointer;}
 .upload-zone{border:2px dashed var(--border);border-radius:16px;padding:32px;text-align:center;cursor:pointer;transition:all 0.3s;background:var(--ivory);}
 .upload-zone:hover{border-color:var(--rose);background:var(--blush);}
+.upload-zone p{color:var(--text-light);font-size:14px;}
+.upload-zone small{font-size:11px;color:var(--text-light);opacity:0.6;margin-top:6px;display:block;}
 .preview-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
 .preview-row img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:2px solid var(--border);}
 .form-submit{width:100%;background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;border:none;padding:18px;border-radius:100px;font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;font-weight:700;margin-top:28px;transition:all 0.3s;box-shadow:0 8px 28px rgba(212,137,122,0.35);}
@@ -370,6 +419,8 @@ section{padding:100px 56px;}
 
 /* CONTACT */
 .contact-section{background:linear-gradient(135deg,var(--rose) 0%,#C9956A 100%);color:#fff;text-align:center;padding:90px 56px;}
+.contact-section .section-title{color:#fff;}
+.contact-section .section-script{color:rgba(255,255,255,0.7);}
 .contact-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px;}
 .btn-white{background:#fff;color:var(--rose);padding:15px 36px;border-radius:100px;font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-weight:700;transition:all 0.3s;display:inline-block;box-shadow:0 8px 24px rgba(0,0,0,0.15);}
 .btn-white:hover{transform:translateY(-2px);}
@@ -382,7 +433,7 @@ section{padding:100px 56px;}
 footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px;}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px;}
 .footer-brand-logo{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.footer-db-circle{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:600;color:#fff;font-size:15px;}
+.footer-db-circle{width:44px;height:44px;border-radius:50%;flex-shrink:0;}
 .footer-brand-name{font-family:'Playfair Display',serif;font-size:20px;color:#fff;}
 .footer-brand-p{font-size:13px;line-height:1.8;font-weight:300;color:rgba(245,235,228,0.45);}
 .footer-col-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--rose-light);margin-bottom:20px;font-weight:600;}
@@ -432,6 +483,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
   .modal-box{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr;}
   .form-card{padding:36px 24px;}
+  .form-grid{grid-template-columns:1fr;}
   .cart-panel{width:100%;right:-100%;}
   .hero-inner{grid-template-columns:1fr;text-align:center;padding:40px 20px;}
   .hero-visual{display:none;}
@@ -442,9 +494,134 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
   .pcard-name{font-size:14px;}
   .pcard-desc{display:none;}
 }
+/* ══════════════════════════════
+   PROFILE, LOGOUT & LOGIN WALL MODALS
+══════════════════════════════ */
+.profile-veil {
+  position: fixed; inset: 0; background: rgba(74,55,40,0.6); z-index: 300;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(6px);
+}
+.profile-veil.open { opacity: 1; pointer-events: all; }
+
+#profilePanel {
+  position: fixed; top: 0; right: -400px; width: 340px; height: 100vh;
+  background: #fff; z-index: 301; transition: right 0.4s var(--ease);
+  box-shadow: -20px 0 60px rgba(139,94,74,0.15); display: flex; flex-direction: column;
+}
+#profilePanel.open { right: 0; }
+.profile-head { padding: 32px; background: var(--ivory); border-bottom: 1px solid var(--border); text-align: center; }
+.profile-name { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); margin-top: 12px; }
+.profile-email { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+.profile-rows { padding: 24px 32px; display: flex; flex-direction: column; gap: 16px; }
+.profile-row { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 12px 0; border-bottom: 1px dashed var(--border); transition: all 0.2s; }
+.profile-row:hover .profile-row-text p:first-child { color: var(--rose); }
+.profile-row.logout:hover .profile-row-text p:first-child { color: #dc2626; }
+.profile-row-left { display: flex; align-items: center; gap: 16px; }
+.profile-row-icon { font-size: 20px; }
+.profile-row-text p:first-child { font-size: 14px; font-weight: 600; color: var(--text); transition: color 0.2s; }
+.profile-row-text p:last-child { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+.profile-row-arrow { font-size: 18px; color: var(--text-light); }
+
+.logout-confirm, .login-wall {
+  position: fixed; inset: 0; background: rgba(74,55,40,0.6); z-index: 10000;
+  display: none; align-items: center; justify-content: center; backdrop-filter: blur(6px);
+}
+.logout-confirm.open, .login-wall.open { display: flex; }
+.logout-box, .login-wall-box {
+  background: #fff; border-radius: 24px; padding: 40px; text-align: center;
+  max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(139,94,74,0.2);
+}
+.logout-emoji, .login-wall-icon { font-size: 48px; margin-bottom: 16px; }
+.logout-title, .login-wall-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--text); margin-bottom: 12px; }
+.logout-body, .login-wall-body { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+.logout-btns { display: flex; gap: 12px; margin-top: 24px; justify-content: center; }
+.logout-btn-no, .logout-btn-yes, .login-wall-btn {
+  padding: 12px 24px; border-radius: 100px; font-family: 'Raleway', sans-serif;
+  font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s; border: none;
+}
+.logout-btn-no { background: var(--blush); color: var(--text); }
+.logout-btn-no:hover { background: var(--border); }
+.logout-btn-yes { background: #fee2e2; color: #dc2626; }
+.logout-btn-yes:hover { background: #ef4444; color: #fff; }
+
+.login-wall-btn { background: #4285F4; color: #fff; width: 100%; margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 10px; }
+.login-wall-btn:hover { background: #3367D6; }
+.login-wall-close { margin-top: 16px; font-size: 12px; color: var(--text-light); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.login-wall-close:hover { color: var(--rose); }
 </style>
+
+<script>
+// Disable right-click
+document.addEventListener('contextmenu', e => e.preventDefault());
+// Disable F12, Ctrl+Shift+I/J/U/C
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || 
+      (e.ctrlKey && e.shiftKey && ['I','J','C','K'].includes(e.key.toUpperCase())) ||
+      (e.ctrlKey && e.key.toUpperCase() === 'U')) {
+    e.preventDefault(); e.stopPropagation(); return false;
+  }
+});
+// Detect devtools open via size difference
+(function devToolsDetect() {
+  const threshold = 160;
+  setInterval(() => {
+    if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
+      console.warn("DevTools inspection detected. Please browse the boutique natively for the best experience ✿");
+    }
+  }, 1000);
+})();
+// Profile and Modal Logic
+function toggleProfile() {
+  document.getElementById('profilePanel').classList.toggle('open');
+  document.getElementById('profileVeil').classList.toggle('open');
+}
+
+function showPurchases() {
+  toast("Your order history is currently empty ✿");
+  toggleProfile();
+}
+
+function showMyReviews() {
+  toast("You haven't left any reviews yet ✿");
+  toggleProfile();
+}
+
+function confirmLogout() {
+  toggleProfile();
+  document.getElementById('logoutConfirm').classList.add('open');
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('logoutConfirm').classList.remove('open');
+  document.getElementById('mainApp').classList.remove('show');
+  document.body.classList.remove('mobile-view');
+  const ds = document.getElementById('deviceScreen');
+  ds.classList.remove('show');
+  ds.classList.add('hide');
+  document.getElementById('loader').classList.remove('show', 'out');
+  const gs = document.getElementById('gSignInScreen');
+  gs.classList.add('show');
+  gs.classList.remove('hide');
+}
+
+function closeLoginWall() {
+  document.getElementById('loginWall').classList.remove('open');
+}
+</script>
 </head>
 <body>
+
+<!-- INTRO ANIMATION -->
+<div id="introScreen">
+  <div class="intro-inner">
+    <img class="intro-logo" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique"/>
+    <div class="intro-tagline">welcome to dream boutique</div>
+    <div class="intro-sub">Modest & Ethnic Wears</div>
+    <div class="intro-dots"><div class="intro-dot"></div><div class="intro-dot"></div><div class="intro-dot"></div></div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════
   GOOGLE SIGN-IN SCREEN
@@ -457,7 +634,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
     <div class="gsign-petal"></div><div class="gsign-petal"></div>
   </div>
   <div class="gsign-box">
-    <div class="gsign-logo">DB</div>
+    <img class="gsign-logo" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique"/>
     <h2 class="gsign-title">Dream <em>Boutique</em></h2>
     <span class="gsign-script">welcome, beautiful</span>
     <p class="gsign-body">Sign in to explore our curated collection of modest & ethnic wears — and leave your review after your purchase, seamlessly.</p>
@@ -466,7 +643,13 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
       <svg class="gsign-google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
       Continue with Google
     </button>
-    <p class="gsign-guest" onclick="continueAsGuest()">or continue as guest →</p>
+    <div style="margin-top:20px;display:flex;align-items:center;gap:12px;">
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+      <span style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);white-space:nowrap;">or</span>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+    <button onclick="continueAsGuest()" style="margin-top:16px;width:100%;background:transparent;border:1.5px solid var(--border);color:var(--text-light);padding:14px;border-radius:100px;font-family:Raleway,sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all 0.3s;" onmouseover="this.style.borderColor='var(--rose)';this.style.color='var(--rose)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-light)'">Browse as Guest</button>
+    <p style="margin-top:10px;font-size:11px;color:var(--text-light);opacity:0.55;text-align:center;font-style:italic;line-height:1.6;">Guests can browse — sign in to add to bag &amp; leave reviews</p>
     <div class="gsign-badges">
       <div class="gsign-badge">🔒 Secure</div>
       <div class="gsign-badge">✿ 30 Pieces</div>
@@ -515,7 +698,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
 ═══════════════════════════ -->
 <div id="loader">
   <div class="ld-content">
-    <div class="ld-logo-ring">DB</div>
+    <img class="ld-logo-ring" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique"/>
     <p class="ld-tagline">Dream Boutique · Modest Wears</p>
     <div class="ld-dots">
       <div class="ld-dot"></div>
@@ -533,7 +716,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <div class="nav-logo-db">DB</div>
+    <img class="nav-logo-db" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique Logo"/>
     <div>
       <span class="nav-brand-main">Dream Boutique</span>
       <span class="nav-brand-sub">Modest & Ethnic Wears</span>
@@ -550,6 +733,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
       <div class="nav-user-avatar" id="navAvatar"></div>
       <span id="navUserFirstName"></span>
     </div>
+    <button class="cart-pill" id="profileNavBtn" onclick="toggleProfile()" style="display:none;background:var(--blush-deep);gap:6px;padding:8px 16px;"><span id="profileNavInitial" style="width:26px;height:26px;background:linear-gradient(135deg,var(--rose),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;flex-shrink:0;"></span><span id="profileNavName" style="font-size:11px;"></span></button>
     <button class="cart-pill" onclick="toggleCart()">🛍 Bag <span class="cart-pill-count" id="cartCount">0</span></button>
   </div>
 </nav>
@@ -634,10 +818,10 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
 <section id="about" class="about-section">
   <div class="about-inner">
     <div class="about-visual fade-up">
-      <div class="about-logo-big">DB</div>
-      <div style="text-align:center;">
-        <p style="font-family:'Dancing Script',cursive;font-size:22px;color:var(--rose);">Dream Boutique</p>
-        <small style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);">Est. with love</small>
+      <img class="about-logo-big" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique Logo"/>
+      <div class="about-visual-text">
+        <p>Dream Boutique</p>
+        <small>Est. with love</small>
       </div>
       <div class="about-stats">
         <div class="about-stat"><div class="about-stat-num">30</div><div class="about-stat-label">Pieces</div></div>
@@ -724,6 +908,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
     <h2 class="section-title">Leave a <em>Review</em></h2>
     <span class="section-script">your words mean the world to us</span>
   </div>
+  <div id="reviewLockDiv" style="max-width:720px;margin:0 auto 32px;display:none;"></div>
   <div class="form-card fade-up">
     <div class="logged-in-note" id="loggedInNote" style="display:none;">
       <div class="logged-in-note-avatar" id="formAvatar"></div>
@@ -792,7 +977,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
   <div class="footer-top">
     <div>
       <div class="footer-brand-logo">
-        <div class="footer-db-circle">DB</div>
+        <img class="footer-db-circle" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique Logo"/>
         <span class="footer-brand-name">Dream Boutique</span>
       </div>
       <p class="footer-brand-p">Every day elegance. Modest & Ethnic wears curated for the woman who carries herself with grace. Shipping across all of India with love.</p>
@@ -891,7 +1076,7 @@ function handleGoogleCredential(response) {
 function signInWithGoogle() {
   // Initialize Google Sign-In
   google.accounts.id.initialize({
-    client_id: '1234567890-placeholder.apps.googleusercontent.com', // Replace with real client ID
+    client_id: '387530599241-bc4q30neop330gr3b8oaugeedqc8eo03.apps.googleusercontent.com', // Replace with real client ID //replaced
     callback: handleGoogleCredential,
     auto_select: false,
   });
@@ -950,21 +1135,21 @@ function selectDevice(type) {
 // PRODUCT DATA
 // ═══════════════════════════════════════
 const uploadedImgs = {
-  1:'/mnt/user-data/uploads/btq1.png',2:'/mnt/user-data/uploads/btq2.png',
-  3:'/mnt/user-data/uploads/btq3.png',4:'/mnt/user-data/uploads/btq4.png',
-  5:'/mnt/user-data/uploads/btq5.png',6:'/mnt/user-data/uploads/btq6.png',
-  7:'/mnt/user-data/uploads/btq7.png',8:'/mnt/user-data/uploads/btq8.png',
-  9:'/mnt/user-data/uploads/btq9.png',10:'/mnt/user-data/uploads/btq10.png',
-  11:'/mnt/user-data/uploads/btq11.png',12:'/mnt/user-data/uploads/btq12.png',
-  13:'/mnt/user-data/uploads/btq13.png',14:'/mnt/user-data/uploads/btq14.png',
-  15:'/mnt/user-data/uploads/btq15.png',16:'/mnt/user-data/uploads/btq16.png',
-  17:'/mnt/user-data/uploads/btq17.png',18:'/mnt/user-data/uploads/btq18.png',
-  19:'/mnt/user-data/uploads/btq19.png',20:'/mnt/user-data/uploads/btq20.png',
-  21:'/mnt/user-data/uploads/btq21.png',22:'/mnt/user-data/uploads/btq22.png',
-  23:'/mnt/user-data/uploads/btq23.png',24:'/mnt/user-data/uploads/btq24.png',
-  25:'/mnt/user-data/uploads/btq25.png',26:'/mnt/user-data/uploads/btq26.png',
-  27:'/mnt/user-data/uploads/btq27.png',28:'/mnt/user-data/uploads/btq28.png',
-  29:'/mnt/user-data/uploads/btq29.png',30:'/mnt/user-data/uploads/btq30.png'
+  1:'./images/btq1.png', 2:'./images/btq2.png',
+  3:'./images/btq3.png', 4:'./images/btq4.png',
+  5:'./images/btq5.png', 6:'./images/btq6.png',
+  7:'./images/btq7.png', 8:'./images/btq8.png',
+  9:'./images/btq9.png', 10:'./images/btq10.png',
+  11:'./images/btq11.png', 12:'./images/btq12.png',
+  13:'./images/btq13.png', 14:'./images/btq14.png',
+  15:'./images/btq15.png', 16:'./images/btq16.png',
+  17:'./images/btq17.png', 18:'./images/btq18.png',
+  19:'./images/btq19.png', 20:'./images/btq20.png',
+  21:'./images/btq21.png', 22:'./images/btq22.png',
+  23:'./images/btq23.png', 24:'./images/btq24.png',
+  25:'./images/btq25.png', 26:'./images/btq26.png',
+  27:'./images/btq27.png', 28:'./images/btq28.png',
+  29:'./images/btq29.png', 30:'./images/btq30.png'
 };
 const bgColors={1:'#B8D4E8',2:'#2C3E6E',3:'#8B2635',4:'#C4A0A0',5:'#F5F0A0',6:'#B8D4B0',7:'#C4B0D4',8:'#F0EDE0',9:'#F0EDE0',10:'#F0EDE0',11:'#2C3E6E',12:'#1A1A1A',13:'#2C3E6E',14:'#C4956A',15:'#E8E0D4',16:'#8B9A6E',17:'#8B2635',18:'#E8A0B0',19:'#C4B0D4',20:'#B8D4B0',21:'#C8C8C8',22:'#F0EDE0',23:'#8B7355',24:'#F0EDE0',25:'#F0B8C0',26:'#D4A820',27:'#E83870',28:'#C4956A',29:'#D4A820',30:'#C4B0D4'};
 
@@ -1005,20 +1190,33 @@ const products=[
 // APP INIT
 // ═══════════════════════════════════════
 function initApp() {
-  // Show user in nav
   if (currentUser && currentUser.name !== 'Guest') {
-    const chip = document.getElementById('navUserChip');
-    const avatar = document.getElementById('navAvatar');
-    const fname = document.getElementById('navUserFirstName');
-    chip.style.display = 'flex';
-    avatar.textContent = currentUser.given_name ? currentUser.given_name[0].toUpperCase() : '✿';
-    if (currentUser.picture) { const img = document.createElement('img'); img.src = currentUser.picture; img.style.cssText='width:28px;height:28px;border-radius:50%;object-fit:cover;'; avatar.innerHTML=''; avatar.appendChild(img); }
-    fname.textContent = currentUser.given_name || currentUser.name;
+    // Populate Navigation Button
+    document.getElementById('profileNavBtn').style.display = 'flex';
+    document.getElementById('navUserChip').style.display = 'none'; // Hide the old chip
+    document.getElementById('profileNavInitial').textContent = currentUser.given_name ? currentUser.given_name[0].toUpperCase() : currentUser.name[0].toUpperCase();
+    document.getElementById('profileNavName').textContent = currentUser.given_name || currentUser.name;
+
+    // Populate Sidebar Profile Panel
+    const profileAvatarWrap = document.getElementById('profileAvatarWrap');
+    if (currentUser.picture) {
+      profileAvatarWrap.innerHTML = `<img src="${currentUser.picture}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;">`;
+    } else {
+      profileAvatarWrap.innerHTML = `<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-family:'Playfair Display',serif;margin:0 auto;">${currentUser.name[0].toUpperCase()}</div>`;
+    }
+    document.getElementById('profileName').textContent = currentUser.name;
+    document.getElementById('profileEmail').textContent = currentUser.email || '';
+
     // Populate feedback form
     document.getElementById('loggedInNote').style.display = 'flex';
-    document.getElementById('formAvatar').textContent = (currentUser.given_name||'G')[0].toUpperCase();
+    document.getElementById('formAvatar').textContent = currentUser.name[0].toUpperCase();
     document.getElementById('formUserName').textContent = currentUser.name;
+  } else {
+    // Guest state
+    document.getElementById('profileNavBtn').style.display = 'none';
+    document.getElementById('loggedInNote').style.display = 'none';
   }
+  
   renderProducts();
   observeFades();
 }
@@ -1067,6 +1265,13 @@ function filterP(cat, btn) {
 // CART — FIXED MULTI-ITEM
 // ═══════════════════════════════════════
 function addToCart(id, fromModal=false) {
+  // Check if user is a Guest
+  if (!currentUser || currentUser.name === 'Guest') {
+    if (fromModal) closeModalDirect();
+    document.getElementById('loginWall').classList.add('open');
+    return;
+  }
+
   const p = products.find(x=>x.id===id);
   if (!p.stock) { toast('This piece is currently out of stock ✿'); return; }
   if (!cart.find(x=>x.id===id)) { cart.push(p); updateCart(); toast(`"${p.name}" added to your bag ✿`); }
@@ -1160,10 +1365,15 @@ function renderStars(val){
 function hoverStar(val){renderStars(val);}
 function setHalfRating(val){currentRating=val;renderStars(val);}
 
-// Reset stars on mouse leave
+// Reset stars on mouse leave + intro splash
 document.addEventListener('DOMContentLoaded',()=>{
   const row=document.getElementById('halfStarRow');
   if(row) row.addEventListener('mouseleave',()=>renderStars(currentRating));
+
+  setTimeout(()=>{
+    document.getElementById('introScreen').classList.add('hide');
+    document.getElementById('gSignInScreen').classList.add('show');
+  }, 2800);
 });
 
 function starsToDisplay(val){
@@ -1185,13 +1395,21 @@ function handlePhotos(e){
 }
 
 function submitReview(){
+  // Check if user is a Guest
+  if (!currentUser || currentUser.name === 'Guest') {
+    document.getElementById('loginWall').classList.add('open');
+    return;
+  }
+
   const review=document.getElementById('freview').value.trim();
   if(!review){toast('Please write your review ✿');return;}
   if(!currentRating){toast('Please select a star rating ✿');return;}
-  const name=currentUser&&currentUser.name!=='Guest'?currentUser.name:'Anonymous';
+  
+  const name = currentUser.name;
   const card=document.createElement('div');
   card.className='rcard fade-up';
   card.innerHTML=`<div class="rcard-quote">"</div><div class="rcard-stars">${starsToDisplay(currentRating)}</div><p class="rcard-text">${review}</p><p class="rcard-author">${name}</p>`;
+  
   document.getElementById('reviewsGrid').prepend(card);
   setTimeout(()=>card.classList.add('in'),80);
   document.getElementById('feedbackForm').style.display='none';
@@ -1214,5 +1432,68 @@ function observeFades(){
   document.querySelectorAll('.fade-up:not(.in)').forEach(el=>obs.observe(el));
 }
 </script>
+
+<!-- PROFILE VEIL -->
+<div class="profile-veil" id="profileVeil" onclick="toggleProfile()"></div>
+
+<!-- PROFILE PANEL -->
+<div id="profilePanel">
+  <div class="profile-head">
+    <div id="profileAvatarWrap"></div>
+    <p class="profile-name" id="profileName"></p>
+    <p class="profile-email" id="profileEmail"></p>
+  </div>
+  <div class="profile-rows">
+    <div class="profile-row" onclick="showPurchases()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">🛍</div>
+        <div class="profile-row-text"><p>Purchased Items</p><p id="purchaseCount">View your orders</p></div>
+      </div>
+      <div class="profile-row-arrow">›</div>
+    </div>
+    <div class="profile-row" onclick="showMyReviews()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">✿</div>
+        <div class="profile-row-text"><p>My Reviews</p><p id="reviewCount">View your reviews</p></div>
+      </div>
+      <div class="profile-row-arrow">›</div>
+    </div>
+    <div class="profile-row logout" onclick="confirmLogout()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">🚪</div>
+        <div class="profile-row-text" style="color:#dc2626"><p>Log Out</p><p>Sign out of your account</p></div>
+      </div>
+      <div class="profile-row-arrow" style="color:#dc2626">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOUT CONFIRM -->
+<div class="logout-confirm" id="logoutConfirm">
+  <div class="logout-box">
+    <div class="logout-emoji">🥺</div>
+    <h3 class="logout-title">Are you sure?</h3>
+    <p class="logout-body">We'll miss you. You can always come back and pick up right where you left off — your bag and wishlist will be here waiting.</p>
+    <div class="logout-btns">
+      <button class="logout-btn-no" onclick="document.getElementById('logoutConfirm').classList.remove('open')">Stay ✿</button>
+      <button class="logout-btn-yes" onclick="doLogout()">Log Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN WALL -->
+<div class="login-wall" id="loginWall">
+  <div class="login-wall-box">
+    <div class="login-wall-icon">🔒</div>
+    <h3 class="login-wall-title">Sign in to <em>continue</em></h3>
+    <p class="login-wall-body" id="loginWallMsg">Please sign in with your Google account to add items to your bag and place orders.</p>
+    <button class="login-wall-btn" onclick="closeLoginWall(); document.getElementById('gSignInScreen').classList.add('show'); document.getElementById('gSignInScreen').classList.remove('hide');">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign in with Google
+    </button>
+    <p class="login-wall-close" onclick="closeLoginWall()">Maybe later →</p>
+  </div>
+</div>
+
 </body>
 </html>
