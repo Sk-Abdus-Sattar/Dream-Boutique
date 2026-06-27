@@ -36,17 +36,20 @@ onAuthStateChanged(auth, async (user) => {
       picture: user.photoURL,
       uid: user.uid,
     };
-    // Returning user — wait for intro animation to finish, then go straight to device picker
-    // (no sign-in screen needed — they're already logged in)
-    setTimeout(() => {
-      document.getElementById('introScreen').classList.add('hide');
-      document.getElementById('gSignInScreen').classList.add('hide');
-      document.getElementById('gSignInScreen').classList.remove('show');
-      onUserReady();
-    }, 2800);
+    // Hide all gate screens
+    document.getElementById('introScreen').classList.add('hide');
+    document.getElementById('gSignInScreen').classList.add('hide');
+    document.getElementById('gSignInScreen').classList.remove('show');
+    document.getElementById('loader').classList.remove('show');
+    // Go straight to main app (skip device selector on refresh)
+    const app = document.getElementById('mainApp');
+    if (!app.classList.contains('show')) {
+      app.classList.add('show');
+      history.replaceState(null, '', '#home');
+      initApp();
+    }
   } else {
     currentUser = null;
-    // New/logged-out visitor — intro plays then sign-in screen shows (handled by DOMContentLoaded)
   }
 });
 
@@ -74,15 +77,8 @@ async function signInWithGoogle() {
 async function doLogout() {
   await signOut(auth);
   currentUser = null;
-  // Hide app, hide profile panel
   document.getElementById('logoutConfirm').classList.remove('open');
-  document.getElementById('profilePanel').classList.remove('open');
-  document.getElementById('profileVeil').classList.remove('open');
-  document.getElementById('mainApp').classList.remove('show');
-  // Push sign-in to history and show sign-in screen
-  history.pushState({ page: 'signin' }, '', '#signin');
-  document.getElementById('gSignInScreen').classList.add('show');
-  document.getElementById('gSignInScreen').classList.remove('hide');
+  location.reload();
 }
 
 // ─── Fetch user's purchased products ───
@@ -91,12 +87,13 @@ async function getUserPurchases(email) {
   const q = query(collection(db, 'purchases'), where('email', '==', email));
   const snap = await getDocs(q);
   if (snap.empty) return [];
+  // Merge all product arrays across docs (in case of multiple purchase docs)
   let all = [];
   snap.forEach(d => {
     const p = d.data().products;
     if (Array.isArray(p)) all = all.concat(p);
   });
-  return [...new Set(all)];
+  return [...new Set(all)]; // deduplicate
 }
 
 // ─── Fetch products the user has already reviewed ───
@@ -147,17 +144,21 @@ async function populateReviewDropdown() {
     getUserReviewedProducts(currentUser.email),
   ]);
 
+  // Store on currentUser for profile use
   currentUser.purchases = purchased;
 
+  // Products available to review = purchased minus already reviewed
   const available = purchased.filter(p => !reviewed.includes(p));
 
   if (purchased.length === 0) {
+    // No purchases at all
     document.getElementById('feedbackForm').style.display = 'none';
     document.getElementById('reviewPurchaseGate').style.display = 'block';
     return;
   }
 
   if (available.length === 0) {
+    // Purchased but reviewed everything
     document.getElementById('feedbackForm').style.display = 'none';
     document.getElementById('reviewPurchaseGate').style.display = 'block';
     document.getElementById('reviewPurchaseGate').innerHTML = `
@@ -167,6 +168,7 @@ async function populateReviewDropdown() {
     return;
   }
 
+  // Populate dropdown with available products
   available.forEach(name => {
     const opt = document.createElement('option');
     opt.value = name;
@@ -178,9 +180,9 @@ async function populateReviewDropdown() {
   document.getElementById('feedbackForm').style.display = 'block';
 }
 
+// ─── Populate profile purchased items ───
 function renderProfilePurchases(purchases) {
   const el = document.getElementById('purchaseCount');
-  if (!el) return;
   if (!purchases || purchases.length === 0) {
     el.textContent = 'No purchases yet';
     return;
@@ -193,14 +195,11 @@ function continueAsGuest() {
   onUserReady();
 }
 
-// ─── onUserReady: always shows device picker ───
 function onUserReady() {
   document.getElementById('gSignInScreen').classList.add('hide');
-  document.getElementById('gSignInScreen').classList.remove('show');
   const ds = document.getElementById('deviceScreen');
   ds.classList.add('show');
-  ds.classList.remove('hide');
-  if (currentUser && currentUser.given_name && currentUser.given_name !== 'Guest') {
+  if (currentUser.given_name && currentUser.given_name !== 'Guest') {
     document.getElementById('devWelcomeText').textContent = 'Welcome, ' + currentUser.given_name;
     document.getElementById('devUserName').innerHTML = 'You\'re stepping into <em>the Dream</em>';
   }
@@ -209,16 +208,16 @@ function onUserReady() {
   const cardMap = { desktop: 'devCardDesktop', tablet: 'devCardTablet', mobile: 'devCardMobile' };
   const card = document.getElementById(cardMap[detected]);
   if (card) card.classList.add('detected');
-  history.replaceState({ page: 'device' }, '', '#device');
+  history.replaceState(null, '', '#device');
 }
 
 function selectDevice(type) {
   const ds = document.getElementById('deviceScreen');
   ds.classList.add('hide');
-  ds.classList.remove('show');
   const loader = document.getElementById('loader');
   loader.classList.add('show');
 
+  // Apply layout based on user's explicit choice (overrides auto-detect)
   if (type === 'mobile' || type === 'tablet') {
     document.body.classList.add('mobile-view');
   } else {
@@ -229,39 +228,25 @@ function selectDevice(type) {
     loader.classList.add('out');
     const app = document.getElementById('mainApp');
     app.classList.add('show');
-    history.replaceState({ page: 'home' }, '', '#home');
+    history.replaceState(null, '', '#home');
     initApp();
   }, 1800);
 }
 
-// ─── Handle back/forward navigation ───
-window.addEventListener('popstate', (e) => {
+// Handle back button / refresh on hash
+window.addEventListener('popstate', () => {
   const hash = location.hash;
   const app = document.getElementById('mainApp');
   const isAppShowing = app && app.classList.contains('show');
-
-  if (hash === '#signin' || hash === '') {
-    // Only go to sign-in if not logged in
-    if (!currentUser || currentUser.email === null) {
-      app && app.classList.remove('show');
-      document.getElementById('gSignInScreen').classList.add('show');
-      document.getElementById('gSignInScreen').classList.remove('hide');
-    } else {
-      // Logged in user going back — stay on home
-      history.replaceState({ page: 'home' }, '', '#home');
-    }
-  } else if (hash === '#home') {
-    // Close any overlays
-    document.getElementById('cartPanel').classList.remove('open');
-    document.getElementById('cartVeil').classList.remove('open');
-    document.getElementById('profilePanel').classList.remove('open');
-    document.getElementById('profileVeil').classList.remove('open');
-    document.getElementById('modalVeil').classList.remove('open');
-    document.body.style.overflow = '';
-  } else if (hash === '#device') {
-    // Don't allow going back to device picker once app is loaded
-    if (isAppShowing) {
-      history.pushState({ page: 'home' }, '', '#home');
+  if (!hash || hash === '#home') {
+    // Already on main app — do nothing (stay on page)
+    if (!isAppShowing && currentUser) {
+      // Restore app view after refresh
+      app.classList.add('show');
+      document.getElementById('introScreen').classList.add('hide');
+      document.getElementById('gSignInScreen').classList.add('hide');
+      document.getElementById('deviceScreen').classList.add('hide');
+      initApp();
     }
   }
 });
@@ -326,35 +311,36 @@ const products=[
 // ═══════════════════════════════════════
 function initApp() {
   if (currentUser && currentUser.name !== 'Guest') {
+    // Populate Navigation Button
     document.getElementById('profileNavBtn').style.display = 'flex';
-    document.getElementById('navUserChip').style.display = 'none';
+    document.getElementById('navUserChip').style.display = 'none'; // Hide the old chip
     document.getElementById('profileNavInitial').textContent = currentUser.given_name ? currentUser.given_name[0].toUpperCase() : currentUser.name[0].toUpperCase();
     document.getElementById('profileNavName').textContent = currentUser.given_name || currentUser.name;
 
+    // Populate Sidebar Profile Panel
     const profileAvatarWrap = document.getElementById('profileAvatarWrap');
-    if (profileAvatarWrap) {
-      if (currentUser.picture) {
-        profileAvatarWrap.innerHTML = `<img src="${currentUser.picture}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;">`;
-      } else {
-        profileAvatarWrap.innerHTML = `<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-family:'Playfair Display',serif;margin:0 auto;">${currentUser.name[0].toUpperCase()}</div>`;
-      }
+    if (currentUser.picture) {
+      profileAvatarWrap.innerHTML = `<img src="${currentUser.picture}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;">`;
+    } else {
+      profileAvatarWrap.innerHTML = `<div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-family:'Playfair Display',serif;margin:0 auto;">${currentUser.name[0].toUpperCase()}</div>`;
     }
-    const pName = document.getElementById('profileName');
-    const pEmail = document.getElementById('profileEmail');
-    if (pName) pName.textContent = currentUser.name;
-    if (pEmail) pEmail.textContent = currentUser.email || '';
+    document.getElementById('profileName').textContent = currentUser.name;
+    document.getElementById('profileEmail').textContent = currentUser.email || '';
 
+    // Populate feedback form
     document.getElementById('loggedInNote').style.display = 'flex';
     document.getElementById('formAvatar').textContent = currentUser.name[0].toUpperCase();
     document.getElementById('formUserName').textContent = currentUser.name;
   } else {
+    // Guest state
     document.getElementById('profileNavBtn').style.display = 'none';
     document.getElementById('loggedInNote').style.display = 'none';
   }
-
+  
   renderProducts();
   observeFades();
   loadReviews();
+  // Hide form by default, populateReviewDropdown will show it if eligible
   document.getElementById('feedbackForm').style.display = 'none';
   document.getElementById('reviewPurchaseGate').style.display = 'block';
   populateReviewDropdown().then(() => {
@@ -369,49 +355,32 @@ function initApp() {
 // ═══════════════════════════════════════
 let cart = [], currentProd = null;
 
-function productCardHTML(p) {
-  const img = uploadedImgs[p.id];
-  const imgEl = img
-    ? `<img class="pcard-img" src="${img}" alt="${p.name}" loading="lazy"/>`
-    : `<div style="width:100%;height:100%;background:${bgColors[p.id]}25;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:0.2;">✿</div>`;
-  const stockBadge = p.stock
-    ? `<span class="stock-badge in">● In Stock</span>`
-    : `<span class="stock-badge out">● Out of Stock</span>`;
-  return `<div class="pcard fade-up" data-product-id="${p.id}">
-    <div class="pcard-img-wrap">${imgEl}
-      <span class="pcard-badge">${p.tag}</span>
-      ${stockBadge}
-    </div>
-    <div class="pcard-info">
-      <p class="pcard-tag">${p.tag}</p>
-      <h3 class="pcard-name">${p.name}</h3>
-      <p class="pcard-desc">${p.desc.substring(0,115)}…</p>
-      <div class="pcard-foot">
-        <span class="pcard-price">₹${Number(p.price).toLocaleString('en-IN')}</span>
-        <div class="pcard-actions">
-          <button class="add-bag-btn" data-add-cart="${p.id}" title="Add to Bag">🛍</button>
-          <button class="wa-icon-btn" data-enquire="${p.id}" title="Enquire on WhatsApp">💬</button>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
 function renderProducts(filter='all') {
   const grid = document.getElementById('productGrid');
   const list = filter==='all' ? products : products.filter(p=>p.cat===filter);
-  grid.innerHTML = list.map(productCardHTML).join('');
-  // Attach event listeners via delegation
-  grid.querySelectorAll('.pcard').forEach(card => {
-    const id = parseInt(card.dataset.productId);
-    card.addEventListener('click', () => openModal(id));
-  });
-  grid.querySelectorAll('[data-add-cart]').forEach(btn => {
-    btn.addEventListener('click', e => { e.stopPropagation(); addToCart(parseInt(btn.dataset.addCart)); });
-  });
-  grid.querySelectorAll('[data-enquire]').forEach(btn => {
-    btn.addEventListener('click', e => { e.stopPropagation(); enquireWA(parseInt(btn.dataset.enquire)); });
-  });
+  grid.innerHTML = list.map(p => {
+    const img = uploadedImgs[p.id];
+    const imgEl = img ? `<img class="pcard-img" src="${img}" alt="${p.name}" loading="lazy"/>` : `<div style="width:100%;height:100%;background:${bgColors[p.id]}25;display:flex;align-items:center;justify-content:center;font-size:48px;opacity:0.2;">✿</div>`;
+    const stockBadge = p.stock ? `<span class="stock-badge in">● In Stock</span>` : `<span class="stock-badge out">● Out of Stock</span>`;
+    return `<div class="pcard fade-up" onclick="openModal(${p.id})">
+      <div class="pcard-img-wrap">${imgEl}
+        <span class="pcard-badge">${p.tag}</span>
+        ${stockBadge}
+      </div>
+      <div class="pcard-info">
+        <p class="pcard-tag">${p.tag}</p>
+        <h3 class="pcard-name">${p.name}</h3>
+        <p class="pcard-desc">${p.desc.substring(0,115)}…</p>
+        <div class="pcard-foot">
+          <span class="pcard-price">₹${Number(p.price).toLocaleString('en-IN')}</span>
+          <div class="pcard-actions" onclick="event.stopPropagation()">
+            <button class="add-bag-btn" onclick="addToCart(${p.id})" title="Add to Bag">🛍</button>
+            <button class="wa-icon-btn" onclick="enquireWA(${p.id})" title="Enquire on WhatsApp">💬</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
   observeFades();
 }
 
@@ -422,14 +391,16 @@ function filterP(cat, btn) {
 }
 
 // ═══════════════════════════════════════
-// CART
+// CART — FIXED MULTI-ITEM
 // ═══════════════════════════════════════
 function addToCart(id, fromModal=false) {
+  // Check if user is a Guest
   if (!currentUser || currentUser.name === 'Guest') {
     if (fromModal) closeModalDirect();
     document.getElementById('loginWall').classList.add('open');
     return;
   }
+
   const p = products.find(x=>x.id===id);
   if (!p.stock) { toast('This piece is currently out of stock ✿'); return; }
   if (!cart.find(x=>x.id===id)) { cart.push(p); updateCart(); toast(`"${p.name}" added to your bag ✿`); }
@@ -445,6 +416,7 @@ function updateCart() {
   if (mbc) mbc.textContent = cart.length;
   const body = document.getElementById('cartBody');
   const empty = document.getElementById('cartEmpty');
+  // Remove existing item rows (keep empty state div intact)
   body.querySelectorAll('.cart-item-row').forEach(el=>el.remove());
   if (cart.length===0) {
     empty.style.display='flex';
@@ -459,22 +431,18 @@ function updateCart() {
     const thumb=img?`<img class="cart-item-thumb" src="${img}" alt="${p.name}"/>`:`<div class="cart-item-thumb-placeholder" style="background:${bgColors[p.id]}30;">✿</div>`;
     const row=document.createElement('div');
     row.className='cart-item-row';
-    row.innerHTML=`${thumb}<div class="citem-info"><p class="citem-cat">${p.tag}</p><p class="citem-name">${p.name}</p><p class="citem-price">₹${Number(p.price).toLocaleString('en-IN')}</p></div><button class="citem-remove" data-remove="${p.id}">×</button>`;
-    row.querySelector('[data-remove]').addEventListener('click', () => removeFromCart(p.id));
+    row.innerHTML=`${thumb}<div class="citem-info"><p class="citem-cat">${p.tag}</p><p class="citem-name">${p.name}</p><p class="citem-price">₹${Number(p.price).toLocaleString('en-IN')}</p></div><button class="citem-remove" onclick="removeFromCart(${p.id})">×</button>`;
     body.appendChild(row);
   });
 }
 
-function toggleCart(){
-  document.getElementById('cartPanel').classList.toggle('open');
-  document.getElementById('cartVeil').classList.toggle('open');
-}
+function toggleCart(){document.getElementById('cartPanel').classList.toggle('open');document.getElementById('cartVeil').classList.toggle('open');}
 
 function checkoutWA(){
   if(!cart.length)return;
   const list=cart.map((p,i)=>`${i+1}. ${p.name} — ₹${Number(p.price).toLocaleString('en-IN')}`).join('%0A');
   const total=cart.reduce((s,p)=>s+Number(p.price),0);
-  const userInfo=currentUser&&currentUser.name!=='Guest'?`%0AName: ${currentUser.name}%0AEmail: ${currentUser.email||'—'}`:'' ;
+  const userInfo=currentUser&&currentUser.name!=='Guest'?`%0AName: ${currentUser.name}%0AEmail: ${currentUser.email||'—'}`:'';
   const msg=`Hello Dream Boutique! 🌸%0A%0AI'd love to order:%0A${list}%0A%0ATotal: ₹${total.toLocaleString('en-IN')}${userInfo}%0A%0APlease confirm availability. Thank you!`;
   window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
 }
@@ -501,23 +469,11 @@ function openModal(id){
   const stock=document.getElementById('modalStock');
   stock.className='modal-stock '+(p.stock?'in':'out');
   stock.innerHTML=(p.stock?'● In Stock':'● Out of Stock');
-  document.getElementById('modalQty').textContent='1';
   document.getElementById('modalVeil').classList.add('open');
   document.body.style.overflow='hidden';
-  // Push product hash for back-button support
-  history.pushState({ page: 'product', id: p.id }, '', `#product/${p.id}`);
 }
 function closeModal(e){if(e.target===document.getElementById('modalVeil'))closeModalDirect();}
-function closeModalDirect(){
-  document.getElementById('modalVeil').classList.remove('open');
-  document.body.style.overflow='';
-  currentProd=null;
-  document.getElementById('modalQty').textContent='1';
-  // Go back to #home in history
-  if (location.hash.startsWith('#product/')) {
-    history.back();
-  }
-}
+function closeModalDirect(){document.getElementById('modalVeil').classList.remove('open');document.body.style.overflow='';currentProd=null; document.getElementById('modalQty').textContent='1';}
 
 // ═══════════════════════════════════════
 // QTY CONTROL
@@ -533,6 +489,7 @@ function changeQty(delta) {
 // ═══════════════════════════════════════
 // BUY NOW
 // ═══════════════════════════════════════
+// EmailJS — replace with your actual Service ID, Template ID, Public Key
 const EJS_SERVICE  = 'Dream Boutique';
 const EJS_TEMPLATE = 'template_3gu6aux';
 const EJS_PUBKEY   = 'JsS_HIYQlBNniDhUK';
@@ -562,21 +519,24 @@ async function buyNow() {
   };
 
   try {
-    // 1. Log order to Firestore
+    // 1. Log purchase to Firestore
     await addDoc(collection(db, 'orders'), {
       ...orderData,
       createdAt: serverTimestamp(),
     });
 
-    // 2. Add to purchases collection for review eligibility
+    // 2. Also add to purchases collection so the buyer can leave a review later
+    // Check if a purchase doc for this email already exists
     const pq = query(collection(db, 'purchases'), where('email', '==', currentUser.email));
     const psnap = await getDocs(pq);
     if (psnap.empty) {
+      // Create new
       await addDoc(collection(db, 'purchases'), {
         email: currentUser.email,
         products: [currentProd.name],
       });
     } else {
+      // Merge product into existing doc
       const pdoc = psnap.docs[0];
       const existing = pdoc.data().products || [];
       if (!existing.includes(currentProd.name)) {
@@ -584,7 +544,7 @@ async function buyNow() {
       }
     }
 
-    // 3. Send EmailJS notification
+    // 3. Send email notification to shop owner via EmailJS
     await emailjs.send(EJS_SERVICE, EJS_TEMPLATE, {
       to_email: 'noorproductions.as@gmail.com',
       buyer_name: orderData.buyerName,
@@ -595,7 +555,7 @@ async function buyNow() {
       ordered_at: orderData.orderedAt,
     });
 
-    // 4. Show order confirmation
+    // 4. Close product modal, show order success modal
     closeModalDirect();
     document.getElementById('orderDetailProduct').textContent = orderData.productName;
     document.getElementById('orderDetailQty').textContent = qty;
@@ -614,9 +574,14 @@ function closeOrderModal() {
 }
 
 // ═══════════════════════════════════════
-// HALF-STAR RATING DISPLAY
+// HALF-STAR RATING
 // ═══════════════════════════════════════
+// Rating now handled by dropdown (#frating)
+
+// Reset stars on mouse leave + intro splash
 document.addEventListener('DOMContentLoaded',()=>{
+  // Intro → sign-in screen handled by onAuthStateChanged for returning users
+  // For new visitors, show intro then sign-in screen
   if (!auth.currentUser) {
     setTimeout(()=>{
       document.getElementById('introScreen').classList.add('hide');
@@ -665,19 +630,23 @@ async function submitReview(){
       rating,
       review,
     });
+    // Add review card to grid
     const card = document.createElement('div');
     card.className = 'rcard fade-up';
     card.innerHTML = `<div class="rcard-quote">"</div><div class="rcard-stars">${starsToDisplay(rating)}</div><p class="rcard-text">${review}</p><p class="rcard-author">${currentUser.name}</p><p class="rcard-loc" style="font-size:11px;color:var(--text-light);margin-top:2px;">${product}</p>`;
     document.getElementById('reviewsGrid').prepend(card);
     setTimeout(() => card.classList.add('in'), 80);
+    // Remove reviewed product from dropdown
     const sel = document.getElementById('fproduct');
     const opt = Array.from(sel.options).find(o => o.value === product);
     if (opt) opt.remove();
+    // If no more products left to review, show success permanently
     const remaining = Array.from(sel.options).filter(o => o.value !== '').length;
     if (remaining === 0) {
       document.getElementById('feedbackForm').style.display = 'none';
       document.getElementById('successBox').style.display = 'block';
     } else {
+      // Reset form for next product, show brief success toast
       document.getElementById('freview').value = '';
       document.getElementById('frating').value = '';
       sel.value = '';
@@ -704,9 +673,10 @@ function observeFades(){
   document.querySelectorAll('.fade-up:not(.in)').forEach(el=>obs.observe(el));
 }
 
-// Expose functions globally for onclick attributes and profile.js
+// Expose functions to global scope for onclick attributes
 window.signInWithGoogle = signInWithGoogle;
 window.continueAsGuest = continueAsGuest;
+window.toggleProfile = toggleProfile;
 window.toggleCart = toggleCart;
 window.filterP = filterP;
 window.openModal = openModal;
@@ -721,13 +691,5 @@ window.selectDevice = selectDevice;
 window.changeQty = changeQty;
 window.buyNow = buyNow;
 window.closeOrderModal = closeOrderModal;
-window.doLogout = doLogout;
+window.closeLoginWall = closeLoginWall;
 window.toast = toast;
-window.starsToDisplay = starsToDisplay;
-window.getUserPurchases = getUserPurchases;
-window.db = db;
-window.collection = collection;
-window.query = query;
-window.where = where;
-window.getDocs = getDocs;
-window.currentUser_ref = () => currentUser;

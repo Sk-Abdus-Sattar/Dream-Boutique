@@ -1,14 +1,14 @@
-// ═══════════════════════════════════════
-// SECURITY LOCKS
-// ═══════════════════════════════════════
+// Disable right-click
 document.addEventListener('contextmenu', e => e.preventDefault());
+// Disable F12, Ctrl+Shift+I/J/U/C
 document.addEventListener('keydown', e => {
-  if (e.key === 'F12' ||
+  if (e.key === 'F12' || 
       (e.ctrlKey && e.shiftKey && ['I','J','C','K'].includes(e.key.toUpperCase())) ||
       (e.ctrlKey && e.key.toUpperCase() === 'U')) {
     e.preventDefault(); e.stopPropagation(); return false;
   }
 });
+// Detect devtools open via size difference
 (function devToolsDetect() {
   const threshold = 160;
   setInterval(() => {
@@ -17,10 +17,7 @@ document.addEventListener('keydown', e => {
     }
   }, 1000);
 })();
-
-// ═══════════════════════════════════════
-// PROFILE PANEL
-// ═══════════════════════════════════════
+// Profile and Modal Logic
 function toggleProfile() {
   document.getElementById('profilePanel').classList.toggle('open');
   document.getElementById('profileVeil').classList.toggle('open');
@@ -28,11 +25,10 @@ function toggleProfile() {
 
 async function showPurchases() {
   toggleProfile();
-  const cu = window.currentUser_ref ? window.currentUser_ref() : null;
-  if (!cu || !cu.email) { window.toast && window.toast("Sign in to view your purchases ✿"); return; }
-  const purchases = await window.getUserPurchases(cu.email);
+  if (!currentUser || !currentUser.email) { toast("Sign in to view your purchases ✿"); return; }
+  const purchases = await getUserPurchases(currentUser.email);
   if (purchases.length === 0) {
-    window.toast && window.toast("No purchases recorded yet ✿");
+    toast("No purchases recorded yet ✿");
     return;
   }
   showProfileModal(
@@ -43,13 +39,11 @@ async function showPurchases() {
 
 async function showMyReviews() {
   toggleProfile();
-  const cu = window.currentUser_ref ? window.currentUser_ref() : null;
-  if (!cu || !cu.email) { window.toast && window.toast("Sign in to view your reviews ✿"); return; }
-  const db = window.db;
-  const q = window.query(window.collection(db, 'reviews'), window.where('email', '==', cu.email));
-  const snap = await window.getDocs(q);
+  if (!currentUser || !currentUser.email) { toast("Sign in to view your reviews ✿"); return; }
+  const q = query(collection(db, 'reviews'), where('email', '==', currentUser.email));
+  const snap = await getDocs(q);
   if (snap.empty) {
-    window.toast && window.toast("You haven't left any reviews yet ✿");
+    toast("You haven't left any reviews yet ✿");
     return;
   }
   const rows = [];
@@ -57,7 +51,7 @@ async function showMyReviews() {
     const r = d.data();
     rows.push(`<div style="padding:14px 0;border-bottom:1px solid var(--border);">
       <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">${r.product}</div>
-      <div style="color:#F4A261;font-size:14px;margin-bottom:4px;">${window.starsToDisplay ? window.starsToDisplay(r.rating) : r.rating}</div>
+      <div style="color:#F4A261;font-size:14px;margin-bottom:4px;">${starsToDisplay(r.rating)}</div>
       <div style="font-size:13px;color:var(--text);line-height:1.6;">"${r.review}"</div>
     </div>`);
   });
@@ -89,13 +83,8 @@ function confirmLogout() {
   document.getElementById('logoutConfirm').classList.add('open');
 }
 
+// doLogout handled by Firebase Auth (async) above
+
 function closeLoginWall() {
   document.getElementById('loginWall').classList.remove('open');
 }
-
-// Expose to global scope
-window.toggleProfile = toggleProfile;
-window.showPurchases = showPurchases;
-window.showMyReviews = showMyReviews;
-window.confirmLogout = confirmLogout;
-window.closeLoginWall = closeLoginWall;
