@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms & Conditions — Dream Boutique</title>
+<meta name="description" content="Terms and Conditions for Dream Boutique — Modest & Ethnic Wears."/>
+<link rel="icon" href="BQT-Assets/DB%20Logo.png" type="image/png"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blush:#F7E8E0; --blush-deep:#F0D5C8; --rose:#D4897A; --rose-light:#E8B4A8;
+  --ivory:#FDF8F4; --ivory-dark:#F5EDE4; --gold:#C9956A; --gold-light:#E8C4A8;
+  --brown:#8B5E4A; --text:#4A3728; --text-light:#9A7B6E; --border:#EDD8CC; --green:#25D366;
+  --ease:cubic-bezier(0.25,1,0.5,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Raleway',sans-serif;background:var(--ivory);color:var(--text);overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--ivory);}::-webkit-scrollbar-thumb{background:var(--rose-light);border-radius:3px;}
+
+/* ══ FLOATING PETALS ══ */
+.petal-bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+.petal{position:absolute;border-radius:50% 0 50% 0;opacity:0.07;}
+.petal:nth-child(1){width:80px;height:80px;background:var(--rose);top:5%;left:3%;animation:floatPetal 7s ease-in-out infinite;}
+.petal:nth-child(2){width:50px;height:50px;background:var(--gold);top:18%;right:5%;animation:floatPetal 9s ease-in-out infinite 1s;}
+.petal:nth-child(3){width:100px;height:100px;background:var(--rose-light);bottom:20%;left:2%;animation:floatPetal 8s ease-in-out infinite 2s;}
+.petal:nth-child(4){width:60px;height:60px;background:var(--gold-light);bottom:35%;right:4%;animation:floatPetal 10s ease-in-out infinite 0.5s;}
+.petal:nth-child(5){width:40px;height:40px;background:var(--rose);top:60%;left:45%;animation:floatPetal 6s ease-in-out infinite 3s;}
+@keyframes floatPetal{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-18px) rotate(8deg);}}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(253,248,244,0.96);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 56px;height:72px;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-db{
+  width:44px;height:44px;border-radius:50%;
+  box-shadow:0 4px 16px rgba(212,137,122,0.35);flex-shrink:0;
+  object-fit:cover;
+}
+.nav-brand-main{font-family:'Playfair Display',serif;font-size:17px;color:var(--text);letter-spacing:1px;display:block;}
+.nav-brand-sub{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);display:block;margin-top:1px;}
+.nav-back{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-light);text-decoration:none;font-weight:500;
+  transition:color 0.3s;
+}
+.nav-back:hover{color:var(--rose);}
+.nav-back svg{transition:transform 0.3s;}
+.nav-back:hover svg{transform:translateX(-3px);}
+
+/* ══ HERO ══ */
+.hero{
+  padding:140px 56px 72px;text-align:center;position:relative;z-index:1;
+}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--rose);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--rose-light);}
+.hero-title{
+  font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);
+  color:var(--text);font-weight:400;line-height:1.15;margin-bottom:16px;
+}
+.hero-title em{font-style:italic;color:var(--rose);}
+.hero-script{
+  font-family:'Dancing Script',cursive;font-size:clamp(18px,2.5vw,26px);
+  color:var(--gold);display:block;margin-bottom:28px;
+}
+.hero-meta{
+  font-size:12px;color:var(--text-light);letter-spacing:2px;
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;
+}
+.hero-meta span{display:flex;align-items:center;gap:6px;}
+.hero-divider{
+  width:80px;height:2px;margin:36px auto 0;
+  background:linear-gradient(90deg,transparent,var(--rose-light),transparent);
+}
+
+/* ══ MAIN LAYOUT ══ */
+.page-wrap{
+  max-width:860px;margin:0 auto;
+  padding:0 32px 100px;position:relative;z-index:1;
+}
+
+/* ══ INTRO CARD ══ */
+.intro-card{
+  background:#fff;border:1px solid var(--border);border-radius:24px;
+  padding:40px 48px;margin-bottom:48px;
+  box-shadow:0 8px 32px rgba(139,94,74,0.07);
+  text-align:center;
+}
+.intro-card p{
+  font-size:14px;line-height:1.9;color:var(--text-light);font-weight:300;
+}
+.intro-card strong{color:var(--rose);font-weight:600;}
+
+/* ══ SECTION ══ */
+.tc-section{
+  background:#fff;border:1px solid var(--border);border-radius:20px;
+  padding:40px 48px;margin-bottom:24px;
+  box-shadow:0 4px 20px rgba(139,94,74,0.05);
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s var(--ease),transform 0.6s var(--ease);
+}
+.tc-section.in{opacity:1;transform:translateY(0);}
+
+.section-head{
+  display:flex;align-items:flex-start;gap:18px;margin-bottom:24px;
+  padding-bottom:20px;border-bottom:1px solid var(--border);
+}
+.section-num{
+  font-family:'Playfair Display',serif;font-size:36px;font-weight:400;
+  color:var(--blush-deep);line-height:1;flex-shrink:0;
+  width:48px;text-align:center;
+}
+.section-label{flex:1;}
+.section-label h2{
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:500;
+  color:var(--text);margin-bottom:4px;
+}
+.section-label .section-sub{
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--rose);font-weight:500;
+}
+
+.tc-body{font-size:13.5px;line-height:2;color:var(--text-light);font-weight:300;}
+.tc-body p{margin-bottom:14px;}
+.tc-body p:last-child{margin-bottom:0;}
+.tc-body strong{color:var(--text);font-weight:600;}
+.tc-body em{color:var(--rose);font-style:normal;font-weight:500;}
+
+/* ══ POINT LIST ══ */
+.tc-points{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:4px;}
+.tc-points li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:13.5px;line-height:1.8;color:var(--text-light);font-weight:300;
+}
+.tc-points li::before{
+  content:'✿';color:var(--rose-light);font-size:12px;
+  flex-shrink:0;margin-top:3px;
+}
+
+/* ══ HIGHLIGHT BOX ══ */
+.tc-highlight{
+  background:linear-gradient(135deg,var(--blush) 0%,var(--ivory-dark) 100%);
+  border:1px solid var(--border);border-radius:14px;
+  padding:20px 24px;margin:20px 0;
+}
+.tc-highlight p{font-size:13px;line-height:1.85;color:var(--brown);font-weight:400;}
+.tc-highlight strong{color:var(--rose);}
+
+/* ══ CONTACT FOOTER ══ */
+.contact-card{
+  background:linear-gradient(135deg,#fff 0%,var(--blush) 100%);
+  border:1px solid var(--border);border-radius:24px;
+  padding:48px;margin-top:12px;text-align:center;
+  box-shadow:0 8px 32px rgba(212,137,122,0.1);
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.6s var(--ease),transform 0.6s var(--ease);
+}
+.contact-card.in{opacity:1;transform:translateY(0);}
+.contact-title{font-family:'Playfair Display',serif;font-size:26px;color:var(--text);font-weight:400;margin-bottom:8px;}
+.contact-title em{font-style:italic;color:var(--rose);}
+.contact-script{font-family:'Dancing Script',cursive;font-size:18px;color:var(--gold);display:block;margin-bottom:28px;}
+.contact-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.contact-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 28px;border-radius:100px;
+  font-family:'Raleway',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;text-decoration:none;
+  transition:all 0.3s var(--ease);cursor:pointer;border:none;
+}
+.contact-btn-wa{background:var(--green);color:#fff;}
+.contact-btn-wa:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,0.3);}
+.contact-btn-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;}
+.contact-btn-ig:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(220,39,67,0.3);}
+
+/* ══ FOOTER ══ */
+.page-footer{
+  text-align:center;padding:40px 32px;
+  border-top:1px solid var(--border);
+  font-size:11px;color:var(--text-light);letter-spacing:2px;
+  position:relative;z-index:1;
+}
+.page-footer .footer-script{
+  font-family:'Dancing Script',cursive;font-size:16px;color:var(--gold);
+  display:block;margin-bottom:8px;
+}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .hero{padding:110px 20px 56px;}
+  .page-wrap{padding:0 16px 80px;}
+  .intro-card,.tc-section{padding:28px 24px;}
+  .contact-card{padding:32px 24px;}
+  .section-num{font-size:28px;width:36px;}
+  .section-label h2{font-size:17px;}
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div class="petal-bg" aria-hidden="true">
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img class="nav-logo-db" src="BQT-Assets/DB%20Logo.png" alt="Dream Boutique Logo" onerror="this.style.background='var(--rose)';this.removeAttribute('src');"/>
+    <div>
+      <span class="nav-brand-main">Dream Boutique</span>
+      <span class="nav-brand-sub">Modest & Ethnic Wears</span>
+    </div>
+  </a>
+  <a class="nav-back" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Shop
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Legal & Policies</div>
+  <h1 class="hero-title">Terms &amp; <em>Conditions</em></h1>
+  <span class="hero-script">Honesty is part of the Dream ✿</span>
+  <div class="hero-meta">
+    <span>📅 Effective: January 1, 2025</span>
+    <span>·</span>
+    <span>🇮🇳 India</span>
+    <span>·</span>
+    <span>✿ Dream Boutique</span>
+  </div>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- CONTENT -->
+<main class="page-wrap">
+
+  <!-- INTRO -->
+  <div class="intro-card fade-up">
+    <p>
+      Welcome to <strong>Dream Boutique</strong> — a curated space for modest and ethnic wear, crafted with love and delivered across India.
+      By browsing this website or placing an order with us, you agree to the terms outlined below. We've written these as clearly as we can —
+      no confusing legal jargon, just a straightforward agreement between you and us.
+      <br/><br/>
+      If you have questions about anything here, we're always just a WhatsApp message away.
+    </p>
+  </div>
+
+  <!-- 1. GENERAL USE -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div class="section-label">
+        <h2>General Use of the Website</h2>
+        <span class="section-sub">Who we are &amp; who this is for</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>This website is operated by <strong>Dream Boutique</strong>, a modest and ethnic wear brand based in India. By accessing or using this site, you confirm that you are at least 13 years of age and agree to be bound by these terms.</p>
+      <ul class="tc-points">
+        <li>This site is intended for personal, non-commercial use only.</li>
+        <li>You may browse, enquire, and place orders for your own or gifting purposes.</li>
+        <li>Reselling Dream Boutique products without prior written permission is not permitted.</li>
+        <li>We reserve the right to update, modify, or discontinue any part of the site without prior notice.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. PRODUCTS & ENQUIRIES -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div class="section-label">
+        <h2>Products &amp; Enquiries</h2>
+        <span class="section-sub">What we sell &amp; how to order</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Dream Boutique sells <strong>modest and ethnic wear</strong> including but not limited to kurtis, sarees, co-ord sets, and occasion wear. All product images are as accurate as possible, but slight variations in colour may occur due to screen calibration and fabric photography.</p>
+      <div class="tc-highlight">
+        <p>📦 <strong>Orders are placed via WhatsApp enquiry.</strong> Adding an item to your bag on this site signals your interest — final confirmation and payment details are shared directly through our WhatsApp channel at +91 98325 96691.</p>
+      </div>
+      <ul class="tc-points">
+        <li>Product availability is subject to stock and may change without notice.</li>
+        <li>Prices displayed are in Indian Rupees (₹) and inclusive of applicable taxes unless stated otherwise.</li>
+        <li>We reserve the right to refuse or cancel any order at our discretion.</li>
+        <li>Custom orders and alterations may be accommodated — please enquire via WhatsApp.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. PAYMENTS -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div class="section-label">
+        <h2>Payments</h2>
+        <span class="section-sub">How transactions work</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Payment details and methods are communicated directly through our WhatsApp channel upon order confirmation. We currently accept:</p>
+      <ul class="tc-points">
+        <li>UPI payments (GPay, PhonePe, Paytm, etc.)</li>
+        <li>Bank transfers (NEFT / IMPS / RTGS)</li>
+        <li>Cash on Delivery where available — subject to location and order value</li>
+      </ul>
+      <p>Orders are processed only after payment confirmation. Dream Boutique is not responsible for failed transfers initiated by incorrect payment details provided by the customer.</p>
+    </div>
+  </div>
+
+  <!-- 4. SHIPPING -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div class="section-label">
+        <h2>Shipping &amp; Delivery</h2>
+        <span class="section-sub">Getting your order to you</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Dream Boutique ships across India. Estimated delivery timelines are communicated at the time of order confirmation and vary by location.</p>
+      <ul class="tc-points">
+        <li>Shipping charges, if any, will be communicated before order confirmation.</li>
+        <li>We are not responsible for delays caused by courier partners, natural events, or circumstances beyond our control.</li>
+        <li>Tracking details will be shared via WhatsApp once your order is dispatched.</li>
+        <li>Please ensure your delivery address and contact number are accurate at the time of ordering.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. RETURNS & EXCHANGES -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div class="section-label">
+        <h2>Returns &amp; Exchanges</h2>
+        <span class="section-sub">If something isn't right</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>We want you to love every piece you receive. If there's a genuine issue with your order, we'll do our best to make it right.</p>
+      <div class="tc-highlight">
+        <p>🌸 <strong>Return or exchange requests must be raised within 48 hours of receiving your order</strong>, with photos of the item and packaging shared via WhatsApp. Items must be unworn, unwashed, and with all tags intact.</p>
+      </div>
+      <ul class="tc-points">
+        <li>Returns or exchanges are accepted only in cases of defective, damaged, or incorrect items received.</li>
+        <li>Colour variation due to screen display is not considered a defect.</li>
+        <li>Sale items, customised pieces, and innerwear are <em>non-returnable</em>.</li>
+        <li>Return shipping costs are the customer's responsibility unless the error is on our end.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. ACCOUNTS & SIGN-IN -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div class="section-label">
+        <h2>Accounts &amp; Sign-In</h2>
+        <span class="section-sub">Your Google account &amp; our site</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Dream Boutique uses <strong>Google Sign-In</strong> for authentication. By signing in, you allow us to access your basic Google profile information (name, email, and profile picture) solely for personalising your shopping experience on this site.</p>
+      <ul class="tc-points">
+        <li>We do not store your Google password or any sensitive credentials.</li>
+        <li>We do not sell, share, or misuse your personal information — see our Privacy note below.</li>
+        <li>You may browse as a guest, but certain features (bag, reviews) require sign-in.</li>
+        <li>You can sign out at any time. Signing out clears your active session on this device.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. PRIVACY -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">07</div>
+      <div class="section-label">
+        <h2>Privacy &amp; Your Data</h2>
+        <span class="section-sub">What we collect &amp; why</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Your privacy matters to us. Here is a straightforward summary of what information we use and how:</p>
+      <ul class="tc-points">
+        <li><strong>Google profile data</strong> (name, email, photo) — used only to personalise your session. Not stored on external servers.</li>
+        <li><strong>Cart and wishlist data</strong> — stored locally in your browser (localStorage) for convenience. Cleared when you sign out.</li>
+        <li><strong>WhatsApp conversations</strong> — kept for order coordination and support purposes only.</li>
+        <li>We do not run advertising trackers or sell your data to third parties.</li>
+        <li>Our website may use cookies for performance and session management.</li>
+      </ul>
+      <p>By using this site, you consent to this data usage as described above.</p>
+    </div>
+  </div>
+
+  <!-- 8. REVIEWS & CONTENT -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">08</div>
+      <div class="section-label">
+        <h2>Reviews &amp; User Content</h2>
+        <span class="section-sub">What you share with us</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Signed-in customers may leave product reviews on our site. By submitting a review, you agree that:</p>
+      <ul class="tc-points">
+        <li>Your review is honest and based on your genuine experience with the product.</li>
+        <li>You will not include offensive, discriminatory, or misleading content.</li>
+        <li>Dream Boutique reserves the right to moderate or remove reviews that violate these guidelines.</li>
+        <li>Reviews submitted become part of the site's public content and may be displayed openly.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 9. INTELLECTUAL PROPERTY -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">09</div>
+      <div class="section-label">
+        <h2>Intellectual Property</h2>
+        <span class="section-sub">Our brand, images &amp; content</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>All content on this website — including the Dream Boutique name, logo, product photographs, descriptions, and design — is the property of Dream Boutique and protected under applicable intellectual property laws.</p>
+      <ul class="tc-points">
+        <li>You may not reproduce, redistribute, or republish any content without express written permission.</li>
+        <li>Screenshots or reposts for personal sharing must credit <em>@dream_boutique.official</em>.</li>
+        <li>Unauthorised commercial use of our brand assets is strictly prohibited.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. LIMITATION OF LIABILITY -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">10</div>
+      <div class="section-label">
+        <h2>Limitation of Liability</h2>
+        <span class="section-sub">Our responsibilities &amp; yours</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>Dream Boutique makes every effort to ensure a smooth and accurate shopping experience. However, we are not liable for:</p>
+      <ul class="tc-points">
+        <li>Indirect or consequential losses arising from use of this website.</li>
+        <li>Technical issues, downtime, or data loss beyond our reasonable control.</li>
+        <li>Third-party services (courier partners, payment platforms, Google) and their terms.</li>
+        <li>Any loss resulting from the customer's failure to provide accurate delivery or contact information.</li>
+      </ul>
+      <p>Our total liability in any dispute shall not exceed the value of the specific order in question.</p>
+    </div>
+  </div>
+
+  <!-- 11. GOVERNING LAW -->
+  <div class="tc-section fade-up">
+    <div class="section-head">
+      <div class="section-num">11</div>
+      <div class="section-label">
+        <h2>Governing Law</h2>
+        <span class="section-sub">Jurisdiction &amp; disputes</span>
+      </div>
+    </div>
+    <div class="tc-body">
+      <p>These Terms &amp; Conditions are governed by the laws of <strong>India</strong>. Any disputes arising out of or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of India.</p>
+      <p>We encourage customers to reach out to us directly via WhatsApp before escalating any dispute — most concerns are resolved quickly and warmly. 🌸</p>
+    </div>
+  </div>
+
+  <!-- CONTACT CARD -->
+  <div class="contact-card fade-up">
+    <h2 class="contact-title">Still have <em>questions?</em></h2>
+    <span class="contact-script">We're always here for you ✿</span>
+    <div class="contact-btns">
+      <a class="contact-btn contact-btn-wa" href="https://wa.me/919832596691" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.856L0 24l6.335-1.502A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.37l-.36-.213-3.76.892.951-3.667-.233-.376A9.818 9.818 0 012.182 12c0-5.42 4.398-9.818 9.818-9.818 5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+        WhatsApp Us
+      </a>
+      <a class="contact-btn contact-btn-ig" href="https://instagram.com/dream_boutique.official" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<!-- PAGE FOOTER -->
+<footer class="page-footer">
+  <span class="footer-script">Dream Boutique ✿</span>
+  © 2025 Dream Boutique — Modest &amp; Ethnic Wears. All rights reserved.
+</footer>
+
+<script>
+// Fade-in on scroll
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
