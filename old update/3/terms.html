@@ -11,7 +11,7 @@
 :root {
   --blush:#F7E8E0; --blush-deep:#F0D5C8; --rose:#D4897A; --rose-light:#E8B4A8;
   --ivory:#FDF8F4; --ivory-dark:#F5EDE4; --gold:#C9956A; --gold-light:#E8C4A8;
-  --brown:#8B5E4A; --text:#4A3728; --text-light:#9A7B6E; --border:#EDD8CC;
+  --brown:#8B5E4A; --text:#4A3728; --text-light:#9A7B6E; --border:#EDD8CC; --green:#25D366;
   --ease:cubic-bezier(0.25,1,0.5,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -176,6 +176,8 @@ nav{
   letter-spacing:2px;text-transform:uppercase;text-decoration:none;
   transition:all 0.3s var(--ease);cursor:pointer;border:none;
 }
+.contact-btn-wa{background:var(--green);color:#fff;}
+.contact-btn-wa:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,0.3);}
 .contact-btn-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;}
 .contact-btn-ig:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(220,39,67,0.3);}
 
@@ -254,7 +256,7 @@ nav{
       By browsing this website or placing an order with us, you agree to the terms outlined below. We've written these as clearly as we can —
       no confusing legal jargon, just a straightforward agreement between you and us.
       <br/><br/>
-      If you have questions about anything here, we're always just a message away on Instagram.
+      If you have questions about anything here, we're always just a WhatsApp message away.
     </p>
   </div>
 
@@ -290,13 +292,13 @@ nav{
     <div class="tc-body">
       <p>Dream Boutique sells <strong>modest and ethnic wear</strong> including but not limited to kurtis, sarees, co-ord sets, and occasion wear. All product images are as accurate as possible, but slight variations in colour may occur due to screen calibration and fabric photography.</p>
       <div class="tc-highlight">
-        <p>📦 <strong>Orders are placed directly on this website.</strong> Add an item to your bag and use the Buy Now button to place your order. Our team will confirm via your registered email address.</p>
+        <p>📦 <strong>Orders are placed via WhatsApp enquiry.</strong> Adding an item to your bag on this site signals your interest — final confirmation and payment details are shared directly through our WhatsApp channel at +91 98325 96691.</p>
       </div>
       <ul class="tc-points">
         <li>Product availability is subject to stock and may change without notice.</li>
         <li>Prices displayed are in Indian Rupees (₹) and inclusive of applicable taxes unless stated otherwise.</li>
         <li>We reserve the right to refuse or cancel any order at our discretion.</li>
-        <li>Custom orders and alterations may be accommodated — please reach out via Instagram.</li>
+        <li>Custom orders and alterations may be accommodated — please enquire via WhatsApp.</li>
       </ul>
     </div>
   </div>
@@ -311,7 +313,7 @@ nav{
       </div>
     </div>
     <div class="tc-body">
-      <p>Payment details and methods are communicated directly through our email upon order confirmation. We currently accept:</p>
+      <p>Payment details and methods are communicated directly through our WhatsApp channel upon order confirmation. We currently accept:</p>
       <ul class="tc-points">
         <li>UPI payments (GPay, PhonePe, Paytm, etc.)</li>
         <li>Bank transfers (NEFT / IMPS / RTGS)</li>
@@ -335,7 +337,7 @@ nav{
       <ul class="tc-points">
         <li>Shipping charges, if any, will be communicated before order confirmation.</li>
         <li>We are not responsible for delays caused by courier partners, natural events, or circumstances beyond our control.</li>
-        <li>Tracking details will be shared via email once your order is dispatched.</li>
+        <li>Tracking details will be shared via WhatsApp once your order is dispatched.</li>
         <li>Please ensure your delivery address and contact number are accurate at the time of ordering.</li>
       </ul>
     </div>
@@ -353,7 +355,7 @@ nav{
     <div class="tc-body">
       <p>We want you to love every piece you receive. If there's a genuine issue with your order, we'll do our best to make it right.</p>
       <div class="tc-highlight">
-        <p>🌸 <strong>Return or exchange requests must be raised within 48 hours of receiving your order</strong>, with photos of the item and packaging shared via email or Instagram. Items must be unworn, unwashed, and with all tags intact.</p>
+        <p>🌸 <strong>Return or exchange requests must be raised within 48 hours of receiving your order</strong>, with photos of the item and packaging shared via WhatsApp. Items must be unworn, unwashed, and with all tags intact.</p>
       </div>
       <ul class="tc-points">
         <li>Returns or exchanges are accepted only in cases of defective, damaged, or incorrect items received.</li>
@@ -398,7 +400,7 @@ nav{
       <ul class="tc-points">
         <li><strong>Google profile data</strong> (name, email, photo) — used only to personalise your session. Not stored on external servers.</li>
         <li><strong>Cart and wishlist data</strong> — stored locally in your browser (localStorage) for convenience. Cleared when you sign out.</li>
-        <li><strong>Order and contact data</strong> — used only for order coordination and support purposes. Not shared with third parties.</li>
+        <li><strong>WhatsApp conversations</strong> — kept for order coordination and support purposes only.</li>
         <li>We do not run advertising trackers or sell your data to third parties.</li>
         <li>Our website may use cookies for performance and session management.</li>
       </ul>
@@ -477,7 +479,7 @@ nav{
     </div>
     <div class="tc-body">
       <p>These Terms &amp; Conditions are governed by the laws of <strong>India</strong>. Any disputes arising out of or in connection with these terms shall be subject to the exclusive jurisdiction of the courts of India.</p>
-      <p>We encourage customers to reach out to us directly via Instagram or email before escalating any dispute — most concerns are resolved quickly and warmly. 🌸</p>
+      <p>We encourage customers to reach out to us directly via WhatsApp before escalating any dispute — most concerns are resolved quickly and warmly. 🌸</p>
     </div>
   </div>
 
@@ -486,6 +488,10 @@ nav{
     <h2 class="contact-title">Still have <em>questions?</em></h2>
     <span class="contact-script">We're always here for you ✿</span>
     <div class="contact-btns">
+      <a class="contact-btn contact-btn-wa" href="https://wa.me/919832596691" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.856L0 24l6.335-1.502A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.37l-.36-.213-3.76.892.951-3.667-.233-.376A9.818 9.818 0 012.182 12c0-5.42 4.398-9.818 9.818-9.818 5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+        WhatsApp Us
+      </a>
       <a class="contact-btn contact-btn-ig" href="https://instagram.com/dream_boutique.official" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         Instagram

@@ -2,6 +2,7 @@
 // USER STATE
 // ═══════════════════════════════════════
 let currentUser = null;
+const WA = "919832596691";
 // Bug-1 fix: set to true once onAuthStateChanged fires so DOMContentLoaded doesn't race against it
 let _authResolved = false;
 
@@ -412,6 +413,7 @@ function productCardHTML(p) {
         <span class="pcard-price">₹${Number(p.price).toLocaleString('en-IN')}</span>
         <div class="pcard-actions">
           <button class="add-bag-btn" data-add-cart="${p.id}" title="Add to Bag">🛍</button>
+          <button class="wa-icon-btn" data-enquire="${p.id}" title="Enquire on WhatsApp">💬</button>
         </div>
       </div>
     </div>
@@ -429,6 +431,9 @@ function renderProducts(filter='all') {
   });
   grid.querySelectorAll('[data-add-cart]').forEach(btn => {
     btn.addEventListener('click', e => { e.stopPropagation(); addToCart(parseInt(btn.dataset.addCart)); });
+  });
+  grid.querySelectorAll('[data-enquire]').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); enquireWA(parseInt(btn.dataset.enquire)); });
   });
   observeFades();
 }
@@ -488,9 +493,19 @@ function toggleCart(){
   document.getElementById('cartVeil').classList.toggle('open');
 }
 
-function checkoutCart(){
+function checkoutWA(){
   if(!cart.length)return;
-  toast('Please use Buy Now on individual items to place your order ✿');
+  const list=cart.map((p,i)=>`${i+1}. ${p.name} — ₹${Number(p.price).toLocaleString('en-IN')}`).join('%0A');
+  const total=cart.reduce((s,p)=>s+Number(p.price),0);
+  const userInfo=currentUser&&currentUser.name!=='Guest'?`%0AName: ${currentUser.name}%0AEmail: ${currentUser.email||'—'}`:'' ;
+  const msg=`Hello Dream Boutique! 🌸%0A%0AI'd love to order:%0A${list}%0A%0ATotal: ₹${total.toLocaleString('en-IN')}${userInfo}%0A%0APlease confirm availability. Thank you!`;
+  window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
+}
+
+function enquireWA(id){
+  const p=products.find(x=>x.id===id);
+  const msg=`Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0APrice: ₹${Number(p.price).toLocaleString('en-IN')}%0ACould you confirm availability? Thank you!`;
+  window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
 }
 
 // ═══════════════════════════════════════
@@ -750,7 +765,8 @@ window.closeModal = closeModal;
 window.closeModalDirect = closeModalDirect;
 window.addToCart = addToCart;
 window.addToCartFromModal = addToCartFromModal;
-window.checkoutCart = checkoutCart;
+window.checkoutWA = checkoutWA;
+window.enquireWA = enquireWA;
 window.submitReview = submitReview;
 window.selectDevice = selectDevice;
 window.changeQty = changeQty;
