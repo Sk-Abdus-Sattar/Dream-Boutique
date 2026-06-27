@@ -6,8 +6,7 @@
 <title>Dream Boutique — Modest & Ethnic Wears</title>
 
   <!-- Security -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com https://accounts.google.com https://apis.google.com; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com;">
-  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com https://accounts.google.com https://apis.google.com https://*.googleapis.com https://*.firebaseapp.com https://*.firebaseio.com https://*.gstatic.com https://cdn.jsdelivr.net https://www.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://securetoken.googleapis.com https://api.emailjs.com https://identitytoolkit.googleapis.com https://*.gstatic.com https://www.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://fonts.googleapis.com https://accounts.google.com https://apis.google.com https://*.googleapis.com https://*.firebaseapp.com https://*.gstatic.com https://www.gstatic.com; frame-src https://accounts.google.com https://*.firebaseapp.com https://securetoken.googleapis.com;">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
@@ -23,7 +22,7 @@
   <link rel="apple-touch-icon" href="BQT-Assets/DB%20Logo.png"/>
   <link rel="manifest" href="manifest.json"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet"/>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root {
   --blush:#F7E8E0; --blush-deep:#F0D5C8; --rose:#D4897A; --rose-light:#E8B4A8;
@@ -549,6 +548,74 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
 .login-wall-btn:hover { background: #3367D6; }
 .login-wall-close { margin-top: 16px; font-size: 12px; color: var(--text-light); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .login-wall-close:hover { color: var(--rose); }
+
+/* ══════════════════════════════
+   ORDER CONFIRMATION MODAL
+══════════════════════════════ */
+.order-veil {
+  position: fixed; inset: 0; background: rgba(74,55,40,0.65); z-index: 10002;
+  display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px); padding: 20px;
+}
+.order-veil.open { display: flex; }
+.order-box {
+  background: #fff; border-radius: 28px; max-width: 480px; width: 100%;
+  box-shadow: 0 30px 80px rgba(139,94,74,0.25); overflow: hidden;
+}
+.order-box-top {
+  background: linear-gradient(135deg, var(--blush), var(--ivory-dark));
+  padding: 40px 40px 32px; text-align: center; border-bottom: 1px solid var(--border);
+}
+.order-success-icon { font-size: 56px; margin-bottom: 12px; display: block; }
+.order-success-title {
+  font-family: 'Playfair Display', serif; font-size: 26px; color: var(--text);
+  font-weight: 400; margin-bottom: 8px;
+}
+.order-success-title em { color: var(--rose); font-style: italic; }
+.order-success-sub {
+  font-size: 13px; color: var(--text-light); line-height: 1.8; font-weight: 300;
+}
+.order-box-body { padding: 28px 40px 36px; }
+.order-detail-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 13px;
+}
+.order-detail-row:last-of-type { border-bottom: none; }
+.order-detail-label { color: var(--text-light); font-weight: 300; }
+.order-detail-val { color: var(--text); font-weight: 600; }
+.order-note-box {
+  background: var(--blush); border-radius: 14px; padding: 16px 20px;
+  margin: 20px 0 0; font-size: 12px; color: var(--brown); line-height: 1.8;
+  font-style: italic;
+}
+.order-close-btn {
+  width: 100%; margin-top: 20px; background: linear-gradient(135deg, var(--rose), var(--gold));
+  color: #fff; border: none; padding: 16px; border-radius: 100px;
+  font-family: 'Raleway', sans-serif; font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase; font-weight: 700; cursor: pointer;
+  transition: all 0.3s; box-shadow: 0 6px 20px rgba(212,137,122,0.3);
+}
+.order-close-btn:hover { transform: translateY(-2px); }
+
+/* Qty selector in modal */
+.qty-row {
+  display: flex; align-items: center; gap: 12px; margin: 16px 0;
+}
+.qty-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-light); font-weight: 600; }
+.qty-ctrl {
+  display: flex; align-items: center; gap: 0; border: 1.5px solid var(--border);
+  border-radius: 100px; overflow: hidden; background: var(--ivory);
+}
+.qty-btn {
+  background: none; border: none; width: 36px; height: 36px; font-size: 18px;
+  cursor: pointer; color: var(--text); transition: all 0.2s; font-weight: 300;
+  display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:hover { background: var(--blush); color: var(--rose); }
+.qty-val {
+  min-width: 36px; text-align: center; font-family: 'Playfair Display', serif;
+  font-size: 16px; color: var(--text); font-weight: 500;
+}
 </style>
 
 <script>
@@ -577,14 +644,59 @@ function toggleProfile() {
   document.getElementById('profileVeil').classList.toggle('open');
 }
 
-function showPurchases() {
-  toast("Your order history is currently empty ✿");
+async function showPurchases() {
   toggleProfile();
+  if (!currentUser || !currentUser.email) { toast("Sign in to view your purchases ✿"); return; }
+  const purchases = await getUserPurchases(currentUser.email);
+  if (purchases.length === 0) {
+    toast("No purchases recorded yet ✿");
+    return;
+  }
+  showProfileModal(
+    "🛍 Your Purchases",
+    purchases.map(p => `<div style="padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);">✿ ${p}</div>`).join('')
+  );
 }
 
-function showMyReviews() {
-  toast("You haven't left any reviews yet ✿");
+async function showMyReviews() {
   toggleProfile();
+  if (!currentUser || !currentUser.email) { toast("Sign in to view your reviews ✿"); return; }
+  const q = query(collection(db, 'reviews'), where('email', '==', currentUser.email));
+  const snap = await getDocs(q);
+  if (snap.empty) {
+    toast("You haven't left any reviews yet ✿");
+    return;
+  }
+  const rows = [];
+  snap.forEach(d => {
+    const r = d.data();
+    rows.push(`<div style="padding:14px 0;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">${r.product}</div>
+      <div style="color:#F4A261;font-size:14px;margin-bottom:4px;">${starsToDisplay(r.rating)}</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6;">"${r.review}"</div>
+    </div>`);
+  });
+  showProfileModal("✿ My Reviews", rows.join(''));
+}
+
+function showProfileModal(title, bodyHtml) {
+  let modal = document.getElementById('profileInfoModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'profileInfoModal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(74,55,40,0.5);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+    modal.innerHTML = `<div style="background:var(--ivory);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:28px 24px 40px;max-height:70vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h3 id="profileModalTitle" style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text);"></h3>
+        <button onclick="document.getElementById('profileInfoModal').remove()" style="background:none;border:none;font-size:22px;color:var(--text-light);cursor:pointer;">×</button>
+      </div>
+      <div id="profileModalBody"></div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  }
+  document.getElementById('profileModalTitle').textContent = title;
+  document.getElementById('profileModalBody').innerHTML = bodyHtml;
 }
 
 function confirmLogout() {
@@ -592,19 +704,7 @@ function confirmLogout() {
   document.getElementById('logoutConfirm').classList.add('open');
 }
 
-function doLogout() {
-  currentUser = null;
-  document.getElementById('logoutConfirm').classList.remove('open');
-  document.getElementById('mainApp').classList.remove('show');
-  document.body.classList.remove('mobile-view');
-  const ds = document.getElementById('deviceScreen');
-  ds.classList.remove('show');
-  ds.classList.add('hide');
-  document.getElementById('loader').classList.remove('show', 'out');
-  const gs = document.getElementById('gSignInScreen');
-  gs.classList.add('show');
-  gs.classList.remove('hide');
-}
+// doLogout handled by Firebase Auth (async) above
 
 function closeLoginWall() {
   document.getElementById('loginWall').classList.remove('open');
@@ -640,7 +740,10 @@ function closeLoginWall() {
     <p class="gsign-body">Sign in to explore our curated collection of modest & ethnic wears — and leave your review after your purchase, seamlessly.</p>
     <div class="gsign-divider"><span>Sign in to continue</span></div>
     
-    <div id="googleSignInWrapper" style="display: flex; justify-content: center; width: 100%; margin-top: 10px;"></div>
+    <button class="gsign-google-btn" onclick="signInWithGoogle()">
+      <svg class="gsign-google-icon" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+      Continue with Google
+    </button>
 
     <div style="margin-top:20px;display:flex;align-items:center;gap:12px;">
       <div style="flex:1;height:1px;background:var(--border);"></div>
@@ -916,18 +1019,64 @@ function closeLoginWall() {
       </div>
     </div>
     <p class="form-subtitle">Tell us about your experience — we read every single review with gratitude and share them with our growing community of dreamers.</p>
+    <div id="reviewPurchaseGate" style="display:none;text-align:center;padding:32px 0;">
+      <div style="font-size:40px;margin-bottom:12px;">🔒</div>
+      <p style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin-bottom:8px;">Verified Purchases Only</p>
+      <p style="font-size:13px;color:var(--text-light);line-height:1.7;">Only customers who have purchased from Dream Boutique can leave a review.<br>Once your order is confirmed, you'll be granted review access.</p>
+    </div>
     <div id="feedbackForm">
-      <!-- HALF-STAR RATING -->
+      <!-- PRODUCT DROPDOWN -->
+      <div class="fgroup">
+        <label>Product Purchased <span style="color:var(--rose)">*</span></label>
+        <select id="fproduct" style="width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;font-family:Raleway,sans-serif;font-size:13px;color:var(--text);background:var(--ivory);appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%239A7B6E' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer;">
+          <option value="">— Select a product —</option>
+          <option value="Sky Blue Striped Belted Dress">Sky Blue Striped Belted Dress</option>
+          <option value="Navy Blue Belted Maxi Dress">Navy Blue Belted Maxi Dress</option>
+          <option value="Maroon Corduroy Belted Dress">Maroon Corduroy Belted Dress</option>
+          <option value="Dusty Rose Corduroy Dress">Dusty Rose Corduroy Dress</option>
+          <option value="Lemon Yellow Lace Kurta">Lemon Yellow Lace Kurta</option>
+          <option value="Sage Green Lace Kurta">Sage Green Lace Kurta</option>
+          <option value="Lavender Lace Kurta">Lavender Lace Kurta</option>
+          <option value="Ivory Lace Maxi Dress">Ivory Lace Maxi Dress</option>
+          <option value="Ivory Floral Embroidered Kurta">Ivory Floral Embroidered Kurta</option>
+          <option value="Ivory Full-Sleeve Floral Kurta">Ivory Full-Sleeve Floral Kurta</option>
+          <option value="Navy Cable Knit Vest Set">Navy Cable Knit Vest Set</option>
+          <option value="Black Argyle Knit Vest Set">Black Argyle Knit Vest Set</option>
+          <option value="Navy Ribbed Vest + Light Wash Jeans">Navy Ribbed Vest + Light Wash Jeans</option>
+          <option value="Camel Argyle Vest Set">Camel Argyle Vest Set</option>
+          <option value="Ivory Houndstooth Vest Set">Ivory Houndstooth Vest Set</option>
+          <option value="Olive Green Floral Appliqué Set">Olive Green Floral Appliqué Set</option>
+          <option value="Deep Red Pintuck Kurta Set">Deep Red Pintuck Kurta Set</option>
+          <option value="Blush Pink Pintuck Kurta Set">Blush Pink Pintuck Kurta Set</option>
+          <option value="Lavender Floral Stripe Top Set">Lavender Floral Stripe Top Set</option>
+          <option value="Sage Green Floral Stripe Top Set">Sage Green Floral Stripe Top Set</option>
+          <option value="Grey Stripe Floral Top Set">Grey Stripe Floral Top Set</option>
+          <option value="Cream Gold Tassel Kurta Set">Cream Gold Tassel Kurta Set</option>
+          <option value="Mocha Tassel Kurta Set">Mocha Tassel Kurta Set</option>
+          <option value="Ivory Cherry Blossom Maxi">Ivory Cherry Blossom Maxi</option>
+          <option value="Blush Cherry Blossom Maxi">Blush Cherry Blossom Maxi</option>
+          <option value="Mustard Cherry Blossom Maxi">Mustard Cherry Blossom Maxi</option>
+          <option value="Hot Pink Cherry Blossom Maxi">Hot Pink Cherry Blossom Maxi</option>
+          <option value="Camel Cherry Blossom Maxi">Camel Cherry Blossom Maxi</option>
+          <option value="Golden Mustard Heart Collar Kurta">Golden Mustard Heart Collar Kurta</option>
+          <option value="Dusty Lavender Embroidered Co-ord">Dusty Lavender Embroidered Co-ord</option>
+        </select>
+      </div>
+      <!-- STAR RATING DROPDOWN -->
       <div class="fgroup">
         <label>Your Rating <span style="color:var(--rose)">*</span></label>
-        <div class="half-star-row" id="halfStarRow">
-          <div class="hstar-wrap" data-val="1"><span class="hstar-bg">★</span><span class="hstar-fg" id="hfg1" style="width:0%">★</span><span class="hstar-left" onmouseenter="hoverStar(0.5)" onclick="setHalfRating(0.5)"></span><span class="hstar-right" onmouseenter="hoverStar(1)" onclick="setHalfRating(1)"></span></div>
-          <div class="hstar-wrap" data-val="2"><span class="hstar-bg">★</span><span class="hstar-fg" id="hfg2" style="width:0%">★</span><span class="hstar-left" onmouseenter="hoverStar(1.5)" onclick="setHalfRating(1.5)"></span><span class="hstar-right" onmouseenter="hoverStar(2)" onclick="setHalfRating(2)"></span></div>
-          <div class="hstar-wrap" data-val="3"><span class="hstar-bg">★</span><span class="hstar-fg" id="hfg3" style="width:0%">★</span><span class="hstar-left" onmouseenter="hoverStar(2.5)" onclick="setHalfRating(2.5)"></span><span class="hstar-right" onmouseenter="hoverStar(3)" onclick="setHalfRating(3)"></span></div>
-          <div class="hstar-wrap" data-val="4"><span class="hstar-bg">★</span><span class="hstar-fg" id="hfg4" style="width:0%">★</span><span class="hstar-left" onmouseenter="hoverStar(3.5)" onclick="setHalfRating(3.5)"></span><span class="hstar-right" onmouseenter="hoverStar(4)" onclick="setHalfRating(4)"></span></div>
-          <div class="hstar-wrap" data-val="5"><span class="hstar-bg">★</span><span class="hstar-fg" id="hfg5" style="width:0%">★</span><span class="hstar-left" onmouseenter="hoverStar(4.5)" onclick="setHalfRating(4.5)"></span><span class="hstar-right" onmouseenter="hoverStar(5)" onclick="setHalfRating(5)"></span></div>
-        </div>
-        <div class="rating-display" id="ratingDisplay">Tap a star to rate</div>
+        <select id="frating" style="width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;font-family:Raleway,sans-serif;font-size:13px;color:var(--text);background:var(--ivory);appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%239A7B6E' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer;">
+          <option value="">— Select a rating —</option>
+          <option value="1">⭐ 1 — Poor</option>
+          <option value="1.5">⭐½ 1.5</option>
+          <option value="2">⭐⭐ 2 — Fair</option>
+          <option value="2.5">⭐⭐½ 2.5</option>
+          <option value="3">⭐⭐⭐ 3 — Good</option>
+          <option value="3.5">⭐⭐⭐½ 3.5</option>
+          <option value="4">⭐⭐⭐⭐ 4 — Great</option>
+          <option value="4.5">⭐⭐⭐⭐½ 4.5</option>
+          <option value="5">⭐⭐⭐⭐⭐ 5 — Excellent</option>
+        </select>
       </div>
       <div class="fgroup" style="margin-top:8px;">
         <label>Your Review <span style="color:var(--rose)">*</span></label>
@@ -992,10 +1141,11 @@ function closeLoginWall() {
     <div class="footer-col">
       <p class="footer-col-title">Policies</p>
       <ul>
-        <li><a href="#">Opening Video Required</a></li>
-        <li><a href="#">Online Payment Only</a></li>
-        <li><a href="#">Pan India Shipping</a></li>
-        <li><a href="#">WhatsApp Orders</a></li>
+        <li><a href="terms.html#opening-video">Opening Video Required</a></li>
+        <li><a href="terms.html#payments">Online Payment Only</a></li>
+        <li><a href="terms.html#shipping">Pan India Shipping</a></li>
+        <li><a href="terms.html#returns">Returns & Exchanges</a></li>
+        <li><a href="terms.html" style="color:var(--rose-light);font-weight:600;">Terms & Conditions ✿</a></li>
       </ul>
     </div>
   </div>
@@ -1044,11 +1194,52 @@ function closeLoginWall() {
       <div class="modal-stock" id="modalStock"></div>
       <div class="modal-price" id="modalPrice"></div>
       <p class="modal-desc" id="modalDesc"></p>
-      <div class="modal-note">✿ Enquire on WhatsApp to confirm availability before ordering</div>
-      <div class="modal-btns">
-        <button class="add-bag-btn" style="border-radius:100px;padding:14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;" onclick="addToCartFromModal()">🛍 Add to Bag</button>
-        <a id="modalWaLink" href="#" target="_blank" class="btn-rose" style="text-align:center;font-size:11px;">💬 Enquire on WhatsApp</a>
+      <div class="modal-note">✿ Opening video is mandatory for all orders — please record an unboxing video on delivery</div>
+      <div class="qty-row">
+        <span class="qty-label">Qty</span>
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <span class="qty-val" id="modalQty">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
       </div>
+      <div class="modal-btns">
+        <button class="btn-rose" style="text-align:center;font-size:11px;border:none;cursor:pointer;width:100%;padding:16px;" onclick="buyNow()">🛒 Buy Now</button>
+        <button class="add-bag-btn" style="border-radius:100px;padding:14px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;" onclick="addToCartFromModal()">🛍 Add to Bag</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER CONFIRMATION MODAL -->
+<div class="order-veil" id="orderVeil">
+  <div class="order-box">
+    <div class="order-box-top">
+      <span class="order-success-icon">🌸</span>
+      <h2 class="order-success-title">Order <em>Placed!</em></h2>
+      <p class="order-success-sub">Congratulations! Your order has been placed successfully.<br/>Our delivery executive will soon send you a mail on your registered email address to confirm it — please make sure you reply to them if needed.</p>
+    </div>
+    <div class="order-box-body">
+      <div class="order-detail-row">
+        <span class="order-detail-label">Product</span>
+        <span class="order-detail-val" id="orderDetailProduct">—</span>
+      </div>
+      <div class="order-detail-row">
+        <span class="order-detail-label">Quantity</span>
+        <span class="order-detail-val" id="orderDetailQty">—</span>
+      </div>
+      <div class="order-detail-row">
+        <span class="order-detail-label">Amount</span>
+        <span class="order-detail-val" id="orderDetailAmount">—</span>
+      </div>
+      <div class="order-detail-row">
+        <span class="order-detail-label">Ordered by</span>
+        <span class="order-detail-val" id="orderDetailEmail">—</span>
+      </div>
+      <div class="order-note-box">
+        ✿ Remember: an opening (unboxing) video is mandatory for all orders. Please record it on delivery to protect your purchase.
+      </div>
+      <button class="order-close-btn" onclick="closeOrderModal()">Done ✿</button>
     </div>
   </div>
 </div>
@@ -1056,47 +1247,201 @@ function closeLoginWall() {
 <!-- WA FLOAT -->
 <a href="https://wa.me/919832596691" class="wa-float" target="_blank" title="WhatsApp Us">💬</a>
 
-<script>
+<script type="module">
 // ═══════════════════════════════════════
 // USER STATE
 // ═══════════════════════════════════════
 let currentUser = null;
 const WA = "919832596691";
 
-// Google Identity Services callback
-function handleGoogleCredential(response) {
-  // Decode JWT payload
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  currentUser = { name: payload.name, email: payload.email, picture: payload.picture, given_name: payload.given_name };
-  onUserReady();
-}
+// ═══════════════════════════════════════
+// FIREBASE INIT
+// ═══════════════════════════════════════
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, collection, query, where, getDocs, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-function signInWithGoogle() {
-  // Initialize Google Sign-In
-  google.accounts.id.initialize({
-    client_id: '387530599241-bc4q30neop330gr3b8oaugeedqc8eo03.apps.googleusercontent.com', // Replace with real client ID //replaced
-    callback: handleGoogleCredential,
-    auto_select: false,
-  });
-  google.accounts.id.prompt((notification) => {
-    if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-      // Fallback: show one-tap or prompt
-      google.accounts.id.renderButton(document.createElement('div'), {});
-      // Simulate for demo
-      simulateGoogleSignIn();
+const firebaseConfig = {
+  apiKey: "AIzaSyDnkKFie4vQzlykaVhnJ_cwILgk4zRQL2Q",
+  authDomain: "dream-boutique-fd674.firebaseapp.com",
+  projectId: "dream-boutique-fd674",
+  storageBucket: "dream-boutique-fd674.firebasestorage.app",
+  messagingSenderId: "510483704329",
+  appId: "1:510483704329:web:06906cca8ec2d901b0a6d8",
+  measurementId: "G-VVX092ZF68"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+setPersistence(auth, browserLocalPersistence);
+
+// ─── Auth state listener — runs on every page load/refresh ───
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = {
+      name: user.displayName,
+      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
+      email: user.email,
+      picture: user.photoURL,
+      uid: user.uid,
+    };
+    // Hide all gate screens
+    document.getElementById('introScreen').classList.add('hide');
+    document.getElementById('gSignInScreen').classList.add('hide');
+    document.getElementById('gSignInScreen').classList.remove('show');
+    document.getElementById('loader').classList.remove('show');
+    // Go straight to main app (skip device selector on refresh)
+    const app = document.getElementById('mainApp');
+    if (!app.classList.contains('show')) {
+      app.classList.add('show');
+      history.replaceState(null, '', '#home');
+      initApp();
     }
+  } else {
+    currentUser = null;
+  }
+});
+
+async function signInWithGoogle() {
+  try {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    currentUser = {
+      name: user.displayName,
+      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
+      email: user.email,
+      picture: user.photoURL,
+      uid: user.uid,
+    };
+    onUserReady();
+  } catch(e) {
+    if (e.code !== 'auth/popup-closed-by-user') {
+      toast('Sign-in failed. Please try again ✿');
+    }
+  }
+}
+
+async function doLogout() {
+  await signOut(auth);
+  currentUser = null;
+  document.getElementById('logoutConfirm').classList.remove('open');
+  location.reload();
+}
+
+// ─── Fetch user's purchased products ───
+async function getUserPurchases(email) {
+  if (!email) return [];
+  const q = query(collection(db, 'purchases'), where('email', '==', email));
+  const snap = await getDocs(q);
+  if (snap.empty) return [];
+  // Merge all product arrays across docs (in case of multiple purchase docs)
+  let all = [];
+  snap.forEach(d => {
+    const p = d.data().products;
+    if (Array.isArray(p)) all = all.concat(p);
+  });
+  return [...new Set(all)]; // deduplicate
+}
+
+// ─── Fetch products the user has already reviewed ───
+async function getUserReviewedProducts(email) {
+  if (!email) return [];
+  const q = query(collection(db, 'reviews'), where('email', '==', email));
+  const snap = await getDocs(q);
+  const reviewed = [];
+  snap.forEach(d => reviewed.push(d.data().product));
+  return reviewed;
+}
+
+// ─── Save review to Firestore ───
+async function saveReview(reviewData) {
+  await addDoc(collection(db, 'reviews'), {
+    ...reviewData,
+    createdAt: serverTimestamp(),
   });
 }
 
-function simulateGoogleSignIn() {
-  // Demo fallback since we don't have a real OAuth client ID
-  const name = prompt('Enter your name (Google Sign-In demo):') || 'Guest';
-  currentUser = { name: name, given_name: name.split(' ')[0], email: name.toLowerCase().replace(/\s/g,'') + '@gmail.com', picture: null };
-  onUserReady();
+// ─── Load all reviews from Firestore into the grid ───
+async function loadReviews() {
+  const q = query(collection(db, 'reviews'), orderBy('createdAt', 'desc'));
+  const snap = await getDocs(q);
+  const grid = document.getElementById('reviewsGrid');
+  snap.forEach(docSnap => {
+    const r = docSnap.data();
+    const card = document.createElement('div');
+    card.className = 'rcard fade-up in';
+    card.innerHTML = `<div class="rcard-quote">"</div><div class="rcard-stars">${starsToDisplay(r.rating)}</div><p class="rcard-text">${r.review}</p><p class="rcard-author">${r.name}</p><p class="rcard-loc" style="font-size:11px;color:var(--text-light);margin-top:2px;">${r.product || ''}</p>`;
+    grid.appendChild(card);
+  });
+}
+
+// ─── Populate product dropdown with only purchased & unreviewed items ───
+async function populateReviewDropdown() {
+  const select = document.getElementById('fproduct');
+  select.innerHTML = '<option value="">— Select a product —</option>';
+
+  if (!currentUser || !currentUser.email) {
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('reviewPurchaseGate').style.display = 'block';
+    return;
+  }
+
+  const [purchased, reviewed] = await Promise.all([
+    getUserPurchases(currentUser.email),
+    getUserReviewedProducts(currentUser.email),
+  ]);
+
+  // Store on currentUser for profile use
+  currentUser.purchases = purchased;
+
+  // Products available to review = purchased minus already reviewed
+  const available = purchased.filter(p => !reviewed.includes(p));
+
+  if (purchased.length === 0) {
+    // No purchases at all
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('reviewPurchaseGate').style.display = 'block';
+    return;
+  }
+
+  if (available.length === 0) {
+    // Purchased but reviewed everything
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('reviewPurchaseGate').style.display = 'block';
+    document.getElementById('reviewPurchaseGate').innerHTML = `
+      <div style="font-size:40px;margin-bottom:12px;">🌸</div>
+      <p style="font-family:'Playfair Display',serif;font-size:18px;color:var(--text);margin-bottom:8px;">All Reviews Submitted</p>
+      <p style="font-size:13px;color:var(--text-light);line-height:1.7;">You've reviewed all your purchased items. Thank you so much for sharing your experience!</p>`;
+    return;
+  }
+
+  // Populate dropdown with available products
+  available.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    select.appendChild(opt);
+  });
+
+  document.getElementById('reviewPurchaseGate').style.display = 'none';
+  document.getElementById('feedbackForm').style.display = 'block';
+}
+
+// ─── Populate profile purchased items ───
+function renderProfilePurchases(purchases) {
+  const el = document.getElementById('purchaseCount');
+  if (!purchases || purchases.length === 0) {
+    el.textContent = 'No purchases yet';
+    return;
+  }
+  el.textContent = `${purchases.length} item${purchases.length > 1 ? 's' : ''} purchased`;
 }
 
 function continueAsGuest() {
-  currentUser = { name: 'Guest', given_name: 'Guest', email: null, picture: null };
+  currentUser = { name: 'Guest', given_name: 'Guest', email: null, picture: null, uid: null };
   onUserReady();
 }
 
@@ -1104,11 +1449,11 @@ function onUserReady() {
   document.getElementById('gSignInScreen').classList.add('hide');
   const ds = document.getElementById('deviceScreen');
   ds.classList.add('show');
-  // Set welcome name
   if (currentUser.given_name && currentUser.given_name !== 'Guest') {
     document.getElementById('devWelcomeText').textContent = 'Welcome, ' + currentUser.given_name;
     document.getElementById('devUserName').innerHTML = 'You\'re stepping into <em>the Dream</em>';
   }
+  history.replaceState(null, '', '#device');
 }
 
 function selectDevice(type) {
@@ -1125,9 +1470,28 @@ function selectDevice(type) {
     loader.classList.add('out');
     const app = document.getElementById('mainApp');
     app.classList.add('show');
+    history.replaceState(null, '', '#home');
     initApp();
   }, 1800);
 }
+
+// Handle back button / refresh on hash
+window.addEventListener('popstate', () => {
+  const hash = location.hash;
+  const app = document.getElementById('mainApp');
+  const isAppShowing = app && app.classList.contains('show');
+  if (!hash || hash === '#home') {
+    // Already on main app — do nothing (stay on page)
+    if (!isAppShowing && currentUser) {
+      // Restore app view after refresh
+      app.classList.add('show');
+      document.getElementById('introScreen').classList.add('hide');
+      document.getElementById('gSignInScreen').classList.add('hide');
+      document.getElementById('deviceScreen').classList.add('hide');
+      initApp();
+    }
+  }
+});
 
 // ═══════════════════════════════════════
 // PRODUCT DATA
@@ -1217,6 +1581,15 @@ function initApp() {
   
   renderProducts();
   observeFades();
+  loadReviews();
+  // Hide form by default, populateReviewDropdown will show it if eligible
+  document.getElementById('feedbackForm').style.display = 'none';
+  document.getElementById('reviewPurchaseGate').style.display = 'block';
+  populateReviewDropdown().then(() => {
+    if (currentUser && currentUser.purchases) {
+      renderProfilePurchases(currentUser.purchases);
+    }
+  });
 }
 
 // ═══════════════════════════════════════
@@ -1336,42 +1709,125 @@ function openModal(id){
   const stock=document.getElementById('modalStock');
   stock.className='modal-stock '+(p.stock?'in':'out');
   stock.innerHTML=(p.stock?'● In Stock':'● Out of Stock');
-  const msg=`Hello Dream Boutique! 🌸%0A%0AI'm interested in: *${p.name}*%0APrice: ₹${Number(p.price).toLocaleString('en-IN')}%0ACould you confirm availability? Thank you!`;
-  document.getElementById('modalWaLink').href=`https://wa.me/${WA}?text=${msg}`;
   document.getElementById('modalVeil').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeModal(e){if(e.target===document.getElementById('modalVeil'))closeModalDirect();}
-function closeModalDirect(){document.getElementById('modalVeil').classList.remove('open');document.body.style.overflow='';currentProd=null;}
+function closeModalDirect(){document.getElementById('modalVeil').classList.remove('open');document.body.style.overflow='';currentProd=null; document.getElementById('modalQty').textContent='1';}
+
+// ═══════════════════════════════════════
+// QTY CONTROL
+// ═══════════════════════════════════════
+function changeQty(delta) {
+  const el = document.getElementById('modalQty');
+  let v = parseInt(el.textContent) + delta;
+  if (v < 1) v = 1;
+  if (v > 10) v = 10;
+  el.textContent = v;
+}
+
+// ═══════════════════════════════════════
+// BUY NOW
+// ═══════════════════════════════════════
+// EmailJS — replace with your actual Service ID, Template ID, Public Key
+const EJS_SERVICE  = 'Dream Boutique';
+const EJS_TEMPLATE = 'template_3gu6aux';
+const EJS_PUBKEY   = 'JsS_HIYQlBNniDhUK';
+
+emailjs.init(EJS_PUBKEY);
+
+async function buyNow() {
+  if (!currentUser || currentUser.name === 'Guest') {
+    closeModalDirect();
+    document.getElementById('loginWall').classList.add('open');
+    return;
+  }
+  if (!currentProd) return;
+  if (!currentProd.stock) { toast('This piece is currently out of stock ✿'); return; }
+
+  const qty = parseInt(document.getElementById('modalQty').textContent) || 1;
+  const totalAmt = Number(currentProd.price) * qty;
+  const orderData = {
+    productName: currentProd.name,
+    productId: currentProd.id,
+    price: currentProd.price,
+    quantity: qty,
+    totalAmount: totalAmt,
+    buyerEmail: currentUser.email,
+    buyerName: currentUser.name,
+    orderedAt: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+  };
+
+  try {
+    // 1. Log purchase to Firestore
+    await addDoc(collection(db, 'orders'), {
+      ...orderData,
+      createdAt: serverTimestamp(),
+    });
+
+    // 2. Also add to purchases collection so the buyer can leave a review later
+    // Check if a purchase doc for this email already exists
+    const pq = query(collection(db, 'purchases'), where('email', '==', currentUser.email));
+    const psnap = await getDocs(pq);
+    if (psnap.empty) {
+      // Create new
+      await addDoc(collection(db, 'purchases'), {
+        email: currentUser.email,
+        products: [currentProd.name],
+      });
+    } else {
+      // Merge product into existing doc
+      const pdoc = psnap.docs[0];
+      const existing = pdoc.data().products || [];
+      if (!existing.includes(currentProd.name)) {
+        await updateDoc(pdoc.ref, { products: [...existing, currentProd.name] });
+      }
+    }
+
+    // 3. Send email notification to shop owner via EmailJS
+    await emailjs.send(EJS_SERVICE, EJS_TEMPLATE, {
+      to_email: 'noorproductions.as@gmail.com',
+      buyer_name: orderData.buyerName,
+      buyer_email: orderData.buyerEmail,
+      product_name: orderData.productName,
+      quantity: orderData.quantity,
+      total_amount: '₹' + totalAmt.toLocaleString('en-IN'),
+      ordered_at: orderData.orderedAt,
+    });
+
+    // 4. Close product modal, show order success modal
+    closeModalDirect();
+    document.getElementById('orderDetailProduct').textContent = orderData.productName;
+    document.getElementById('orderDetailQty').textContent = qty;
+    document.getElementById('orderDetailAmount').textContent = '₹' + totalAmt.toLocaleString('en-IN');
+    document.getElementById('orderDetailEmail').textContent = orderData.buyerEmail;
+    document.getElementById('orderVeil').classList.add('open');
+
+  } catch(err) {
+    console.error('Order error:', err);
+    toast('Something went wrong. Please try again ✿');
+  }
+}
+
+function closeOrderModal() {
+  document.getElementById('orderVeil').classList.remove('open');
+}
 
 // ═══════════════════════════════════════
 // HALF-STAR RATING
 // ═══════════════════════════════════════
-let currentRating=0;
-
-function renderStars(val){
-  for(let i=1;i<=5;i++){
-    const fg=document.getElementById('hfg'+i);
-    if(val>=i) fg.style.width='100%';
-    else if(val>=i-0.5) fg.style.width='50%';
-    else fg.style.width='0%';
-  }
-  const labels={0.5:'½ star',1:'1 star',1.5:'1½ stars',2:'2 stars',2.5:'2½ stars',3:'3 stars',3.5:'3½ stars',4:'4 stars',4.5:'4½ stars',5:'5 stars'};
-  document.getElementById('ratingDisplay').textContent=val>0?`You rated: ${labels[val]}`:'Tap a star to rate';
-}
-
-function hoverStar(val){renderStars(val);}
-function setHalfRating(val){currentRating=val;renderStars(val);}
+// Rating now handled by dropdown (#frating)
 
 // Reset stars on mouse leave + intro splash
 document.addEventListener('DOMContentLoaded',()=>{
-  const row=document.getElementById('halfStarRow');
-  if(row) row.addEventListener('mouseleave',()=>renderStars(currentRating));
-
-  setTimeout(()=>{
-    document.getElementById('introScreen').classList.add('hide');
-    document.getElementById('gSignInScreen').classList.add('show');
-  }, 2800);
+  // Intro → sign-in screen handled by onAuthStateChanged for returning users
+  // For new visitors, show intro then sign-in screen
+  if (!auth.currentUser) {
+    setTimeout(()=>{
+      document.getElementById('introScreen').classList.add('hide');
+      document.getElementById('gSignInScreen').classList.add('show');
+    }, 2800);
+  }
 });
 
 function starsToDisplay(val){
@@ -1392,26 +1848,53 @@ function handlePhotos(e){
   Array.from(e.target.files).forEach(f=>{const r=new FileReader();r.onload=ev=>{const i=document.createElement('img');i.src=ev.target.result;prev.appendChild(i);};r.readAsDataURL(f);});
 }
 
-function submitReview(){
-  // Check if user is a Guest
+async function submitReview(){
   if (!currentUser || currentUser.name === 'Guest') {
     document.getElementById('loginWall').classList.add('open');
     return;
   }
+  const product = document.getElementById('fproduct').value;
+  const ratingVal = document.getElementById('frating').value;
+  const review = document.getElementById('freview').value.trim();
+  if (!product) { toast('Please select a product ✿'); return; }
+  if (!ratingVal) { toast('Please select a rating ✿'); return; }
+  if (!review) { toast('Please write your review ✿'); return; }
 
-  const review=document.getElementById('freview').value.trim();
-  if(!review){toast('Please write your review ✿');return;}
-  if(!currentRating){toast('Please select a star rating ✿');return;}
-  
-  const name = currentUser.name;
-  const card=document.createElement('div');
-  card.className='rcard fade-up';
-  card.innerHTML=`<div class="rcard-quote">"</div><div class="rcard-stars">${starsToDisplay(currentRating)}</div><p class="rcard-text">${review}</p><p class="rcard-author">${name}</p>`;
-  
-  document.getElementById('reviewsGrid').prepend(card);
-  setTimeout(()=>card.classList.add('in'),80);
-  document.getElementById('feedbackForm').style.display='none';
-  document.getElementById('successBox').style.display='block';
+  const rating = parseFloat(ratingVal);
+  try {
+    await saveReview({
+      name: currentUser.name,
+      email: currentUser.email,
+      uid: currentUser.uid,
+      product,
+      rating,
+      review,
+    });
+    // Add review card to grid
+    const card = document.createElement('div');
+    card.className = 'rcard fade-up';
+    card.innerHTML = `<div class="rcard-quote">"</div><div class="rcard-stars">${starsToDisplay(rating)}</div><p class="rcard-text">${review}</p><p class="rcard-author">${currentUser.name}</p><p class="rcard-loc" style="font-size:11px;color:var(--text-light);margin-top:2px;">${product}</p>`;
+    document.getElementById('reviewsGrid').prepend(card);
+    setTimeout(() => card.classList.add('in'), 80);
+    // Remove reviewed product from dropdown
+    const sel = document.getElementById('fproduct');
+    const opt = Array.from(sel.options).find(o => o.value === product);
+    if (opt) opt.remove();
+    // If no more products left to review, show success permanently
+    const remaining = Array.from(sel.options).filter(o => o.value !== '').length;
+    if (remaining === 0) {
+      document.getElementById('feedbackForm').style.display = 'none';
+      document.getElementById('successBox').style.display = 'block';
+    } else {
+      // Reset form for next product, show brief success toast
+      document.getElementById('freview').value = '';
+      document.getElementById('frating').value = '';
+      sel.value = '';
+      toast('Review posted! ✿ You can review another item below.');
+    }
+  } catch(e) {
+    toast('Could not save review. Please try again ✿');
+  }
 }
 
 // ═══════════════════════════════════════
@@ -1429,6 +1912,27 @@ function observeFades(){
   },{threshold:0.07});
   document.querySelectorAll('.fade-up:not(.in)').forEach(el=>obs.observe(el));
 }
+
+// Expose functions to global scope for onclick attributes
+window.signInWithGoogle = signInWithGoogle;
+window.continueAsGuest = continueAsGuest;
+window.toggleProfile = toggleProfile;
+window.toggleCart = toggleCart;
+window.filterP = filterP;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.closeModalDirect = closeModalDirect;
+window.addToCart = addToCart;
+window.addToCartFromModal = addToCartFromModal;
+window.checkoutWA = checkoutWA;
+window.enquireWA = enquireWA;
+window.submitReview = submitReview;
+window.selectDevice = selectDevice;
+window.changeQty = changeQty;
+window.buyNow = buyNow;
+window.closeOrderModal = closeOrderModal;
+window.closeLoginWall = closeLoginWall;
+window.toast = toast;
 </script>
 
 <!-- PROFILE VEIL -->
@@ -1485,7 +1989,7 @@ function observeFades(){
     <div class="login-wall-icon">🔒</div>
     <h3 class="login-wall-title">Sign in to <em>continue</em></h3>
     <p class="login-wall-body" id="loginWallMsg">Please sign in with your Google account to add items to your bag and place orders.</p>
-    <button class="login-wall-btn" onclick="closeLoginWall(); document.getElementById('gSignInScreen').classList.add('show'); document.getElementById('gSignInScreen').classList.remove('hide');">
+    <button class="login-wall-btn" onclick="closeLoginWall(); signInWithGoogle();">
       <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
       Sign in with Google
     </button>
