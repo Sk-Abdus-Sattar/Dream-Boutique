@@ -579,8 +579,7 @@ async function buyNow() {
     btn.textContent = '⏳ Placing Order…';
     btn.style.opacity = '0.75';
   });
-  // Freeze the entire screen — block all user interaction
-  document.getElementById('orderFreezeOverlay').classList.add('active');
+  // Freeze body scroll so the modal stays in view
   document.body.style.overflow = 'hidden';
 
   const qty = parseInt(document.getElementById('modalQty').textContent) || 1;
@@ -630,13 +629,7 @@ async function buyNow() {
       ordered_at: orderData.orderedAt,
     });
 
-    // 4. Restore button state, then show order confirmation
-    buyBtns.forEach(btn => {
-      btn.disabled = false;
-      btn.textContent = btn.dataset.origText || '🛒 Buy Now';
-      btn.style.opacity = '';
-    });
-    document.getElementById('orderFreezeOverlay').classList.remove('active');
+    // 4. Show order confirmation
     closeModalDirect();
     document.getElementById('orderDetailProduct').textContent = orderData.productName;
     document.getElementById('orderDetailQty').textContent = qty;
@@ -652,7 +645,6 @@ async function buyNow() {
       btn.textContent = btn.dataset.origText || '🛒 Buy Now';
       btn.style.opacity = '';
     });
-    document.getElementById('orderFreezeOverlay').classList.remove('active');
     toast('Something went wrong. Please try again ✿');
   }
 }
