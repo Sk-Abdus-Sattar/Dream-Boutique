@@ -1,0 +1,21 @@
+{
+  "name": "Dream Boutique",
+  "short_name": "Dream Boutique",
+  "description": "Modest & Ethnic Wears",
+  "start_url": "/Dream-Boutique/",
+  "display": "standalone",
+  "background_color": "#fdf6f0",
+  "theme_color": "#d4896a",
+  "icons": [
+    {
+      "src": "BQT-Assets/DB Logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "BQT-Assets/DB Logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
