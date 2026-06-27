@@ -447,10 +447,9 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
 .mobile-view .hero-ctas{justify-content:center;}
 .mobile-view .about-inner{grid-template-columns:1fr;}
 .mobile-view .footer-top{grid-template-columns:1fr;}
-.mobile-view .modal-box{grid-template-columns:1fr;max-height:90vh;overflow-y:auto;}
-.mobile-view .modal-img-side{aspect-ratio:3/2;height:auto;position:relative;}
+.mobile-view .modal-box{grid-template-columns:1fr;}
+.mobile-view .modal-img-side{aspect-ratio:4/3;}
 .mobile-view .cart-panel{width:100%;right:-100%;}
-.mobile-view .cart-panel.open{right:0;}
 .mobile-view .contact-section{padding:70px 20px;}
 .mobile-view .marquee-track span{font-size:10px;padding:0 24px;}
 
@@ -506,8 +505,7 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
 
 /* Stock badge smaller on mobile */
 .mobile-view .stock-badge { font-size: 7px; padding: 3px 8px; }
-/* Bug-4 fix: move category badge to bottom-right so it doesn't overlap the stock badge */
-.mobile-view .pcard-badge { font-size: 7px; padding: 3px 8px; top: auto; left: auto; bottom: 10px; right: 10px; }
+.mobile-view .pcard-badge { font-size: 7px; padding: 3px 8px; }
 
 /* ── Mobile Filter ── */
 .mobile-view .filter-wrap {
@@ -577,15 +575,11 @@ footer{background:var(--text);color:rgba(245,235,228,0.6);padding:60px 56px 32px
   section{padding:70px 20px;}
   .product-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   .about-inner{grid-template-columns:1fr;}
-  /* Bug-5 fix: modal becomes scrollable column on tablet — img must not be 90vh */
-  .modal-box{grid-template-columns:1fr;max-height:90vh;overflow-y:auto;}
-  .modal-img-side{height:auto;position:relative;aspect-ratio:3/2;}
+  .modal-box{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr;}
   .form-card{padding:36px 24px;}
   .form-grid{grid-template-columns:1fr;}
-  /* Bug-2 fix: cart must slide fully in on tablet */
   .cart-panel{width:100%;right:-100%;}
-  .cart-panel.open{right:0;}
   .hero-inner{grid-template-columns:1fr;text-align:center;padding:40px 20px;}
   .hero-visual{display:none;}
   .hero-badges,.hero-ctas{justify-content:center;}

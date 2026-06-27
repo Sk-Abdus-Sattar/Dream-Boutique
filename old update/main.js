@@ -3,8 +3,6 @@
 // ═══════════════════════════════════════
 let currentUser = null;
 const WA = "919832596691";
-// Bug-1 fix: set to true once onAuthStateChanged fires so DOMContentLoaded doesn't race against it
-let _authResolved = false;
 
 // ═══════════════════════════════════════
 // FIREBASE INIT
@@ -38,7 +36,6 @@ onAuthStateChanged(auth, async (user) => {
       picture: user.photoURL,
       uid: user.uid,
     };
-    _authResolved = true;
     // Returning user — wait for intro animation to finish, then go straight to device picker
     // (no sign-in screen needed — they're already logged in)
     setTimeout(() => {
@@ -49,7 +46,6 @@ onAuthStateChanged(auth, async (user) => {
     }, 2800);
   } else {
     currentUser = null;
-    _authResolved = true;
     // New/logged-out visitor — intro plays then sign-in screen shows (handled by DOMContentLoaded)
   }
 });
@@ -359,7 +355,6 @@ function initApp() {
   renderProducts();
   observeFades();
   loadReviews();
-  loadCartFromStorage(); // Bug-6 fix: restore persisted cart
   document.getElementById('feedbackForm').style.display = 'none';
   document.getElementById('reviewPurchaseGate').style.display = 'block';
   populateReviewDropdown().then(() => {
@@ -373,24 +368,6 @@ function initApp() {
 // PRODUCT RENDER
 // ═══════════════════════════════════════
 let cart = [], currentProd = null;
-
-// ── Bug-6 fix: cart persistence helpers ──
-function cartKey() {
-  return currentUser && currentUser.email ? `db_cart_${currentUser.email}` : null;
-}
-function saveCartToStorage() {
-  const key = cartKey();
-  if (key) localStorage.setItem(key, JSON.stringify(cart.map(p => p.id)));
-}
-function loadCartFromStorage() {
-  const key = cartKey();
-  if (!key) return;
-  try {
-    const ids = JSON.parse(localStorage.getItem(key) || '[]');
-    cart = ids.map(id => products.find(p => p.id === id)).filter(Boolean);
-    updateCart();
-  } catch(e) { cart = []; }
-}
 
 function productCardHTML(p) {
   const img = uploadedImgs[p.id];
@@ -455,12 +432,12 @@ function addToCart(id, fromModal=false) {
   }
   const p = products.find(x=>x.id===id);
   if (!p.stock) { toast('This piece is currently out of stock ✿'); return; }
-  if (!cart.find(x=>x.id===id)) { cart.push(p); updateCart(); saveCartToStorage(); toast(`"${p.name}" added to your bag ✿`); }
+  if (!cart.find(x=>x.id===id)) { cart.push(p); updateCart(); toast(`"${p.name}" added to your bag ✿`); }
   else toast('Already in your bag ✿');
   if (fromModal) closeModalDirect();
 }
 function addToCartFromModal() { if (currentProd) addToCart(currentProd.id, true); }
-function removeFromCart(id) { cart=cart.filter(x=>x.id!==id); updateCart(); saveCartToStorage(); }
+function removeFromCart(id) { cart=cart.filter(x=>x.id!==id); updateCart(); }
 
 function updateCart() {
   document.getElementById('cartCount').textContent = cart.length;
@@ -571,17 +548,6 @@ async function buyNow() {
   if (!currentProd) return;
   if (!currentProd.stock) { toast('This piece is currently out of stock ✿'); return; }
 
-  // Bug-3 fix: show loading state on ALL buy-now buttons while processing
-  const buyBtns = document.querySelectorAll('.modal-btns .btn-rose, .modal-sticky-actions .btn-rose');
-  buyBtns.forEach(btn => {
-    btn.disabled = true;
-    btn.dataset.origText = btn.textContent;
-    btn.textContent = '⏳ Placing Order…';
-    btn.style.opacity = '0.75';
-  });
-  // Freeze body scroll so the modal stays in view
-  document.body.style.overflow = 'hidden';
-
   const qty = parseInt(document.getElementById('modalQty').textContent) || 1;
   const totalAmt = Number(currentProd.price) * qty;
   const orderData = {
@@ -639,12 +605,6 @@ async function buyNow() {
 
   } catch(err) {
     console.error('Order error:', err);
-    // Restore button state on failure
-    buyBtns.forEach(btn => {
-      btn.disabled = false;
-      btn.textContent = btn.dataset.origText || '🛒 Buy Now';
-      btn.style.opacity = '';
-    });
     toast('Something went wrong. Please try again ✿');
   }
 }
@@ -656,16 +616,13 @@ function closeOrderModal() {
 // ═══════════════════════════════════════
 // HALF-STAR RATING DISPLAY
 // ═══════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  // Only kick off the fallback timer if onAuthStateChanged hasn't resolved yet.
-  // If Firebase fires quickly (logged-in user), _authResolved will be true and
-  // we do nothing here — preventing the 1-second sign-in screen flash.
-  setTimeout(() => {
-    if (!_authResolved) {
+document.addEventListener('DOMContentLoaded',()=>{
+  if (!auth.currentUser) {
+    setTimeout(()=>{
       document.getElementById('introScreen').classList.add('hide');
       document.getElementById('gSignInScreen').classList.add('show');
-    }
-  }, 2800);
+    }, 2800);
+  }
 });
 
 function starsToDisplay(val){
