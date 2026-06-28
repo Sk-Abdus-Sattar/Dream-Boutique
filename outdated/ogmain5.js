@@ -9,12 +9,12 @@ let _authResolved = false;
 // FIREBASE INIT
 // ═══════════════════════════════════════
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, collection, query, where, getDocs, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnkKFie4vQzlykaVhnJ_cwILgk4zRQL2Q",
-  authDomain: "dream-boutique-fd674.firebaseapp.com",
+  authDomain: "sk-abdus-sattar.github.io",
   projectId: "dream-boutique-fd674",
   storageBucket: "dream-boutique-fd674.firebasestorage.app",
   messagingSenderId: "510483704329",
@@ -33,9 +33,22 @@ setPersistence(auth, browserLocalPersistence);
 let _introDismissed = false;
 const _pageLoadTime = Date.now();
 
-// debug removed for production
+// DEBUG — remove after testing
+function dbg(msg) {
+  console.log('[DB]', msg);
+  let el = document.getElementById('_dbgLog');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = '_dbgLog';
+    el.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99999;background:rgba(0,0,0,0.85);color:#0f0;font-size:11px;font-family:monospace;padding:8px;max-height:40vh;overflow-y:auto;pointer-events:none;';
+    document.body.appendChild(el);
+  }
+  el.innerHTML += `<div>${Date.now() - _pageLoadTime}ms: ${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
 
 function dismissIntroToSignIn() {
+  dbg('dismissIntroToSignIn called, _introDismissed=' + _introDismissed);
   if (_introDismissed) return;
   _introDismissed = true;
   document.getElementById('introScreen').classList.add('hide');
@@ -44,35 +57,21 @@ function dismissIntroToSignIn() {
 }
 
 function dismissIntroToApp() {
+  dbg('dismissIntroToApp called, _introDismissed=' + _introDismissed);
+  // Always allow this — even if sign-in screen was already shown,
+  // a returning redirect user must be able to get into the app
   _introDismissed = true;
   document.getElementById('introScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.remove('show');
+  // Also hide network error screen if it appeared
   const netErr = document.getElementById('networkErrorScreen');
   if (netErr) netErr.remove();
   onUserReady();
 }
 
-// Handle redirect result first (mobile Google sign-in returns here after redirect)
-getRedirectResult(auth).then(result => {
-  if (result && result.user) {
-    const user = result.user;
-    currentUser = {
-      name: user.displayName,
-      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
-      email: user.email,
-      picture: user.photoURL,
-      uid: user.uid,
-    };
-    // dismissIntroToApp will be called by onAuthStateChanged below
-  }
-}).catch(e => {
-  if (e.code !== 'auth/cancelled-popup-request') {
-    console.error('Redirect result error:', e.code);
-  }
-});
-
 onAuthStateChanged(auth, async (user) => {
+  dbg('onAuthStateChanged fired, user=' + (user ? user.email : 'null') + ', hash=' + location.hash);
   _authResolved = true;
   if (user) {
     currentUser = {
@@ -84,42 +83,35 @@ onAuthStateChanged(auth, async (user) => {
     };
     const elapsed = Date.now() - _pageLoadTime;
     const remaining = Math.max(0, 2800 - elapsed);
+    dbg('user found, elapsed=' + elapsed + 'ms, waiting=' + remaining + 'ms');
     setTimeout(dismissIntroToApp, remaining);
   } else {
     currentUser = null;
     const elapsed = Date.now() - _pageLoadTime;
     const remaining = Math.max(0, 2800 - elapsed);
+    dbg('no user, elapsed=' + elapsed + 'ms, waiting=' + remaining + 'ms');
     setTimeout(dismissIntroToSignIn, remaining);
   }
 });
-
-// ─── Detect mobile for auth strategy ───
-function _isMobileBrowser() {
-  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
-    || ('ontouchstart' in window && window.innerWidth < 900);
-}
 
 async function signInWithGoogle() {
   try {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    if (_isMobileBrowser()) {
-      // signInWithRedirect is reliable on mobile browsers — no popup blocker issues
-      await signInWithRedirect(auth, provider);
-      // Page will reload; onAuthStateChanged picks up the user on return
-    } else {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      currentUser = {
-        name: user.displayName,
-        given_name: user.displayName ? user.displayName.split(' ')[0] : '',
-        email: user.email,
-        picture: user.photoURL,
-        uid: user.uid,
-      };
-      dismissIntroToApp();
-    }
+    // signInWithRedirect requires Firebase Hosting (/__/auth/handler) — won't work on GitHub Pages.
+    // signInWithPopup works on all platforms as long as it's called directly from a user gesture.
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    currentUser = {
+      name: user.displayName,
+      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
+      email: user.email,
+      picture: user.photoURL,
+      uid: user.uid,
+    };
+    dismissIntroToApp();
   } catch(e) {
+    dbg('signInWithPopup error: ' + e.code);
     if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
       toast('Sign-in failed. Please try again ✿');
     }
@@ -251,6 +243,7 @@ function continueAsGuest() {
 
 // ─── onUserReady: shows device picker, or skips it if already chosen ───
 function onUserReady() {
+  dbg('onUserReady called, savedDevice=' + (()=>{try{return localStorage.getItem('db_device')}catch(e){return 'err'}})());
   document.getElementById('gSignInScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.remove('show');
 
@@ -301,6 +294,7 @@ function selectDevice(type) {
 
 // ─── Handle back/forward navigation ───
 window.addEventListener('popstate', (e) => {
+  dbg('popstate fired, hash=' + location.hash + ', _authResolved=' + _authResolved + ', _introDismissed=' + _introDismissed + ', currentUser=' + (currentUser ? currentUser.email : 'null'));
   if (!_authResolved) return;
 
   const hash = location.hash;
