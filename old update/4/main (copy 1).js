@@ -280,17 +280,13 @@ function selectDevice(type) {
 
 // ─── Handle back/forward navigation ───
 window.addEventListener('popstate', (e) => {
-  // Guard: during a redirect sign-in return, _authResolved may still be false
-  // and currentUser null — don't react to history events until auth is settled
-  if (!_authResolved) return;
-
   const hash = location.hash;
   const app = document.getElementById('mainApp');
   const isAppShowing = app && app.classList.contains('show');
 
   if (hash === '#signin' || hash === '') {
-    // Only go to sign-in if not logged in AND intro is already done
-    if (_introDismissed && (!currentUser || currentUser.email === null)) {
+    // Only go to sign-in if not logged in
+    if (!currentUser || currentUser.email === null) {
       app && app.classList.remove('show');
       document.getElementById('gSignInScreen').classList.add('show');
       document.getElementById('gSignInScreen').classList.remove('hide');
