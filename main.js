@@ -14,7 +14,7 @@ import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, collection, query
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnkKFie4vQzlykaVhnJ_cwILgk4zRQL2Q",
-  authDomain: "dream-boutique-fd674.firebaseapp.com",
+  authDomain: "sk-abdus-sattar.github.io",
   projectId: "dream-boutique-fd674",
   storageBucket: "dream-boutique-fd674.firebasestorage.app",
   messagingSenderId: "510483704329",
@@ -27,9 +27,31 @@ const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 setPersistence(auth, browserLocalPersistence);
 
-// Handle redirect sign-in result on mobile (fires before onAuthStateChanged)
-getRedirectResult(auth).catch(() => {
-  // Ignore — onAuthStateChanged handles the success case
+// ─── Redirect result must be captured BEFORE onAuthStateChanged ───
+// On mobile, after Google redirects back, getRedirectResult holds the
+// signed-in user. If we don't await it, onAuthStateChanged fires first
+// with null, and the session is lost.
+let _redirectUserHandled = false;
+const _redirectPromise = getRedirectResult(auth).then(result => {
+  if (result && result.user) {
+    dbg('getRedirectResult: got user ' + result.user.email);
+    _redirectUserHandled = true;
+    currentUser = {
+      name: result.user.displayName,
+      given_name: result.user.displayName ? result.user.displayName.split(' ')[0] : '',
+      email: result.user.email,
+      picture: result.user.photoURL,
+      uid: result.user.uid,
+    };
+    const elapsed = Date.now() - _pageLoadTime;
+    const remaining = Math.max(0, 2800 - elapsed);
+    dbg('redirect user found, waiting=' + remaining + 'ms then dismissIntroToApp');
+    setTimeout(dismissIntroToApp, remaining);
+  } else {
+    dbg('getRedirectResult: no redirect user');
+  }
+}).catch(err => {
+  dbg('getRedirectResult error: ' + err.message);
 });
 
 // ─── Auth state listener — mobile-safe, timing-robust ───
@@ -72,8 +94,15 @@ function dismissIntroToApp() {
 }
 
 onAuthStateChanged(auth, async (user) => {
-  dbg('onAuthStateChanged fired, user=' + (user ? user.email : 'null') + ', hash=' + location.hash);
+  dbg('onAuthStateChanged fired, user=' + (user ? user.email : 'null') + ', hash=' + location.hash + ', _redirectUserHandled=' + _redirectUserHandled);
   _authResolved = true;
+
+  // If getRedirectResult already handled a freshly signed-in user, don't override it
+  if (_redirectUserHandled) {
+    dbg('skipping onAuthStateChanged — redirect already handled');
+    return;
+  }
+
   if (user) {
     currentUser = {
       name: user.displayName,
