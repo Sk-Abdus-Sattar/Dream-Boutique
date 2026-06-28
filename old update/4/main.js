@@ -9,7 +9,7 @@ let _authResolved = false;
 // FIREBASE INIT
 // ═══════════════════════════════════════
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, collection, query, where, getDocs, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -27,36 +27,8 @@ const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 setPersistence(auth, browserLocalPersistence);
 
-// Handle redirect sign-in result on mobile (fires before onAuthStateChanged)
-getRedirectResult(auth).catch(() => {
-  // Ignore — onAuthStateChanged handles the success case
-});
-
-// ─── Auth state listener — mobile-safe, timing-robust ───
-// Track page load time so we can calculate remaining intro time
-// no matter how fast or slow Firebase resolves on a real network.
-let _introDismissed = false;
-const _pageLoadTime = Date.now();
-
-function dismissIntroToSignIn() {
-  if (_introDismissed) return;
-  _introDismissed = true;
-  document.getElementById('introScreen').classList.add('hide');
-  document.getElementById('gSignInScreen').classList.remove('hide');
-  document.getElementById('gSignInScreen').classList.add('show');
-}
-
-function dismissIntroToApp() {
-  if (_introDismissed) return;
-  _introDismissed = true;
-  document.getElementById('introScreen').classList.add('hide');
-  document.getElementById('gSignInScreen').classList.add('hide');
-  document.getElementById('gSignInScreen').classList.remove('show');
-  onUserReady();
-}
-
+// ─── Auth state listener — runs on every page load/refresh ───
 onAuthStateChanged(auth, async (user) => {
-  _authResolved = true;
   if (user) {
     currentUser = {
       name: user.displayName,
@@ -65,15 +37,19 @@ onAuthStateChanged(auth, async (user) => {
       picture: user.photoURL,
       uid: user.uid,
     };
-    // Respect the 2800ms intro animation but account for time already elapsed
-    const elapsed = Date.now() - _pageLoadTime;
-    const remaining = Math.max(0, 2800 - elapsed);
-    setTimeout(dismissIntroToApp, remaining);
+    _authResolved = true;
+    // Returning user — wait for intro animation to finish, then go straight to device picker
+    // (no sign-in screen needed — they're already logged in)
+    setTimeout(() => {
+      document.getElementById('introScreen').classList.add('hide');
+      document.getElementById('gSignInScreen').classList.add('hide');
+      document.getElementById('gSignInScreen').classList.remove('show');
+      onUserReady();
+    }, 2800);
   } else {
     currentUser = null;
-    const elapsed = Date.now() - _pageLoadTime;
-    const remaining = Math.max(0, 2800 - elapsed);
-    setTimeout(dismissIntroToSignIn, remaining);
+    _authResolved = true;
+    // New/logged-out visitor — intro plays then sign-in screen shows (handled by DOMContentLoaded)
   }
 });
 
@@ -81,23 +57,16 @@ async function signInWithGoogle() {
   try {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      // Popups are blocked on mobile Chrome — use redirect flow instead
-      await signInWithRedirect(auth, provider);
-      // Page will reload; onAuthStateChanged picks up the user on return
-    } else {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      currentUser = {
-        name: user.displayName,
-        given_name: user.displayName ? user.displayName.split(' ')[0] : '',
-        email: user.email,
-        picture: user.photoURL,
-        uid: user.uid,
-      };
-      onUserReady();
-    }
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    currentUser = {
+      name: user.displayName,
+      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
+      email: user.email,
+      picture: user.photoURL,
+      uid: user.uid,
+    };
+    onUserReady();
   } catch(e) {
     if (e.code !== 'auth/popup-closed-by-user') {
       toast('Sign-in failed. Please try again ✿');
@@ -108,7 +77,6 @@ async function signInWithGoogle() {
 async function doLogout() {
   await signOut(auth);
   currentUser = null;
-  try { localStorage.removeItem('db_device'); } catch(e) {}
   // Hide app, hide profile panel
   document.getElementById('logoutConfirm').classList.remove('open');
   document.getElementById('profilePanel').classList.remove('open');
@@ -228,16 +196,10 @@ function continueAsGuest() {
   onUserReady();
 }
 
-// ─── onUserReady: shows device picker, or skips it if already chosen ───
+// ─── onUserReady: always shows device picker ───
 function onUserReady() {
   document.getElementById('gSignInScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.remove('show');
-
-  // If user already picked a device (e.g. returning from terms.html), skip picker
-  let savedDevice = null;
-  try { savedDevice = localStorage.getItem('db_device'); } catch(e) {}
-  if (savedDevice) { selectDevice(savedDevice); return; }
-
   const ds = document.getElementById('deviceScreen');
   ds.classList.add('show');
   ds.classList.remove('hide');
@@ -254,9 +216,6 @@ function onUserReady() {
 }
 
 function selectDevice(type) {
-  // Persist device choice so navigating away and back skips the picker
-  try { localStorage.setItem('db_device', type); } catch(e) {}
-
   const ds = document.getElementById('deviceScreen');
   ds.classList.add('hide');
   ds.classList.remove('show');
@@ -688,51 +647,18 @@ function closeOrderModal() {
 }
 
 // ═══════════════════════════════════════
-// NETWORK ERROR FALLBACK
+// HALF-STAR RATING DISPLAY
 // ═══════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  // If Firebase never responds (no network, blocked, dead connection)
-  // show a clear, branded error after 6 seconds instead of leaving
-  // the user stuck staring at the intro screen with no explanation.
+  // Only kick off the fallback timer if onAuthStateChanged hasn't resolved yet.
+  // If Firebase fires quickly (logged-in user), _authResolved will be true and
+  // we do nothing here — preventing the 1-second sign-in screen flash.
   setTimeout(() => {
     if (!_authResolved) {
       document.getElementById('introScreen').classList.add('hide');
-      let netErr = document.getElementById('networkErrorScreen');
-      if (!netErr) {
-        netErr = document.createElement('div');
-        netErr.id = 'networkErrorScreen';
-        netErr.style.cssText = [
-          'position:fixed', 'inset:0', 'z-index:10002',
-          'background:linear-gradient(160deg,#FDF8F4 0%,#F7E8E0 50%,#FDF8F4 100%)',
-          'display:flex', 'align-items:center', 'justify-content:center', 'padding:24px'
-        ].join(';');
-        netErr.innerHTML = `
-          <div style="text-align:center;max-width:360px;width:100%;">
-            <div style="font-size:64px;margin-bottom:20px;">📡</div>
-            <h2 style="font-family:'Playfair Display',serif;font-size:26px;color:#4A3728;font-weight:400;margin-bottom:10px;">
-              It's not us — <em style="color:#D4897A;font-style:italic;">it's your network</em>
-            </h2>
-            <p style="font-family:'Dancing Script',cursive;font-size:20px;color:#C9956A;margin-bottom:20px;">
-              Dream Boutique is perfectly fine ✿
-            </p>
-            <p style="font-size:13px;color:#9A7B6E;line-height:1.9;font-weight:300;margin-bottom:32px;">
-              We couldn't connect to our servers. Please check your internet connection and try again — we'll be right here waiting for you.
-            </p>
-            <button onclick="location.reload()"
-              style="background:#D4897A;color:#fff;border:none;padding:14px 36px;border-radius:100px;
-              font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;
-              font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(212,137,122,0.35);">
-              Try Again
-            </button>
-            <p style="margin-top:20px;font-size:11px;color:#9A7B6E;opacity:0.6;font-style:italic;">
-              If the problem persists, try switching from mobile data to Wi‑Fi or vice versa.
-            </p>
-          </div>
-        `;
-        document.body.appendChild(netErr);
-      }
+      document.getElementById('gSignInScreen').classList.add('show');
     }
-  }, 6000);
+  }, 2800);
 });
 
 function starsToDisplay(val){
