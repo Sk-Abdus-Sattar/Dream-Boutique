@@ -38,22 +38,7 @@ getRedirectResult(auth).catch(() => {
 let _introDismissed = false;
 const _pageLoadTime = Date.now();
 
-// DEBUG — remove after testing
-function dbg(msg) {
-  console.log('[DB]', msg);
-  let el = document.getElementById('_dbgLog');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = '_dbgLog';
-    el.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:99999;background:rgba(0,0,0,0.85);color:#0f0;font-size:11px;font-family:monospace;padding:8px;max-height:40vh;overflow-y:auto;pointer-events:none;';
-    document.body.appendChild(el);
-  }
-  el.innerHTML += `<div>${Date.now() - _pageLoadTime}ms: ${msg}</div>`;
-  el.scrollTop = el.scrollHeight;
-}
-
 function dismissIntroToSignIn() {
-  dbg('dismissIntroToSignIn called, _introDismissed=' + _introDismissed);
   if (_introDismissed) return;
   _introDismissed = true;
   document.getElementById('introScreen').classList.add('hide');
@@ -62,7 +47,6 @@ function dismissIntroToSignIn() {
 }
 
 function dismissIntroToApp() {
-  dbg('dismissIntroToApp called, _introDismissed=' + _introDismissed);
   if (_introDismissed) return;
   _introDismissed = true;
   document.getElementById('introScreen').classList.add('hide');
@@ -72,7 +56,6 @@ function dismissIntroToApp() {
 }
 
 onAuthStateChanged(auth, async (user) => {
-  dbg('onAuthStateChanged fired, user=' + (user ? user.email : 'null') + ', hash=' + location.hash);
   _authResolved = true;
   if (user) {
     currentUser = {
@@ -82,15 +65,14 @@ onAuthStateChanged(auth, async (user) => {
       picture: user.photoURL,
       uid: user.uid,
     };
+    // Respect the 2800ms intro animation but account for time already elapsed
     const elapsed = Date.now() - _pageLoadTime;
     const remaining = Math.max(0, 2800 - elapsed);
-    dbg('user found, elapsed=' + elapsed + 'ms, waiting=' + remaining + 'ms');
     setTimeout(dismissIntroToApp, remaining);
   } else {
     currentUser = null;
     const elapsed = Date.now() - _pageLoadTime;
     const remaining = Math.max(0, 2800 - elapsed);
-    dbg('no user, elapsed=' + elapsed + 'ms, waiting=' + remaining + 'ms');
     setTimeout(dismissIntroToSignIn, remaining);
   }
 });
@@ -248,7 +230,6 @@ function continueAsGuest() {
 
 // ─── onUserReady: shows device picker, or skips it if already chosen ───
 function onUserReady() {
-  dbg('onUserReady called, savedDevice=' + (()=>{try{return localStorage.getItem('db_device')}catch(e){return 'err'}})());
   document.getElementById('gSignInScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.remove('show');
 
@@ -299,7 +280,8 @@ function selectDevice(type) {
 
 // ─── Handle back/forward navigation ───
 window.addEventListener('popstate', (e) => {
-  dbg('popstate fired, hash=' + location.hash + ', _authResolved=' + _authResolved + ', _introDismissed=' + _introDismissed + ', currentUser=' + (currentUser ? currentUser.email : 'null'));
+  // Guard: during a redirect sign-in return, _authResolved may still be false
+  // and currentUser null — don't react to history events until auth is settled
   if (!_authResolved) return;
 
   const hash = location.hash;
