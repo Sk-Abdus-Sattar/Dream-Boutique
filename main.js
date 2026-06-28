@@ -9,7 +9,7 @@ let _authResolved = false;
 // FIREBASE INIT
 // ═══════════════════════════════════════
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, collection, query, where, getDocs, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -54,23 +54,6 @@ function dismissIntroToApp() {
 }
 
 // Handle redirect result first (mobile Google sign-in returns here after redirect)
-getRedirectResult(auth).then(result => {
-  if (result && result.user) {
-    const user = result.user;
-    currentUser = {
-      name: user.displayName,
-      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
-      email: user.email,
-      picture: user.photoURL,
-      uid: user.uid,
-    };
-    // dismissIntroToApp will be called by onAuthStateChanged below
-  }
-}).catch(e => {
-  if (e.code !== 'auth/cancelled-popup-request') {
-    console.error('Redirect result error:', e.code);
-  }
-});
 
 onAuthStateChanged(auth, async (user) => {
   _authResolved = true;
@@ -93,32 +76,20 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// ─── Detect mobile for auth strategy ───
-function _isMobileBrowser() {
-  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
-    || ('ontouchstart' in window && window.innerWidth < 900);
-}
-
 async function signInWithGoogle() {
   try {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    if (_isMobileBrowser()) {
-      // signInWithRedirect is reliable on mobile browsers — no popup blocker issues
-      await signInWithRedirect(auth, provider);
-      // Page will reload; onAuthStateChanged picks up the user on return
-    } else {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      currentUser = {
-        name: user.displayName,
-        given_name: user.displayName ? user.displayName.split(' ')[0] : '',
-        email: user.email,
-        picture: user.photoURL,
-        uid: user.uid,
-      };
-      dismissIntroToApp();
-    }
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    currentUser = {
+      name: user.displayName,
+      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
+      email: user.email,
+      picture: user.photoURL,
+      uid: user.uid,
+    };
+    dismissIntroToApp();
   } catch(e) {
     if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
       toast('Sign-in failed. Please try again ✿');
