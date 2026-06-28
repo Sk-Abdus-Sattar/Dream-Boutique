@@ -9,7 +9,7 @@ let _authResolved = false;
 // FIREBASE INIT
 // ═══════════════════════════════════════
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, collection, query, where, getDocs, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -26,33 +26,6 @@ const fbApp = initializeApp(firebaseConfig);
 const auth = getAuth(fbApp);
 const db = getFirestore(fbApp);
 setPersistence(auth, browserLocalPersistence);
-
-// ─── Redirect result must be captured BEFORE onAuthStateChanged ───
-// On mobile, after Google redirects back, getRedirectResult holds the
-// signed-in user. If we don't await it, onAuthStateChanged fires first
-// with null, and the session is lost.
-let _redirectUserHandled = false;
-const _redirectPromise = getRedirectResult(auth).then(result => {
-  if (result && result.user) {
-    dbg('getRedirectResult: got user ' + result.user.email);
-    _redirectUserHandled = true;
-    currentUser = {
-      name: result.user.displayName,
-      given_name: result.user.displayName ? result.user.displayName.split(' ')[0] : '',
-      email: result.user.email,
-      picture: result.user.photoURL,
-      uid: result.user.uid,
-    };
-    const elapsed = Date.now() - _pageLoadTime;
-    const remaining = Math.max(0, 2800 - elapsed);
-    dbg('redirect user found, waiting=' + remaining + 'ms then dismissIntroToApp');
-    setTimeout(dismissIntroToApp, remaining);
-  } else {
-    dbg('getRedirectResult: no redirect user');
-  }
-}).catch(err => {
-  dbg('getRedirectResult error: ' + err.message);
-});
 
 // ─── Auth state listener — mobile-safe, timing-robust ───
 // Track page load time so we can calculate remaining intro time
@@ -85,24 +58,21 @@ function dismissIntroToSignIn() {
 
 function dismissIntroToApp() {
   dbg('dismissIntroToApp called, _introDismissed=' + _introDismissed);
-  if (_introDismissed) return;
+  // Always allow this — even if sign-in screen was already shown,
+  // a returning redirect user must be able to get into the app
   _introDismissed = true;
   document.getElementById('introScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.add('hide');
   document.getElementById('gSignInScreen').classList.remove('show');
+  // Also hide network error screen if it appeared
+  const netErr = document.getElementById('networkErrorScreen');
+  if (netErr) netErr.remove();
   onUserReady();
 }
 
 onAuthStateChanged(auth, async (user) => {
-  dbg('onAuthStateChanged fired, user=' + (user ? user.email : 'null') + ', hash=' + location.hash + ', _redirectUserHandled=' + _redirectUserHandled);
+  dbg('onAuthStateChanged fired, user=' + (user ? user.email : 'null') + ', hash=' + location.hash);
   _authResolved = true;
-
-  // If getRedirectResult already handled a freshly signed-in user, don't override it
-  if (_redirectUserHandled) {
-    dbg('skipping onAuthStateChanged — redirect already handled');
-    return;
-  }
-
   if (user) {
     currentUser = {
       name: user.displayName,
@@ -128,25 +98,21 @@ async function signInWithGoogle() {
   try {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      // Popups are blocked on mobile Chrome — use redirect flow instead
-      await signInWithRedirect(auth, provider);
-      // Page will reload; onAuthStateChanged picks up the user on return
-    } else {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      currentUser = {
-        name: user.displayName,
-        given_name: user.displayName ? user.displayName.split(' ')[0] : '',
-        email: user.email,
-        picture: user.photoURL,
-        uid: user.uid,
-      };
-      onUserReady();
-    }
+    // signInWithRedirect requires Firebase Hosting (/__/auth/handler) — won't work on GitHub Pages.
+    // signInWithPopup works on all platforms as long as it's called directly from a user gesture.
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    currentUser = {
+      name: user.displayName,
+      given_name: user.displayName ? user.displayName.split(' ')[0] : '',
+      email: user.email,
+      picture: user.photoURL,
+      uid: user.uid,
+    };
+    dismissIntroToApp();
   } catch(e) {
-    if (e.code !== 'auth/popup-closed-by-user') {
+    dbg('signInWithPopup error: ' + e.code);
+    if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
       toast('Sign-in failed. Please try again ✿');
     }
   }
